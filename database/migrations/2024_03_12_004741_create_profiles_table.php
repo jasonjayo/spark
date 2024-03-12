@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string("languages", 50);
             $table->timestamp("last_active");
             $table->string("location", 20);
+            // test comment
         });
     }
 
