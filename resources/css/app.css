@@ -1,0 +1,12 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+}
+:root {
+    --bs-body-bg: #f5f5f5;
+}
+main {
+    margin: 2em 0 0 12em;
+}
