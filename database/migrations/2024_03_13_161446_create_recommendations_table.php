@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_traits', function (Blueprint $table) {
-
-            $table->foreignId("user_id")->constrained(table: "users");
-            $table->foreignId("trait_id")->constrained(table: "traits");
-            $table->primary(['user_id', 'trait_id']);
+        Schema::create('recommendations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("user_1_id")->constrained(table: "users");
+            $table->foreignId("user_2_id")->constrained(table: "users");
+            $table->float("weight");
+            $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_traits');
+        Schema::dropIfExists('recommendations');
     }
 };

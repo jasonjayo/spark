@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_traits', function (Blueprint $table) {
-
-            $table->foreignId("user_id")->constrained(table: "users");
-            $table->foreignId("trait_id")->constrained(table: "traits");
-            $table->primary(['user_id', 'trait_id']);
+        Schema::create('photos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("user_id")->constrained();
+            $table->string("photo_url", 50);
+            $table->timestamp("created");
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_traits');
+        Schema::dropIfExists('photos');
     }
 };

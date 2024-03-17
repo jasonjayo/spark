@@ -11,20 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_traits', function (Blueprint $table) {
-
+        Schema::create('bans', function (Blueprint $table) {
+            $table->id();
             $table->foreignId("user_id")->constrained(table: "users");
-            $table->foreignId("trait_id")->constrained(table: "traits");
-            $table->primary(['user_id', 'trait_id']);
+            $table->foreignId("admin_id")->constrained(table: "users");
+            $table->foreignId("report_id")->nullable()->constrained();
+            $table->string("reason", 255);
+            $table->timestamp("active_from")->nullable();
+            $table->timestamp("active_to")->nullable();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_traits');
+        Schema::dropIfExists('bans');
     }
 };
