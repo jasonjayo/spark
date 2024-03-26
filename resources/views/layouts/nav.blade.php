@@ -17,41 +17,35 @@
         min-height: 70vh;
     }
 </style>
-<nav class="nav d-flex mb-5 justify-content-between p-4 position-relative z-1 bg-white">
+<nav class="nav navbar d-flex mb-5 fixed-top justify-content-between p-4 position-relative z-1 bg-white">
     <img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}" alt="">
 
-    <div class="d-flex">
+    <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
             <a href="./dashboard" class="text-decoration-none text-black">
                 <li
                     class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center {{ Request::is('dashboard') ? 'spark-bg-secondary text-white' : '' }}">
-                    <span class="material-symbols-outlined fs-1 pe-2">
-                        star
-                    </span>Discover
+                    <i class="bi-stars fs-1 pe-2"> </i>
+                    <span class="d-none d-lg-flex">Discover</span>
                 </li>
             </a>
             <a href="./search" class="text-decoration-none text-black">
                 <li
                     class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center {{ Request::is('search') ? 'spark-bg-secondary text-white' : '' }}">
-                    <span class="material-symbols-outlined fs-1 pe-2">
-                        search
-                    </span>Search
+                    <i class="bi-search fs-1 pe-2"> </i><span class="d-none d-lg-flex">Search</span>
                 </li>
             </a>
             <a href="./search" class="text-decoration-none text-black">
                 <li class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center">
-                    <span class="material-symbols-outlined fs-1 pe-2">
-                        chat
-                    </span>Chat
+                    <i class="bi-chat-dots fs-1 pe-2"></i><span class="d-none d-lg-flex">Chat</span>
                 </li>
             </a>
             <a href="./profile" class="text-decoration-none text-black">
                 <a href="./profile" class="text-decoration-none text-black">
             <li
                     class="p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center {{ Request::is('profile') ? 'spark-bg-secondary text-white' : '' }} {{ Request::is('dashboard') ? 'spark-bg-secondary' : '' }}">
-                    <span class="material-symbols-outlined fs-1 pe-2">
-                        person
-                    </span>Profile
+                    <i class="bi-person fs-1 pe-2"></i>
+                        <span class="d-none d-lg-flex">Profile</span>
                 </li>
             </a></a>
 
