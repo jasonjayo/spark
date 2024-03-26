@@ -9,8 +9,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+use App\Models\Profile;
+
 class ProfileController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        return view("search", [
+            "profiles" => Profile::filter(request(['min_age', 'max_age']))->get(),
+        ]);
+    }
+
     /**
      * Display the user's profile form.
      */
