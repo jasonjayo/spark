@@ -6,13 +6,17 @@
     </x-slot> --}}
 
 
-    <div class="container">
+    <div class="container-fluid">
         Welcome back, {{ Auth::user()->first_name }}
-        <section id="links" class="d-flex flex-column text-center text-white ">
-            <a href="" class="flex-grow-1 fs-1 m-3 bg-secondary">Discovery Queue</a>
-            <a href="" class="flex-grow-1 fs-1 m-3 bg-secondary">Speed Dating</a>
-            <a href="" class="flex-grow-1 fs-1 m-3 bg-secondary">Browse</a>
-        </section>
+        <div class="row justify-content-md-center">
+            <a href="" class="dashbtn shadow-lg col-5">
+                <img width="fit" src="{{ asset('./images/dashboard/pexels-taryn-elliott-4390580.jpg') }}"/>
+                <span>Discovery Queue</span>
+            </a>
+            <div style="width: 16px"> </div>
+            <a href="" class="dashbtn shadow-lg col-5"><img width="fit" src="{{ asset('./images/dashboard/discovery.jpeg') }}"/>
+                <span>Speed-Dating</span></a>
+    </div>
     </div>
 
 
