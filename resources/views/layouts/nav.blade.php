@@ -10,12 +10,14 @@
     .spark-bg-secondary {
         background: #B61A47;
     }
-
+    .nav {
+        border-bottom: 2px solid var(--spk-color-primary-2);
+    }
     #links {
         min-height: 70vh;
     }
 </style>
-<nav class="d-flex mb-5 justify-content-between p-4 border-bottom border-2 position-relative z-1 bg-white">
+<nav class="nav d-flex mb-5 justify-content-between p-4 position-relative z-1 bg-white">
     <img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}" alt="">
 
     <div class="d-flex">
