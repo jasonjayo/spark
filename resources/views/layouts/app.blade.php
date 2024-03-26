@@ -36,7 +36,6 @@
                 </div>
             </header>
         @endif
-
         {{-- <div class="position-fixed top-0 left-0 bottom-0 spark-bg-primary d-flex">
             <ul class="nav-links list-group text-white d-flex flex-column justify-content-center fs-5">
                 <a href="./dashboard" class="text-decoration-none text-white">
@@ -69,6 +68,15 @@
             {{ $slot }}
 
         </main>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <x-responsive-nav-link :href="route('logout')"
+                onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-responsive-nav-link>
+        </form>
     </div>
 </body>
 
