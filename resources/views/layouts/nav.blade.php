@@ -38,11 +38,13 @@
                     chat
                 </span>Chat
             </li>
-            <li class="p-3 m-3 d-flex text-center align-items-center">
+            <a href="./profile" class="text-decoration-none text-black">
+            <li class="p-3 m-3 rounded d-flex text-center align-items-center {{ Request::is('dashboard') ? 'spark-bg-secondary' : '' }}">
                 <span class="material-symbols-outlined fs-1 pe-2">
                     person
                 </span>Profile
             </li>
+</a>
 
 
 

@@ -1,7 +1,13 @@
 <section>
+
+<?php
+$firstToUpper = ucfirst($user->first_name);
+$secondToUpper = ucfirst($user->second_name); 
+?> 
+             
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Profile Information') }}
+            {{__($firstToUpper . "'s " . "Profile Information") }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -17,18 +23,35 @@
         @csrf
         @method('patch')
 
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+<div class="d-flex flex-column ">
+<!-- Basic Details Div -->
+<div class=""> {{__("Basic Details") }}
+
+        <div> <!-- User Id  -->
+            <x-input-label for="user_id" :value="__('User ID')" /> :
+            <x-input-label id="user_id" name="user_id" type="text" class="mt-1 block w-full" :value="old('name', $user->id)" required autofocus autocomplete="name" /> 
+
+        </div>
+
+        <div> <!-- First Name Input -->
+            <x-input-label for="first_name" :value="__('First Name')" />
+            <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full {$gray-500}-bg-subtle" :value="old('name', $firstToUpper)" required autofocus autocomplete="given-name" /> 
+            <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
+        </div>
+
+        <div> <!-- Second Name Input -->
+            <x-input-label for="second_name" :value="__('Second Name')" />
+            <x-text-input id="second_name" name="second_name" type="text" class="mt-1 block w-full" :value="old('name', $secondToUpper)" required autofocus autocomplete="family-name" /> 
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <div>
+
+        <div> <!-- Email Input -->
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                         {{ __('Your email address is unverified.') }}
@@ -46,8 +69,30 @@
                 </div>
             @endif
         </div>
+            </div>
+      
 
-        <div class="flex items-center gap-4">
+
+<!--Personal Details -->
+<div> Bit more about yourself
+<div> <!-- First Name Input -->
+            <x-input-label for="gender" :value="__('Gender')" />
+          <select class="form-select form-select-sm mb-2" id="gender">
+          <option value="">--Please choose an option--</option>
+            <option value="F">Female</option>
+            <option  value="M">Male</option>
+            <option  value="O">Other</option>
+            <option value="X">Prefer not to say</option>
+            </select>
+        </div>
+        <div>
+
+            <x-input-label  for="bio" :value="__('Bio')" />
+            <textarea name="bio" rows="5" cols="50"/></textarea>
+            </div>
+            </div>
+
+        <div class="flex items-center gap-4 g">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
@@ -60,5 +105,6 @@
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
+            </div>
     </form>
 </section>
