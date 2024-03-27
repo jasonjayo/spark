@@ -1,68 +1,69 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="form-signin pass-forget">
         @csrf
 
         <!-- First Name -->
-        <div>
+        <div class="form-label-group">
             <x-input-label for="first_name" :value="__('First Name')" />
-            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')"
+            <x-text-input id="first_name" class="form-control" type="text" name="first_name" :value="old('first_name')"
                 required autofocus autocomplete="given-name" />
             <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
         </div>
 
         <!-- Second Name -->
-        <div>
+        <div class="form-label-group">
             <x-input-label for="second_name" :value="__('Second Name')" />
-            <x-text-input id="second_name" class="block mt-1 w-full" type="text" name="second_name" :value="old('second_name')"
+            <x-text-input id="second_name" class="form-control" type="text" name="second_name" :value="old('second_name')"
                 required autocomplete="family-name" />
             <x-input-error :messages="$errors->get('second_name')" class="mt-2" />
         </div>
 
         <!-- DOB -->
-        <div>
+        <div class="form-label-group">
             <x-input-label for="dob" :value="__('Date of Birth')" />
-            <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob')"
+            <x-text-input id="dob" class="form-control" type="date" name="dob" :value="old('dob')"
                 required autocomplete="bday" />
             <x-input-error :messages="$errors->get('dob')" class="mt-2" />
-        </div>
+        </div class="form-label-group">
 
         <!-- Email Address -->
-        <div class="mt-4">
+        <div class="form-label-group mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+            <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="form-label-group mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
+            <x-text-input id="password" class="form-control" type="password" name="password" required
                 autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
+        <div class="form-label-group mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
+            <x-text-input id="password_confirmation" class="form-control" type="password"
                 name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+            <a class="text-muted"
                 href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            
+        </div>
+        <x-primary-button class="btn btn-primary mt-2">
                 {{ __('Register') }}
             </x-primary-button>
-        </div>
     </form>
 </x-guest-layout>
