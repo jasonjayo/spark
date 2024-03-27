@@ -32,7 +32,7 @@
             </label>
         </div>
         @if (Route::has('password.request'))
-                <a class="pass-forget" href="{{ route('password.request') }}">
+                <a class="text-muted" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
