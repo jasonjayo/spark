@@ -45,10 +45,10 @@
                     </span>Chat
                 </li>
             </a>
-            <a href="./profile" class="text-decoration-none text-black">
+        
                 <a href="./profile" class="text-decoration-none text-black">
             <li
-                    class="p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center {{ Request::is('profile') ? 'spark-bg-secondary text-white' : '' }} {{ Request::is('dashboard') ? 'spark-bg-secondary' : '' }}">
+                    class="p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center {{ Request::is('profile') ? 'spark-bg-secondary text-white' : '' }} ">
                     <span class="material-symbols-outlined fs-1 pe-2">
                         person
                     </span>Profile

@@ -18,6 +18,25 @@ class Profile extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    protected $fillable = [
+        'user_id',
+        'gender',
+        'tagline',
+        'bio',
+        'university',
+        'work',
+        'fav_movie',
+        'fav_food',
+        'fav_song',
+        'personality_type',
+        'height',
+        'languages',
+        'location',
+
+
+
+    ];
+
     protected $casts = [
         "interested_in" => InterestedIn::class,
         "seeking" => Seeking::class,
@@ -76,4 +95,6 @@ class Profile extends Model
         return ($duration->y * 365.25 * 24 * 60) + ($duration->d * 24 * 60)
             + ($duration->h * 60) + $duration->i;
     }
+
+
 }
