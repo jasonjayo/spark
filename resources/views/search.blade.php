@@ -17,7 +17,7 @@
                 <label for="filter_max_age" class="form-label">Max age</label>
                 <input type="range" class="form-range" min="18" max="100"
                     value="{{ old('max_age', '25') }}" id="filter_max_age" name="max_age">
-                <span id="max_age_val">{{ old('max_age', '18') }}</span>
+                <span id="max_age_val">{{ old('max_age', '25') }}</span>
             </div>
             <div class="col-12">
                 <label for="filter_gender" class="form-label">Gender</label>
@@ -30,6 +30,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
+
+        <a href="./search">Reset</a>
 
         <div class="container">
             <div class="row row-cols-1 row-cols-md-4 g-4">
