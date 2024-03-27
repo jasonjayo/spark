@@ -19,10 +19,15 @@
         border-radius: 8px;
         border: 1px solid var(--spk-color-primary-2);
     }
-    .logo {
+    .logo > * {
         align-self: center;
         max-width: 256px;
         max-height: 256px;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     x-primary-button {
     }
