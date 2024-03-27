@@ -1,0 +1,115 @@
+.guest {
+    --input-padding-x: 0.75rem;
+    --input-padding-x: 0.75rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 40px 0;
+
+    .form-label-group > x-text-input,
+    .form-label-group > x-input-label {
+        padding: var(--input-padding-y) var(--input-padding-x);
+    }
+    .pass-forget {
+        background-color: white;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--spk-color-primary-2);
+    }
+    .logo > * {
+        align-self: center;
+        max-width: 256px;
+        max-height: 256px;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    x-primary-button {
+    }
+    .form-label-group > x-input-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 0; /* Override default `<label>` margin */
+        line-height: 1.5;
+        color: #495057;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: all 0.1s ease-in-out;
+        a {
+            text-decoration: none;
+        }
+    }
+    .btn {
+        align-self: center;
+        width: 100%;
+        
+        --bs-btn-bg: var(--spk-color-primary-1);
+        --bs-btn-hover-bg: var(--spk-color-primary-1);
+    }
+}
+.form-label-group > x-text-input,
+    .form-label-group > x-input-label {
+        padding: var(--input-padding-y) var(--input-padding-x);
+    }
+    .pass-forget {
+        background-color: white;
+        padding: 16px;
+        border-radius: 8px;
+        border: 1px solid var(--spk-color-primary-2);
+    }
+    .logo > * {
+        align-self: center;
+        max-width: 256px;
+        max-height: 256px;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    x-primary-button {
+    }
+    .form-label-group > x-input-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 0; /* Override default `<label>` margin */
+        line-height: 1.5;
+        color: #495057;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: all 0.1s ease-in-out;
+        a {
+            text-decoration: none;
+        }
+    }
+    .btn {
+        align-self: center;
+        width: 100%;
+        border: 0;
+        --bs-btn-bg: var(--spk-color-primary-1);
+        --bs-btn-hover-bg: var(--spk-color-primary-1);
+    }
+    .welcome {
+        background-color: var(--spk-color-primary-1);
+        height: 100vh;
+        h1 {
+            font-size: 60pt;
+            font-weight: 700;
+        }
+        .btn {
+            border: 0;
+            --bs-btn-bg: var(--spk-color-secondary-1);
+            --bs-btn-hover-bg: var(--spk-color-secondary-1);
+        }
+    }

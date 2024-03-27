@@ -5,12 +5,15 @@
     font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 :root {
+
     --bs-body-bg: #f5f5f5;
     background-color: #fff0f5;
     --spk-color-background: #fff0f5;
     --spk-color-primary-1: #de3163;
     --spk-color-primary-2: #b61a47;
     --spk-color-secondary-1: #b183c1;
+    --bs-btn-bg: var(--spk-color-primary-1);
+    --bs-btn-hover-bg: var(--spk-color-primary-1);
 }
 .spk-bg {
     background-color: var(--spk-color-background);

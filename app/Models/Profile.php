@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Enums\InterestedIn;
 use App\Enums\Seeking;
+use App\Enums\Gender;
 use DateInterval;
 
 class Profile extends Model
@@ -40,6 +41,7 @@ class Profile extends Model
     protected $casts = [
         "interested_in" => InterestedIn::class,
         "seeking" => Seeking::class,
+        "gender" => Gender::class,
     ];
 
     public function user(): BelongsTo
@@ -60,6 +62,10 @@ class Profile extends Model
             $now = date_create("now");
             $min_dob = $now->sub(new DateInterval("P" . intval($filters["max_age"]) . "Y364D"));
             $query->where("users.dob", ">=", $min_dob->format("Y-m-d"));
+        }
+
+        if (array_key_exists("gender", $filters)) {
+            $query->where("gender", "=", $filters["gender"]);
         }
     }
 
