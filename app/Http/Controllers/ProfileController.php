@@ -16,8 +16,9 @@ class ProfileController extends Controller
 
     public function index(Request $request)
     {
+        $request->flash(); // allows use of old in search.blade.php
         return view("search", [
-            "profiles" => Profile::filter(request(['min_age', 'max_age']))->get(),
+            "profiles" => Profile::filter(request(['min_age', 'max_age', 'gender']))->get(),
         ]);
     }
 

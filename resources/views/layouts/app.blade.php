@@ -81,6 +81,7 @@
             </x-responsive-nav-link>
         </form>
     </div>
+    @stack('scripts')
 </body>
 
 </html>

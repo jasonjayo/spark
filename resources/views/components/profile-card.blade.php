@@ -59,6 +59,7 @@
         <p class="card-text">
             {{ $profile->tagline }}
         <ul>
+            <li>{{ $profile->gender->getLabel() }}</li>
             <li>Interested in: {{ $profile->interested_in->getLabel() }}</li>
             <li>Looking for: {{ $profile->seeking->getLabel() }}</li>
             @isset($profile->university)

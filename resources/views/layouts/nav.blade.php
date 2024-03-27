@@ -10,9 +10,11 @@
     .spark-bg-secondary {
         background: #B61A47;
     }
+
     .nav {
         border-bottom: 2px solid var(--spk-color-primary-2);
     }
+
     #links {
         min-height: 70vh;
     }
@@ -23,15 +25,19 @@
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
             <a href="./dashboard" class="text-decoration-none text-black">
-                <li
-                    class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center {{ Request::is('dashboard') ? 'spark-bg-secondary text-white' : '' }}">
+                <li @class([
+                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary text-white' => Request::is('dashboard'),
+                ])>
                     <i class="bi-stars fs-1 pe-2"> </i>
                     <span class="d-none d-lg-flex">Discover</span>
                 </li>
             </a>
             <a href="./search" class="text-decoration-none text-black">
-                <li
-                    class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center {{ Request::is('search') ? 'spark-bg-secondary text-white' : '' }}">
+                <li @class([
+                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary text-white' => Request::is('search'),
+                ])>
                     <i class="bi-search fs-1 pe-2"> </i><span class="d-none d-lg-flex">Search</span>
                 </li>
             </a>
@@ -42,12 +48,14 @@
             </a>
             <a href="./profile" class="text-decoration-none text-black">
                 <a href="./profile" class="text-decoration-none text-black">
-            <li
-                    class="p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center {{ Request::is('profile') ? 'spark-bg-secondary text-white' : '' }} {{ Request::is('dashboard') ? 'spark-bg-secondary' : '' }}">
-                    <i class="bi-person fs-1 pe-2"></i>
+                    <li @class([
+                        'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                        'spark-bg-secondary text-white' => Request::is('profile'),
+                    ])>
+                        <i class="bi-person fs-1 pe-2"></i>
                         <span class="d-none d-lg-flex">Profile</span>
-                </li>
-            </a></a>
+                    </li>
+                </a></a>
 
 
 
