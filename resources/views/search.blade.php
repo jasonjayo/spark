@@ -6,7 +6,7 @@
 
 <x-app-layout>
     <div class="container">
-        <form action="" method="GET" class="row row-cols-lg-auto g-3 align-items-center">
+        <form action="" method="GET" id="filters_form" class="row row-cols-lg-auto g-3 align-items-center">
             <div class="col-12">
                 <label for="filter_min_age" class="form-label">Min age</label>
                 <input type="range" class="form-range" min="18" max="100" value="{{ old('min_age', '18') }}"
@@ -29,6 +29,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
+            {{-- this button needed if auto refresh? --}}
         </form>
 
         <a href="./search">Reset</a>
