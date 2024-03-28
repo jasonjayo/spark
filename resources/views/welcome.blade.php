@@ -20,12 +20,19 @@
     </style>
 </head>
 
-<body class="antialiased min-h-screen welcome text-white text-center">
+<body class="antialiased overflow-hidden min-h-screen welcome text-white text-center">
+<div class="hero shadow">
+            <img height="fit" src="{{ asset('./images/dashboard/pexels-taryn-elliott-4390580.jpg') }}" />
+                <div class="hero-text">
+                    <h1 class="cover-heading">Spark</h1>
+                    <p class="lead">Spark a connection. Speed Dating, make a real connection.</p>
+                </div>
+            </div>
     <div
         class="cover-container container d-flex h-100 p-3 mx-auto flex-column">
         <div class="inner-cover">
-            <h1 class="cover-heading">Spark</h1>
-            <p class="lead">Spark a connection. Speed Dating, make a real connection.</p>
+            
+            
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
