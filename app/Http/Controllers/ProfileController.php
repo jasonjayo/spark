@@ -76,8 +76,10 @@ class ProfileController extends Controller
 
 
         $profile = Profile::create([
-            'user_id' => 1, //fix this so its the actual id from the User model, how to access user model attributes tho? :(
+            'user_id' => $request->user()->id,
             'gender' => $request->gender,
+            'seeking' => $request->seeking,
+            'interested_in' => $request->interested_in,
             'tagline' => $request->tagline,
             'bio' => $request->bio,
             'university' => $request->university,
@@ -93,7 +95,7 @@ class ProfileController extends Controller
 
 
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::PROFILE);
     }
 }
 

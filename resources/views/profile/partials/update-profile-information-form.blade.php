@@ -1,4 +1,7 @@
-<section>
+<section> 
+<!-- there should be a section here or somewhere, where we check if the user already has a profile,
+and if they do, we display that info already, and anything they make as a change should 
+be put as a PATCH to the DB. -->
 
 <?php
 $firstToUpper = ucfirst($user->first_name);
@@ -50,17 +53,19 @@ $secondToUpper = ucfirst($user->second_name);
 
 <!--Personal Details -->
         <div> Bit more about yourself
-            <div>
+            
+         <div>
                  <!-- Gender Input -->
             <x-input-label for="gender" :value="__('Gender')" />
             <select name="gender" class="form-select form-select-sm mb-2" id="gender">
             <option value="">--Please choose an option--</option>
-            <option value="F">Female</option>
-            <option  value="M">Male</option>
-            <option  value="O">Other</option>
-            <option value="X">Prefer not to say</option>
+            <option value="f">Female</option>
+            <option  value="m">Male</option>
+            <option  value="o">Other</option>
+            <option value="f">Prefer not to say</option>
             </select>
-            </div>
+         </div> 
+
             <div>
                 <!-- Bio -->
             <x-input-label  for="bio" :value="__('Bio')" />
