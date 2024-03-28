@@ -1,4 +1,5 @@
 @props(['profile'])
+@use('PhpGeoMath\Model\Polar3dPoint')
 
 @pushOnce('styles')
     <style>
@@ -64,6 +65,27 @@
             <li>Looking for: {{ $profile->seeking->getLabel() }}</li>
             @isset($profile->university)
                 <li>{{ $profile->university }}</li>
+            @endisset
+            @php
+                if (isset(Auth::user()->profile->location) && isset($profile->location)) {
+                    $current_user_lat_long = explode(',', Auth::user()->profile->location);
+                    $current_user_loc = new Polar3dPoint(
+                        $current_user_lat_long[0],
+                        $current_user_lat_long[1],
+                        Polar3dPoint::EARTH_RADIUS_IN_METERS,
+                    );
+                    $other_user_lat_long = explode(',', $profile->location);
+                    $other_user_loc = new Polar3dPoint(
+                        $other_user_lat_long[0],
+                        $other_user_lat_long[1],
+                        Polar3dPoint::EARTH_RADIUS_IN_METERS,
+                    );
+                    $distance =
+                        'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
+                }
+            @endphp
+            @isset($distance)
+                <li>{{ $distance }}</li>
             @endisset
         </ul>
         </p>

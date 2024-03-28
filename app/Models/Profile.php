@@ -65,7 +65,15 @@ class Profile extends Model
         }
 
         if (array_key_exists("gender", $filters)) {
-            $query->where("gender", "=", $filters["gender"]);
+            if ($filters["gender"] != "all") {
+                $query->where("gender", "=", $filters["gender"]);
+            }
+        }
+
+        if (array_key_exists("online_now", $filters) && $filters["online_now"] == "yes") {
+            $now = date_create("now");
+            $ten_mins_ago = $now->sub(new DateInterval("PT10M"));
+            $query->where("last_active", ">=", $ten_mins_ago->format("Y-m-d H:i:s"));
         }
     }
 
@@ -101,6 +109,4 @@ class Profile extends Model
         return ($duration->y * 365.25 * 24 * 60) + ($duration->d * 24 * 60)
             + ($duration->h * 60) + $duration->i;
     }
-
-
 }

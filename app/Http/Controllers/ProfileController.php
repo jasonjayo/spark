@@ -19,7 +19,7 @@ class ProfileController extends Controller
     {
         $request->flash(); // allows use of old in search.blade.php
         return view("search", [
-            "profiles" => Profile::filter(request(['min_age', 'max_age', 'gender']))->get(),
+            "profiles" => Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now']))->get(),
         ]);
     }
 
@@ -74,28 +74,31 @@ class ProfileController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
-
-        $profile = Profile::create([
-            'user_id' => 1, //fix this so its the actual id from the User model, how to access user model attributes tho? :(
-            'gender' => $request->gender,
-            'tagline' => $request->tagline,
-            'bio' => $request->bio,
-            'university' => $request->university,
-            'work' => $request->work,
-            'fav_movie' => $request->fav_movie,
-            'fav_food' => $request->fav_food,
-            'fav_song' => $request->fav_song,
-            'personality_type' => $request->personality_type,
-            'height' => $request->height,
-            'languages' => $request->languages,
-            'location' => $request->location,
+        $formFields = $request->validate([
+            'gender' => "required|max:1",
+            'tagline' => "nullable|max:50",
+            'bio' => "max:1000",
+            'university' => "nullable|max:50",
+            'work' => "nullable|max:50",
+            'fav_movie' => "nullable|max:50",
+            'fav_food' => "nullable|max:50",
+            'fav_song' => "nullable|max:50",
+            'personality_type' => "nullable|max:4",
+            'height' => "nullable|numeric|max:50",
+            'languages' => "nullable|max:50",
+            'location' => "nullable|max:20",
         ]);
 
+        // check if creating new profile or updating existing
+        if (!isset(Auth::user()->profile)) {
+            $formFields["user_id"] = Auth::user()->id;
+            // new
+            Profile::create($formFields);
+        } else {
+            // update
+            Auth::user()->profile->update($formFields);
+        }
 
-
-        return redirect(RouteServiceProvider::HOME);
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 }
-
-
-

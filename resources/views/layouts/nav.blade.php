@@ -20,7 +20,8 @@
     }
 </style>
 <nav class="nav navbar d-flex mb-5 fixed-top justify-content-between p-4 position-relative z-1 bg-white">
-    <img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}" alt="">
+    <a href=" {{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
+            alt=""></a>
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
@@ -46,16 +47,16 @@
                     <i class="bi-chat-dots fs-1 pe-2"></i><span class="d-none d-lg-flex">Chat</span>
                 </li>
             </a>
-        
-                <a href="./profile" class="text-decoration-none text-black">
-                    <li @class([
-                        'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
-                        'spark-bg-secondary text-white' => Request::is('profile'),
-                    ])>
-                        <i class="bi-person fs-1 pe-2"></i>
-                        <span class="d-none d-lg-flex">Profile</span>
-                    </li>
-                </a></a>
+
+            <a href="./profile" class="text-decoration-none text-black">
+                <li @class([
+                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary text-white' => Request::is('profile'),
+                ])>
+                    <i class="bi-person fs-1 pe-2"></i>
+                    <span class="d-none d-lg-flex">Profile</span>
+                </li>
+            </a></a>
 
 
 

@@ -16,17 +16,27 @@
             <div class="col-12">
                 <label for="filter_max_age" class="form-label">Max age</label>
                 <input type="range" class="form-range" min="18" max="100"
-                    value="{{ old('max_age', '25') }}" id="filter_max_age" name="max_age">
-                <span id="max_age_val">{{ old('max_age', '25') }}</span>
+                    value="{{ old('max_age', '100') }}" id="filter_max_age" name="max_age">
+                <span id="max_age_val">{{ old('max_age', '100') }}</span>
             </div>
             <div class="col-12">
                 <label for="filter_gender" class="form-label">Gender</label>
                 <select class="form-select" name="gender" id="filter_gender">
+                    <option value="all">All</option>
                     @foreach (Gender::cases() as $gender)
                         <option value="{{ $gender->value }}" {{ $gender->value == old('gender') ? 'selected' : '' }}>
                             {{ $gender->getLabel() }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="yes"
+                        {{ old('online_now') == 'yes' ? 'checked' : '' }} id="filter_online_now" name="online_now">
+                    <label class="form-check-label" for="filter_online_now">
+                        Online now
+                    </label>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
             {{-- this button needed if auto refresh? --}}
