@@ -5,13 +5,13 @@
 <section>
 
     <?php
-    $firstToUpper = ucfirst($user->first_name);
-    $secondToUpper = ucfirst($user->second_name);
-    $user = Auth::user();
-    $hasProfile = isset($user->profile);
-    if ($hasProfile) {
-        $profile = $user->profile;
-    }
+$firstToUpper = ucfirst($user->first_name);
+$secondToUpper = ucfirst($user->second_name);
+$user = Auth::user();
+$hasProfile = isset($user->profile);
+if ($hasProfile) {
+    $profile = $user->profile;
+}
     ?>
 
     <header>
@@ -34,6 +34,8 @@
             Profile saved!
         </div>
     @endif
+    <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
+        @csrf
 
     @if (!$hasProfile)
         <div class="alert alert-primary" role="alert">
@@ -41,8 +43,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
-        @csrf
+    
 
 
         <div class="d-flex flex-column ">

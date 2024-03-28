@@ -55,6 +55,7 @@
                 ])>
                     <i class="bi-person fs-1 pe-2"></i>
                     <span class="d-none d-lg-flex">Profile</span>
+                    
                 </li>
             </a></a>
 
