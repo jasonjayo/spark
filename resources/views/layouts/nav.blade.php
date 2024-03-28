@@ -14,6 +14,10 @@
     .nav {
         border-bottom: 2px solid var(--spk-color-primary-2);
     }
+    .bottomnav {
+        border-top: 2px solid var(--spk-color-primary-2);
+        padding: 0;
+    }
 
     #links {
         min-height: 70vh;
@@ -55,7 +59,7 @@
                 ])>
                     <i class="bi-person fs-1 pe-2"></i>
                     <span class="d-none d-lg-flex">Profile</span>
-                    
+
                 </li>
             </a></a>
 
@@ -63,6 +67,45 @@
 
         </ul>
     </div>
+</nav>
+
+<nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around  z-1 spark-bg-primary">
+    <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
+        <a href="./dashboard" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('dashboard'),
+            ])>
+                <i class="bi-stars fs-1 text-white"> </i>
+            </li>
+        </a>
+        <a href="./search" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 mx-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('search'),
+            ])>
+                <i class="bi-search fs-1 text-white"> </i>
+            </li>
+        </a>
+        <a href="./search" class="text-decoration-none text-black">
+            <li class="p-3 mx-3 px-4 rounded d-flex text-center align-items-center">
+                <i class="bi-chat-dots fs-1 text-white"></i>
+            </li>
+        </a>
+
+        <a href="./profile" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 ml-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('profile'),
+            ])>
+                <i class="bi-person fs-1 text-white"></i>
+
+            </li>
+        </a></a>
+
+
+
+    </ul>
 </nav>
 
 {{-- <div class="container-fluid">

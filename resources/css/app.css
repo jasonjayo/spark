@@ -13,13 +13,18 @@
     --spk-color-primary-2: #b61a47;
     --spk-color-secondary-1: #b183c1;
     --bs-btn-bg: var(--spk-color-primary-1);
-    --bs-btn-hover-bg: var(--spk-color-primary-1);
+    --bs-btn-hover-bg: var(--spk-color-primary-2);
 }
 .spk-bg {
     background-color: var(--spk-color-background);
 }
 .default {
     width: 100vw;
+}
+.btn-primary {
+    --bs-btn-bg: var(--spk-color-primary-1);
+    --bs-btn-hover-bg: var(--spk-color-primary-2);
+    border: 0;
 }
 .dashbtn {
     text-decoration: none;
