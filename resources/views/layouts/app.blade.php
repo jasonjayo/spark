@@ -69,8 +69,8 @@
         <!-- Page Content -->
         <main>
             {{ $slot }}
-
         </main>
+        
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
