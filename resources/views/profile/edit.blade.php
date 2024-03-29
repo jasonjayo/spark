@@ -46,7 +46,10 @@
                 </div>
             </div>
 
-            
+            <!-- Photo Selection 
+            need array of photos, then foreach photo display a wee div and then make
+        -->
+
 
 
     @endif

@@ -76,15 +76,15 @@ if ($hasProfile) {
                 <div class="form-floating mb-3"> <!-- First Name Input -->
                    
                     <input id="first_name" name="first_name" type="text"
-                        class="form-control mt-1 block {$gray-500}-bg-subtle" value="{{ old('first_name', $firstToUpper) }}" required autofocus
-                        autocomplete="given-name" />
+                        class="form-control mt-1 block {$gray-500}-bg-subtle" value="{{ old('first_name', $firstToUpper) }}" required autofocus 
+                        autocomplete="given-name" readonly />
                         <label for="first_name">First Name</label>
                     <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
                 </div>
 
                 <div class="form-floating mb-3"> <!-- Second Name Input -->
                     <input id="second_name" name="second_name" type="text" class="form-control mt-1 block w-full"
-                        value="{{ old('second_name', $secondToUpper) }}" required autofocus autocomplete="family-name" />
+                        value="{{ old('second_name', $secondToUpper) }}" required autofocus autocomplete="family-name" readonly />
                     <label for="second_name">Second Name </label>
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
