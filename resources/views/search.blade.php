@@ -43,7 +43,7 @@
             </div>
             <div class="form-label-group my-3 mx-4">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Interests
                     </button>
@@ -57,8 +57,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between my-3 mx-4">
-                <button class="btn btn-primary">Search</button>
                 <a class="btn btn-outline-secondary" href="./search">Reset</a>
+                <button class="btn btn-primary">Search</button>
 
             </div>
             <div class="col-12 w-100">
