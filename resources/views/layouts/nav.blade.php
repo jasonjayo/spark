@@ -33,7 +33,7 @@
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-            <a href="./dashboard" class="text-decoration-none text-black">
+            <a href=" {{ route('dashboard') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('dashboard'),
@@ -42,7 +42,7 @@
                     <span class="d-none mx-2 d-lg-flex">Discover</span>
                 </li>
             </a>
-            <a href="./search" class="text-decoration-none text-black">
+            <a href=" {{ route('search') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('search'),
@@ -50,13 +50,13 @@
                     <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
-            <a href="./search" class="text-decoration-none text-black">
+            <a href=" {{ route('dashboard') }}" class="text-decoration-none text-black">
                 <li class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center">
                     <i class="bi-chat-dots fs-1"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
                 </li>
             </a>
 
-            <a href="./profile" class="text-decoration-none text-black">
+            <a href=" {{ route('profile.edit') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('profile'),
