@@ -22,28 +22,33 @@
 
     <div class="py-12">
         <div  class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            
+           
+        <!-- Edit Profile -->
         @if (!isset($_GET['section']))
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-m">
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
+            <!-- Update Password -->
             @elseif (isset($_GET['section']) && $_GET['section'] == "section2")
-            <!-- Should these be their own pages??  Update Password -->
             <div  class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-m">
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
+            <!-- Delete Account -->
             @elseif (isset($_GET['section']) && $_GET['section'] == "section3")
-             <!-- Should these be their own pages?? Delete Account -->
             <div i class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-m">
                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
+
+            
+
+
     @endif
         </div>
     </div>

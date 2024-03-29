@@ -5,13 +5,13 @@
 <section>
 
     <?php
-    $firstToUpper = ucfirst($user->first_name);
-    $secondToUpper = ucfirst($user->second_name);
-    $user = Auth::user();
-    $hasProfile = isset($user->profile);
-    if ($hasProfile) {
-        $profile = $user->profile;
-    }
+$firstToUpper = ucfirst($user->first_name);
+$secondToUpper = ucfirst($user->second_name);
+$user = Auth::user();
+$hasProfile = isset($user->profile);
+if ($hasProfile) {
+    $profile = $user->profile;
+}
     ?>
 
     <header>
@@ -60,29 +60,32 @@
     <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
         @csrf
 
-        <div class="d-flex flex-column ">
+        <div class="container d-flex flex-column ">
             <!-- Basic Details Div -->
-            <div class=""> {{ __('Basic Details') }}
+            <div class="mb-3">
+                <h2>Basic Details</h2>
 
-                <div> <!-- User Id  -->
-                    <x-input-label for="user_id" :value="__('User ID')" /> :
-                    <x-input-label id="user_id" name="id" type="text" class="mt-1 block w-full"
-                        :value="old('id', $user->id)" required autofocus autocomplete="name" />
+                <div class="form-floating mb-3"> <!-- User Id  -->
+                <input id="user_id" name="id" type="text" class="form-control mt-1 block w-full"
+                        value="{{ old('id', $user->id) }}" required autofocus autocomplete="name" readonly />
+                    <label for="user_id">User ID </label>
+                   
 
                 </div>
 
-                <div> <!-- First Name Input -->
-                    <x-input-label for="first_name" :value="__('First Name')" />
-                    <x-text-input id="first_name" name="first_name" type="text"
-                        class="mt-1 block w-full {$gray-500}-bg-subtle" :value="old('first_name', $firstToUpper)" required autofocus
+                <div class="form-floating mb-3"> <!-- First Name Input -->
+                   
+                    <input id="first_name" name="first_name" type="text"
+                        class="form-control mt-1 block {$gray-500}-bg-subtle" value="{{ old('first_name', $firstToUpper) }}" required autofocus
                         autocomplete="given-name" />
+                        <label for="first_name">First Name</label>
                     <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
                 </div>
 
-                <div> <!-- Second Name Input -->
-                    <x-input-label for="second_name" :value="__('Second Name')" />
-                    <x-text-input id="second_name" name="second_name" type="text" class="mt-1 block w-full"
-                        :value="old('second_name', $secondToUpper)" required autofocus autocomplete="family-name" />
+                <div class="form-floating mb-3"> <!-- Second Name Input -->
+                    <input id="second_name" name="second_name" type="text" class="form-control mt-1 block w-full"
+                        value="{{ old('second_name', $secondToUpper) }}" required autofocus autocomplete="family-name" />
+                    <label for="second_name">Second Name </label>
                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                 </div>
             </div>
@@ -90,48 +93,48 @@
 
 
             <!--Personal Details -->
-            <div> Bit more about yourself
-                <div>
+            <div class="mb-3"> 
+                <h2>Bit more about yourself</h2>
+                <div class="form-floating mb-3">
                     <!-- Gender Input -->
-                    <x-input-label for="gender" :value="__('Gender')" />
-                    <select name="gender" class="form-select form-select-sm mb-2" id="gender">
-
+                    <select name="gender" class="form-select mb-2" id="gender">
                         @foreach (Gender::cases() as $gender)
                             <option value="{{ $gender->value }}"
                                 {{ $gender->value == old('gender', $hasProfile ? $profile->gender->value : 'o') ? 'selected' : '' }}>
                                 {{ $gender->getLabel() }}</option>
                         @endforeach
                     </select>
+                    <label for="gender">Gender</label>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Bio -->
-                    <x-input-label for="bio" :value="__('Bio')" />
-                    <textarea class="form-control" name="bio" rows="5" cols="50" maxlength="1000">{{ old('gender', $hasProfile ? $profile->bio : '') }}</textarea>
+                    <textarea class="form-control" name="bio" style="height:100px" cols="50" maxlength="1000" placeholder="Describe yourself here...">{{ old('gender', $hasProfile ? $profile->bio : '') }}</textarea>
+                    <label for="bio">Bio<label/>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Tagline -->
-                    <x-input-label for="tagline" :value="__('Tagline')" />
-                    <x-text-input id="tagline" name="tagline" type="text" class="form-control" size="50"
+                    <input id="tagline" name="tagline" type="text" class="form-control" size="50" placeholder="I am a coffee lover!"
                         maxlength="50" value="{{ old('tagline', $hasProfile ? $profile->tagline : '') }}" />
+                    <label for="tagline">Tagline</label>
+
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Interested In -->
-                    <x-input-label for="interested_in" :value="__('Interested In')" />
-                    <select name="interested_in" class="form-select form-select-sm mb-2" id="interested_in">
+                    <select name="interested_in" class="form-select mb-2" id="interested_in">
                         @foreach (InterestedIn::cases() as $interested_in_option)
                             <option value="{{ $interested_in_option->name }}"
                                 {{ $interested_in_option->name == old('interested_in', $hasProfile ? $profile->interested_in : 'ALL') ? 'selected' : '' }}>
                                 {{ $interested_in_option->getLabel() }}</option>
                         @endforeach
                     </select>
+                    <label for="interested_in">Interested In</label>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Seeking -->
-                    <x-input-label for="seeking" :value="__('Length of relationship you are seeking?')" />
-                    <select name="seeking" class="form-select form-select-sm mb-2" id="seeking">
+                    <select name="seeking" class="form-select" id="seeking">
                         @foreach (Seeking::cases() as $seeking_option)
                             <option value="{{ $seeking_option->name }}"
                                 {{ $seeking_option->name == old('seeking', $hasProfile ? $profile->seeking : 'UNKNOWN') ? 'selected' : '' }}>
@@ -139,80 +142,84 @@
                             </option>
                         @endforeach
                     </select>
+                    <label for="seeking">Length of Relationship you are Seeking?</label>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- University -->
-                    <x-input-label for="university" :value="__('University')" />
-                    <x-text-input id="uni" name="university" type="text" class="form-control"
+                    <input  name="university" type="text" class="form-control" id="floatingInput" placeholder="University of Limerick"
                         size="50" maxlength="50"
-                        value="{{ old('university', $hasProfile ? $profile->university : '') }}" />
+                        value="{{ old('university', $hasProfile ? $profile->university : '') }}" >
+                    <label for="floatingInput">University </label>
+                   
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Work -->
-                    <x-input-label for="work" :value="__('Profession/Work')" />
-                    <x-text-input id="work" name="work" type="text" class="form-control" size="50"
+                    <input id="work" name="work" type="text" class="form-control" size="50" placeholder="Barista"
                         maxlength="50" value="{{ old('work', $hasProfile ? $profile->work : '') }}" />
+                    <label for="work">Profession</label>
+                  
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Location -->
-                    <x-input-label for="location" :value="__('Location')" />
-                    <x-text-input id="location" name="location" type="text" class="form-control" size=20
+                    <input id="location" name="location" type="text" class="form-control" size=20
                         maxlength=20 value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
-                    <button id="update-location">Update location</button>
+                        <label for="location">Location</label>
+                    <button class="mt-1 btn btn-primary" id="update-location">Update location</button>
                 </div>
 
             </div>
 
 
-            <div>Extra bits
-                <div>
+            <div class="">
+                <h2>Extra bits</h2>
+                <div class="form-floating mb-3">
                     <!-- Favoutite Movie -->
-                    <x-input-label for="fav_movie" :value="__('Favourite Movie')" />
-                    <x-text-input id="fav_movie" name="fav_movie" type="text" class="form-control" size=50
-                        maxlength=50 value="{{ old('fav_movie', $hasProfile ? $profile->fav_movie : '') }}" />
+                    <input id="fav_movie" name="fav_movie" type="text" class="form-control" 
+                        maxlength=50 value="{{ old('fav_movie', $hasProfile ? $profile->fav_movie : '') }}" placeholder="seven" />
+                        <label for="fav_movie">Favourite Movie</label>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Favoutite Food -->
-                    <x-input-label for="fav_food" :value="__('Favourite Food')" />
-                    <x-text-input id="fav_food" name="fav_food" type="text" class="form-control" size=50
-                        maxlength=50 value="{{ old('fav_food', $hasProfile ? $profile->fav_food : '') }}" />
+                    <input id="fav_food" name="fav_food" type="text" class="form-control" size=50 placeholder="Pizza"
+                        maxlength=50 value="{{ old('fav_food', $hasProfile ? $profile->fav_food : '') }}" >
+                        <label for="fav_food">Favourite Food</label>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Favoutite Song -->
-                    <x-input-label for="fav_song" :value="__('Favourite Song')" />
-                    <x-text-input id="fav_song" name="fav_song" type="text" class="form-control" size=50
-                        maxlength=50 value="{{ old('fav_song', $hasProfile ? $profile->fav_song : '') }}" />
+                    <input id="fav_song" name="fav_song" type="text" class="form-control" size=50 placeholder="Everything She Wants"
+                        maxlength=50 value="{{ old('fav_song', $hasProfile ? $profile->fav_song : '') }}" >
+                        <label for="fav_song">Favourite Song</label>
                 </div>
 
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Personality Type -->
-                    <x-input-label for="personality_type" :value="__('Personality Type (Myers-Briggs)')" />
-                    <x-text-input id="personality_type" name="personality_type" type="text"
+                    <input id="personality_type" name="personality_type" type="text" placeholder="ISFJ"
                         class="form-control" size=4 maxlength=4
                         value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}" />
+                        <label for="personality_type">Personality Type (Myers Briggs)</label>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Height -->
-                    <x-input-label for="height" :value="__('Height in Metres (e.g 1.63cm)')" />
-                    <x-text-input id="height" name="height" type="text" class="form-control" size=4
+                    <input id="height" name="height" type="text" class="form-control" size=4 placeholder="1.75m"
                         maxlength=4 value="{{ old('height', $hasProfile ? $profile->height : '') }}" />
+                        <label for="height">Height in Meters (e.g. 1.53m)</label>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <!-- Languages -->
-                    <x-input-label for="languages" :value="__('Languages Spoken')" />
-                    <x-text-input id="languages" name="languages" type="text" class="form-control" size=50
+                    <input id="languages" name="languages" type="text" class="form-control" size=50 placeholder="Gaeilge, English"
                         maxlength=50 value="{{ old('languages', $hasProfile ? $profile->languages : '') }}" />
+                        <label for="languages">Languages Spoken</label>
                 </div>
             </div>
 
 
             <div class="flex items-center gap-4 g">
-                <x-primary-button>{{ __('Save') }}</x-primary-button>
+                <x-primary-button class="btn btn-primary">{{ __('Save') }}</x-primary-button>
             </div>
 
             <script>
