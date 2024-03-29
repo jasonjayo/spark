@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     })->name('dashboard');
 
     Route::get("/search", [ProfileController::class, "index"])->middleware(['auth'])->name('search');
+    Route::get('/viewprofile/{id}', [ProfileController::class, 'show'])->name('viewprofile');
 });
 
 require __DIR__ . '/auth.php';

@@ -1,0 +1,120 @@
+/* Profile Name */
+.profile-name {
+    font-size: 40px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.workingat,
+.studyingat,
+.livingat,
+.speaking {
+    color: #de3163;
+    font-weight: bold;
+    width: 90px;
+    display: inline-block;
+    text-align: left;
+    margin-right: 10px;
+}
+.livingat {
+    margin-bottom: 10px;
+}
+
+.profile-line {
+    width: 100%;
+    height: 1px;
+    background-color: #de3163;
+    margin: 20px 0;
+    margin-bottom: 20px;
+}
+
+/* Profile Info Container */
+.profile-info {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.profile-bio {
+    max-height: 100px;
+    overflow: auto;
+}
+
+/* Fixed position button */
+.fixed-bottom {
+    position: fixed;
+    bottom: -10;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+/* Button style */
+.btn-send-message {
+    font-size: 16px;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #de3163;
+}
+
+/* Hover effect */
+.btn-send-message:hover {
+    background-color: #b61a47;
+}
+
+@media (max-width: 768px) {
+    .fixed-bottom {
+        position: static;
+        margin-top: 20px;
+    }
+}
+
+.profile-others {
+    display: flex;
+    align-items: center;
+}
+
+.profile-others > div {
+    margin-right: 10px;
+}
+
+.profile-others > div:last-child {
+    margin-right: 0;
+}
+
+.profile-others > div::after {
+    content: "|";
+    margin-left: 10px;
+}
+
+.profile-tagline {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color:#de3163
+}
+
+.favorites-title {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.myfood,
+.mysong,
+.mymovie {
+    color: #de3163;
+    font-weight: bold;
+    width: 90px;
+    display: inline-block;
+    text-align: left;
+    margin-right: 10px;
+    padding-left: 15px;
+}
+
+.mymovie {
+    margin-bottom: 10px;
+}
