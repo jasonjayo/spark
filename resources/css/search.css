@@ -1,0 +1,13 @@
+.sideform {
+    border-bottom: 1px solid var(--spk-color-primary-2);
+    border-right: 0px;
+}
+.search {
+    height: 100%;
+}
+@media (min-width: 992px) {
+    .sideform {
+        border-bottom: 0px;
+        border-right: 1px solid var(--spk-color-primary-2);
+    }
+}

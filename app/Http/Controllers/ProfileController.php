@@ -17,8 +17,11 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $request->flash(); // allows use of old in search.blade.php
+        $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests']));
+        $sql = $query->toRawSQL();
         return view("search", [
-            "profiles" => Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now']))->get(),
+            "profiles" => $query->get(),
+            "sql" => $sql
         ]);
     }
 
@@ -76,7 +79,7 @@ class ProfileController extends Controller
         $formFields = $request->validate([
             'gender' => "required|max:1",
             'tagline' => "nullable|max:50",
-            'bio' => "max:1000",
+            'bio' => "required|max:1000",
             'university' => "nullable|max:50",
             'work' => "nullable|max:50",
             'fav_movie' => "nullable|max:50",
@@ -85,7 +88,7 @@ class ProfileController extends Controller
             'personality_type' => "nullable|max:4",
             'height' => "nullable|numeric|max:50",
             'languages' => "nullable|max:50",
-            'location' => "nullable|max:20",
+            'location' => "nullable|max:30",
         ]);
 
         // check if creating new profile or updating existing

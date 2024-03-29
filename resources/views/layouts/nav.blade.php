@@ -1,8 +1,12 @@
 <style>
     .nav-logo {
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        .nav-logo {
         height: 70px;
     }
-
+    }
     .spark-bg-primary {
         background: #DE3163
     }
@@ -14,12 +18,16 @@
     .nav {
         border-bottom: 2px solid var(--spk-color-primary-2);
     }
+    .bottomnav {
+        border-top: 2px solid var(--spk-color-primary-2);
+        padding: 0;
+    }
 
     #links {
         min-height: 70vh;
     }
 </style>
-<nav class="nav navbar d-flex mb-5 fixed-top justify-content-between p-4 position-relative z-1 bg-white">
+<nav class="nav navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
     <a href=" {{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 
@@ -27,35 +35,35 @@
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
             <a href="./dashboard" class="text-decoration-none text-black">
                 <li @class([
-                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('dashboard'),
                 ])>
-                    <i class="bi-stars fs-1 pe-2"> </i>
-                    <span class="d-none d-lg-flex">Discover</span>
+                    <i class="bi-stars fs-1"> </i>
+                    <span class="d-none mx-2 d-lg-flex">Discover</span>
                 </li>
             </a>
             <a href="./search" class="text-decoration-none text-black">
                 <li @class([
-                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('search'),
                 ])>
-                    <i class="bi-search fs-1 pe-2"> </i><span class="d-none d-lg-flex">Search</span>
+                    <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
             <a href="./search" class="text-decoration-none text-black">
                 <li class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center">
-                    <i class="bi-chat-dots fs-1 pe-2"></i><span class="d-none d-lg-flex">Chat</span>
+                    <i class="bi-chat-dots fs-1"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
                 </li>
             </a>
 
             <a href="./profile" class="text-decoration-none text-black">
                 <li @class([
-                    'p-3 ms-3 me-3 rounded rounded d-flex text-center align-items-center',
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('profile'),
                 ])>
-                    <i class="bi-person fs-1 pe-2"></i>
-                    <span class="d-none d-lg-flex">Profile</span>
-                    
+                    <i class="bi-person fs-1"></i>
+                    <span class="d-none mx-2 d-lg-flex">Profile</span>
+
                 </li>
             </a></a>
 
@@ -63,6 +71,45 @@
 
         </ul>
     </div>
+</nav>
+
+<nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around  z-1 spark-bg-primary">
+    <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
+        <a href="./dashboard" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('dashboard'),
+            ])>
+                <i class="bi-stars fs-1 text-white"> </i>
+            </li>
+        </a>
+        <a href="./search" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 mx-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('search'),
+            ])>
+                <i class="bi-search fs-1 text-white"> </i>
+            </li>
+        </a>
+        <a href="./search" class="text-decoration-none text-black">
+            <li class="p-3 mx-3 px-4 rounded d-flex text-center align-items-center">
+                <i class="bi-chat-dots fs-1 text-white"></i>
+            </li>
+        </a>
+
+        <a href="./profile" class="text-decoration-none text-black">
+            <li @class([
+                'p-3 ml-3 px-4 rounded d-flex text-center align-items-center',
+                'spark-bg-secondary' => Request::is('profile'),
+            ])>
+                <i class="bi-person fs-1 text-white"></i>
+
+            </li>
+        </a></a>
+
+
+
+    </ul>
 </nav>
 
 {{-- <div class="container-fluid">
