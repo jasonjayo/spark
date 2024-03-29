@@ -34,8 +34,20 @@ if ($hasProfile) {
             Profile saved!
         </div>
     @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+    
     <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
-        @csrf
+    @csrf
 
     @if (!$hasProfile)
         <div class="alert alert-primary" role="alert">
@@ -43,7 +55,7 @@ if ($hasProfile) {
         </div>
     @endif
 
-    
+  
 
 
         <div class="d-flex flex-column ">
@@ -92,13 +104,13 @@ if ($hasProfile) {
                 <div>
                     <!-- Bio -->
                     <x-input-label for="bio" :value="__('Bio')" />
-                    <textarea name="bio" rows="5" cols="50" maxlength="1000">{{ old('gender', $hasProfile ? $profile->bio : '') }}</textarea>
+                    <textarea class="form-control" name="bio" rows="5" cols="50" maxlength="1000">{{ old('gender', $hasProfile ? $profile->bio : '') }}</textarea>
                 </div>
 
                 <div>
                     <!-- Tagline -->
                     <x-input-label for="tagline" :value="__('Tagline')" />
-                    <x-text-input id="tagline" name="tagline" type="text" class="mt-1 block w-full" size="50"
+                    <x-text-input id="tagline" name="tagline" type="text" class="form-control" size="50"
                         maxlength="50" value="{{ old('tagline', $hasProfile ? $profile->tagline : '') }}" />
                 </div>
 
@@ -130,7 +142,7 @@ if ($hasProfile) {
                 <div>
                     <!-- University -->
                     <x-input-label for="university" :value="__('University')" />
-                    <x-text-input id="uni" name="university" type="text" class="mt-1 block w-full"
+                    <x-text-input id="uni" name="university" type="text" class="form-control"
                         size="50" maxlength="50"
                         value="{{ old('university', $hasProfile ? $profile->university : '') }}" />
                 </div>
@@ -138,14 +150,14 @@ if ($hasProfile) {
                 <div>
                     <!-- Work -->
                     <x-input-label for="work" :value="__('Profession/Work')" />
-                    <x-text-input id="work" name="work" type="text" class="mt-1 block w-full" size="50"
+                    <x-text-input id="work" name="work" type="text" class="form-control" size="50"
                         maxlength="50" value="{{ old('work', $hasProfile ? $profile->work : '') }}" />
                 </div>
 
                 <div>
                     <!-- Location -->
                     <x-input-label for="location" :value="__('Location')" />
-                    <x-text-input id="location" name="location" type="text" class="mt-1 block w-full" size=20
+                    <x-text-input id="location" name="location" type="text" class="form-control" size=20
                         maxlength=20 value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                     <button id="update-location">Update location</button>
                 </div>
@@ -157,21 +169,21 @@ if ($hasProfile) {
                 <div>
                     <!-- Favoutite Movie -->
                     <x-input-label for="fav_movie" :value="__('Favourite Movie')" />
-                    <x-text-input id="fav_movie" name="fav_movie" type="text" class="mt-1 block w-full" size=50
+                    <x-text-input id="fav_movie" name="fav_movie" type="text" class="form-control" size=50
                         maxlength=50 value="{{ old('fav_movie', $hasProfile ? $profile->fav_movie : '') }}" />
                 </div>
 
                 <div>
                     <!-- Favoutite Food -->
                     <x-input-label for="fav_food" :value="__('Favourite Food')" />
-                    <x-text-input id="fav_food" name="fav_food" type="text" class="mt-1 block w-full" size=50
+                    <x-text-input id="fav_food" name="fav_food" type="text" class="form-control" size=50
                         maxlength=50 value="{{ old('fav_food', $hasProfile ? $profile->fav_food : '') }}" />
                 </div>
 
                 <div>
                     <!-- Favoutite Song -->
                     <x-input-label for="fav_song" :value="__('Favourite Song')" />
-                    <x-text-input id="fav_song" name="fav_song" type="text" class="mt-1 block w-full" size=50
+                    <x-text-input id="fav_song" name="fav_song" type="text" class="form-control" size=50
                         maxlength=50 value="{{ old('fav_song', $hasProfile ? $profile->fav_song : '') }}" />
                 </div>
 
@@ -179,19 +191,19 @@ if ($hasProfile) {
                     <!-- Personality Type -->
                     <x-input-label for="personality_type" :value="__('Personality Type (Myers-Briggs)')" />
                     <x-text-input id="personality_type" name="personality_type" type="text"
-                        class="mt-1 block w-full" size=4 maxlength=4
+                        class="form-control" size=4 maxlength=4
                         value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}" />
                 </div>
                 <div>
                     <!-- Height -->
                     <x-input-label for="height" :value="__('Height in Metres (e.g 1.63cm)')" />
-                    <x-text-input id="height" name="height" type="text" class="mt-1 block w-full" size=4
+                    <x-text-input id="height" name="height" type="text" class="form-control" size=4
                         maxlength=4 value="{{ old('height', $hasProfile ? $profile->height : '') }}" />
                 </div>
                 <div>
                     <!-- Languages -->
                     <x-input-label for="languages" :value="__('Languages Spoken')" />
-                    <x-text-input id="languages" name="languages" type="text" class="mt-1 block w-full" size=50
+                    <x-text-input id="languages" name="languages" type="text" class="form-control" size=50
                         maxlength=50 value="{{ old('languages', $hasProfile ? $profile->languages : '') }}" />
                 </div>
             </div>

@@ -86,7 +86,7 @@ class ProfileController extends Controller
             'personality_type' => "nullable|max:4",
             'height' => "nullable|numeric|max:50",
             'languages' => "nullable|max:50",
-            'location' => "nullable|max:20",
+            'location' => "nullable|max:30",
         ]);
 
         // check if creating new profile or updating existing
