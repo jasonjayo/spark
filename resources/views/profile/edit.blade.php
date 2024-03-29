@@ -8,7 +8,7 @@
 </div>
 <div class="settings">
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <button class="btn btn-secondary dropdown-toggle" style="background:#de3163" type="button" data-bs-toggle="dropdown" aria-expanded="false">
   <i class="bi bi-gear"></i>
   </button>
   <ul class="dropdown-menu">
