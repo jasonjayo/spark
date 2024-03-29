@@ -89,6 +89,6 @@
             @endisset
         </ul>
         </p>
-        <a href="#" class="btn btn-primary">View Profile</a>
+        <a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="btn btn-primary">View Profile</a>
     </div>
 </div>

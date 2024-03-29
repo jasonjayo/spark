@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
-use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -104,4 +103,9 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+    public function show($id): View
+{
+    $profile = Profile::findOrFail($id);
+    return view('viewprofile', ['profile' => $profile]);
+}
 }
