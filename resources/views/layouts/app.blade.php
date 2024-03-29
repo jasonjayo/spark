@@ -27,7 +27,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen default spk-bg dark:bg-gray-900">
+    <div class="min-h-screen default spk-bg">
         @include('layouts.nav')
 
         <!-- Page Heading -->
@@ -69,7 +69,7 @@
         <main>
             {{ $slot }}
         </main>
-        
+{{--         
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
@@ -78,7 +78,7 @@
                                 this.closest('form').submit();">
                 {{ __('Log Out') }}
             </x-responsive-nav-link>
-        </form>
+        </form> --}}
     </div>
     @stack('scripts')
 </body>

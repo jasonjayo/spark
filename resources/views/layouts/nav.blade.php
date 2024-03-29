@@ -23,7 +23,7 @@
         min-height: 70vh;
     }
 </style>
-<nav class="nav navbar d-flex mb-5 fixed-top justify-content-between p-4 position-relative z-1 bg-white">
+<nav class="nav navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
     <a href=" {{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 

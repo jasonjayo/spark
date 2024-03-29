@@ -25,6 +25,11 @@
     --bs-btn-hover-bg: var(--spk-color-primary-2);
     border: 0;
 }
+.btn-secondary {
+    --bs-btn-bg: var(--spk-color-secondary-1);
+    --bs-btn-active-bg: var(--spk-color-secondary-1);
+    border: 0;
+}
 .dashbtn {
     text-decoration: none;
     position: relative;
