@@ -11,6 +11,8 @@ use App\Enums\Seeking;
 use App\Enums\Gender;
 use DateInterval;
 
+use Illuminate\Support\Facades\DB;
+
 class Profile extends Model
 {
     use HasFactory;
@@ -35,9 +37,6 @@ class Profile extends Model
         'height',
         'languages',
         'location',
-
-
-
     ];
 
     protected $casts = [
@@ -76,6 +75,13 @@ class Profile extends Model
             $now = date_create("now");
             $ten_mins_ago = $now->sub(new DateInterval("PT10M"));
             $query->where("last_active", ">=", $ten_mins_ago->format("Y-m-d H:i:s"));
+        }
+
+        if (array_key_exists("interests", $filters) && $filters["interests"] != "") {
+            // first get users who have at least 1 of the interests from filters
+            // then get users from main query who also appear in this result
+            $users_with_interest = DB::table("interest_user")->select("user_id")->whereIn("interest_id", array_filter(explode(",", $filters["interests"])));
+            $query->whereIn("users.id", $users_with_interest);
         }
     }
 

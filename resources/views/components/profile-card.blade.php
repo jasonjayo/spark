@@ -40,7 +40,7 @@
     </style>
 @endPushOnce
 
-<div class="card h-100 profile-card" style="width: 18rem;">
+<div class="card h-100 profile-card">
     <img src="https://placehold.co/300x300?text=Photo" class="card-img-top"
         alt="Photo of {{ $profile->user->first_name }}">
     <div class="card-body">
