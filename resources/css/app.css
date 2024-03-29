@@ -5,7 +5,6 @@
     font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 :root {
-
     --bs-body-bg: #f5f5f5;
     background-color: #fff0f5;
     --spk-color-background: #fff0f5;
@@ -58,4 +57,7 @@
         filter: blur(0px);
         border-radius: 24px;
     }
+}
+#filters_form {
+    background: rgba(255, 255, 255, 0.75);
 }
