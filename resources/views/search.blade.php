@@ -56,13 +56,11 @@
                     </select>
                 </div>
             </div>
-            <div class="form-label-group my-3 mx-4">
+            <div class="d-flex justify-content-between my-3 mx-4">
                 <button class="btn btn-primary">Search</button>
-            </div>
-            <div class="form-label-group my-3 mx-4">
                 <a class="btn btn-outline-secondary" href="./search">Reset</a>
-            </div>
 
+            </div>
             <div class="col-12 w-100">
                 @foreach (array_filter(explode(',', old('interests'))) as $interest_id)
                     <span class="interest-pill badge rounded-pill p-2 text-bg-secondary"
