@@ -53,7 +53,7 @@
                     <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
-            <a href=" {{ route('chat.index') }}" class="text-decoration-none text-black">
+            <a href=" {{ route('chat.show', 1) }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('chat.index'),
