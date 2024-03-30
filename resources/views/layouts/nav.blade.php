@@ -2,11 +2,13 @@
     .nav-logo {
         width: 100%;
     }
+
     @media (min-width: 768px) {
         .nav-logo {
-        height: 70px;
+            height: 70px;
+        }
     }
-    }
+
     .spark-bg-primary {
         background: #DE3163
     }
@@ -18,6 +20,7 @@
     .nav {
         border-bottom: 2px solid var(--spk-color-primary-2);
     }
+
     .bottomnav {
         border-top: 2px solid var(--spk-color-primary-2);
         padding: 0;
@@ -50,8 +53,11 @@
                     <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
-            <a href=" {{ route('dashboard') }}" class="text-decoration-none text-black">
-                <li class="p-3 ms-3 me-3 rounded d-flex text-center align-items-center">
+            <a href=" {{ route('chat') }}" class="text-decoration-none text-black">
+                <li @class([
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary text-white' => Request::is('chat'),
+                ])>
                     <i class="bi-chat-dots fs-1"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
                 </li>
             </a>

@@ -3,40 +3,7 @@
 
 @pushOnce('styles')
     <style>
-        .online-now,
-        .offline {
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            position: relative;
-        }
-
-        .online-now::before {
-            width: 13px;
-            height: 13px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            content: "";
-            display: block;
-            animation: online-pulse 2s infinite;
-            background: var(--bs-success);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        @keyframes online-pulse {
-            0% {
-                opacity: 0.8;
-                transform: translateX(-50%) translateY(-50%) scale(0.8);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-50%) scale(1.5);
-            }
-        }
+        /* can be removed if this remains empty */
     </style>
 @endPushOnce
 
@@ -66,27 +33,9 @@
             @isset($profile->university)
                 <li>{{ $profile->university }}</li>
             @endisset
-            @php
-                if (isset(Auth::user()->profile->location) && isset($profile->location)) {
-                    $current_user_lat_long = explode(',', Auth::user()->profile->location);
-                    $current_user_loc = new Polar3dPoint(
-                        $current_user_lat_long[0],
-                        $current_user_lat_long[1],
-                        Polar3dPoint::EARTH_RADIUS_IN_METERS,
-                    );
-                    $other_user_lat_long = explode(',', $profile->location);
-                    $other_user_loc = new Polar3dPoint(
-                        $other_user_lat_long[0],
-                        $other_user_lat_long[1],
-                        Polar3dPoint::EARTH_RADIUS_IN_METERS,
-                    );
-                    $distance =
-                        'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
-                }
-            @endphp
-            @isset($distance)
-                <li>{{ $distance }}</li>
-            @endisset
+            @if ($profile->getDistance() != null)
+                <li>{{ $profile->getDistance() }}</li>
+            @endif
         </ul>
         </p>
         <a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="btn btn-primary">View Profile</a>
