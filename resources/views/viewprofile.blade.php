@@ -17,13 +17,13 @@
                                         alt="Photo 2">
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                                data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                                data-bs-slide="next">
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleControls" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
@@ -33,39 +33,24 @@
                         <div class="card-body">
                             <div class="profile-info">
                                 <div class="d-flex align-items-center">
-                                    <h2 class="profile-name">{{ $profile->user->first_name }}, <span class="age">{{ $profile->getAge() }}</span></h2>
+                                    <h2 class="profile-name">{{ $profile->user->first_name }}, <span
+                                            class="age">{{ $profile->getAge() }}</span></h2>
                                 </div>
-                                <div class="profile-languages"><span class="speaking">I speak</span> {{ $profile->languages }}</div>
+                                <div class="profile-languages"><span class="speaking">I speak</span>
+                                    {{ $profile->languages }}</div>
                                 <div class="profile-work"><span class="workingat">Work</span> {{ $profile->work }}</div>
-                                <div class="profile-university"><span class="studyingat">University</span> {{ $profile->university }}</div>
+                                <div class="profile-university"><span class="studyingat">University</span>
+                                    {{ $profile->university }}</div>
                                 <div class="profile-location">
-                                    @php
-                                        $distance = null;
-                                        if (isset(Auth::user()->profile->location) && isset($profile->location)) {
-                                            $current_user_lat_long = explode(',', Auth::user()->profile->location);
-                                            $current_user_loc = new Polar3dPoint(
-                                                $current_user_lat_long[0],
-                                                $current_user_lat_long[1],
-                                                Polar3dPoint::EARTH_RADIUS_IN_METERS,
-                                            );
-                                            $other_user_lat_long = explode(',', $profile->location);
-                                            $other_user_loc = new Polar3dPoint(
-                                                $other_user_lat_long[0],
-                                                $other_user_lat_long[1],
-                                                Polar3dPoint::EARTH_RADIUS_IN_METERS,
-                                            );
-                                            $distance =
-                                                '(About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away)';
-                                        }
-                                    @endphp
                                     <span class="livingat">Home</span> {{ $profile->location }}
-                                    @isset($distance)
-                                        <span class="distance">{{ $distance }}</span>
-                                    @endisset
+                                    @if ($profile->getDistance() != null)
+                                        <span class="distance">{{ $profile->getDistance() }}</span>
+                                    @endif
                                 </div>
                                 <div class="profile-others">
                                     <div class="profile-personality">{{ $profile->personality_type }}</div>
-                                    <div class="profile-height">{{ $profile->height }}<span class="metric">m</span></div>
+                                    <div class="profile-height">{{ $profile->height }}<span class="metric">m</span>
+                                    </div>
                                     <div class="profile-interest">{{ $profile->interested_in->getLabel() }}</div>
                                     <div class="profile-seeking">{{ $profile->seeking->getLabel() }}</div>
                                 </div>
@@ -73,13 +58,13 @@
                                 <div class="profile-tagline">{{ $profile->tagline }}</div>
                                 <div class="profile-bio">{{ $profile->bio }}</div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="fixed-bottom">
-                <a href="#" class="btn btn-send-message fixed-bottom">Send Message</a>
-            </div>
+                <div class="fixed-bottom">
+                    <a href="#" class="btn btn-send-message fixed-bottom">Send Message</a>
+                </div>
         </section>
     </div>
     <div style="margin-top: 20px;"></div>

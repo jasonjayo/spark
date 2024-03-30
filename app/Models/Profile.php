@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use PhpGeoMath\Model\Polar3dPoint;
 
 use App\Enums\InterestedIn;
 use App\Enums\Seeking;
 use App\Enums\Gender;
 use DateInterval;
 
-use Illuminate\Support\Facades\DB;
 
 class Profile extends Model
 {
@@ -61,7 +64,7 @@ class Profile extends Model
 
         if (array_key_exists("max_age", $filters)) {
             $now = date_create("now");
-            $min_dob = $now->sub(new DateInterval("P" . intval($filters["max_age"]) . "Y364D"));
+            $min_dob = $now->sub(new DateInterval("P" . $filters["max_age"] . "Y364D"));
             $query->where("users.dob", ">=", $min_dob->format("Y-m-d"));
         }
 
@@ -110,6 +113,26 @@ class Profile extends Model
     public function getAge()
     {
         return date_diff(date_create($this->user->dob), date_create('now'))->y;
+    }
+
+    public function getDistance()
+    {
+        if (isset(Auth::user()->profile->location) && isset($this->location)) {
+            $current_user_lat_long = explode(',', Auth::user()->profile->location);
+            $current_user_loc = new Polar3dPoint(
+                $current_user_lat_long[0],
+                $current_user_lat_long[1],
+                Polar3dPoint::EARTH_RADIUS_IN_METERS,
+            );
+            $other_user_lat_long = explode(',', $this->location);
+            $other_user_loc = new Polar3dPoint(
+                $other_user_lat_long[0],
+                $other_user_lat_long[1],
+                Polar3dPoint::EARTH_RADIUS_IN_METERS,
+            );
+            return 'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
+        }
+        return null;
     }
 
     private function getMinsFromDuration(DateInterval $duration)
