@@ -48,8 +48,8 @@
                 ?>
                 <ul class='list-group'>
                     @foreach (User::all() as $user)
-                        <a
-                            class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'>
+                        <a class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
+                            href='{{ route('chat.show', $user->id) }}'>
                             {{ $user->first_name }}
                             @if ($user->profile->isActive())
                                 <span title="Active now" class="online-now ms-3 text-bg-success rounded-circle"></span>
@@ -62,21 +62,33 @@
             </div>
             <div id="inner" class="col-9">
                 <ul id="messages" class="d-flex flex-column p-3 m-auto">
-                    <li class="m-1 p-2 d-inline-block rounded-3 bg-secondary text-light align-self-start ">hello</li>
+                    {{-- <li class="m-1 p-2 d-inline-block rounded-3 bg-secondary text-light align-self-start ">hello</li>
                     <li class="m-1 p-2 d-inline-block rounded-3 bg-primary text-light align-self-end">again</li>
                     <li class="m-1 p-2 d-inline-block rounded-3 bg-secondary text-light align-self-start ">hello</li>
                     <li class="m-1 p-2 d-inline-block rounded-3 bg-primary text-light align-self-end">test</li>
                     <li class="m-1 p-2 d-inline-block rounded-3 bg-secondary text-light align-self-start ">asdadasd</li>
-                    <li class="m-1 p-2 d-inline-block rounded-3 bg-primary text-light align-self-end">hey!</li>
+                    <li class="m-1 p-2 d-inline-block rounded-3 bg-primary text-light align-self-end">hey!</li> --}}
+                    @foreach ($messages as $message)
+                        @php
+                            $isOwnMsg = $message->sender_id != Auth::user()->id;
+                        @endphp
+                        <li @class([
+                            'm-1 p-2 d-inline-block rounded-3',
+                            'bg-primary text-light align-self-end' => !$isOwnMsg,
+                            'bg-secondary text-light align-self-start' => $isOwnMsg,
+                        ])>{{ $message->content }}</li>
+                    @endforeach
                 </ul>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-3"></div>
-            <form class="col-9 m-auto d-flex pt-2" id="send-msg-form">
+            <form action="{{ route('chat.store') }}" method="POST" class="col-9 m-auto d-flex pt-2" id="send-msg-form">
+                @csrf
                 <label class="visually-hidden" for="message">Message</label>
-                <input type="text" class="form-control me-2" id="message" placeholder="Message">
+                <input type="text" class="form-control me-2" id="message" placeholder="Message" name="content">
+                <input hidden name="recipient_id" value="{{ request()->id }}">
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
         </div>

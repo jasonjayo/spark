@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,9 +32,13 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get("/search", [ProfileController::class, "index"])->middleware(['auth'])->name('search');
+    Route::get("/search", [ProfileController::class, "index"])->name('search');
     Route::get('/viewprofile/{id}', [ProfileController::class, 'show'])->name('viewprofile');
-    Route::get("chat", [MessageController::class, "index"])->name("chat");
+
+    // chat
+    Route::get("chat", [ChatController::class, "index"])->name("chat.index");
+    Route::get("chat/{id}", [ChatController::class, "show"])->name("chat.show");
+    Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 });
 
 require __DIR__ . '/auth.php';
