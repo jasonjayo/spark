@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Database\Query\Builder;
+
+use Illuminate\Support\Facades\Log;
+
+use App\Events\ChatSent;
+
+use Pusher\Pusher;
 
 class ChatController extends Controller
 {
@@ -30,15 +35,16 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        //validations
+        $request->validate(["content" => "required|max:255", "recipient_id" => "numeric"]);
 
         $chat = new Chat;
         $chat->content = $request->content;
         $chat->sender_id = Auth::user()->id;
         $chat->recipient_id = $request->recipient_id;
-
         $chat->save();
-        return back();
+
+        ChatSent::dispatch($chat);
+        return response(null, 201);
     }
 
     /**

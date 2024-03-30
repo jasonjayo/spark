@@ -38,7 +38,7 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     // chat
     Route::get("chat", [ChatController::class, "index"])->name("chat.index");
     Route::get("chat/{id}", [ChatController::class, "show"])->name("chat.show");
-    Route::post("chat", [ChatController::class, "store"])->name("chat.store");
+    // Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 });
 
 require __DIR__ . '/auth.php';

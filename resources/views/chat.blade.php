@@ -1,5 +1,9 @@
 @use('App\Models\User')
 
+@pushOnce('scripts')
+    @vite(['resources/js/chat.js'])
+@endPushOnce
+
 <x-app-layout>
     <main class="container p-3">
         <div class="row ms-2 me-2 mb-2">
@@ -84,7 +88,7 @@
         </div>
         <div class="row">
             <div class="col-3"></div>
-            <form action="{{ route('chat.store') }}" method="POST" class="col-9 m-auto d-flex pt-2" id="send-msg-form">
+            <form class="col-9 m-auto d-flex pt-2" id="send-msg-form">
                 @csrf
                 <label class="visually-hidden" for="message">Message</label>
                 <input type="text" class="form-control me-2" id="message" placeholder="Message" name="content">
@@ -92,5 +96,14 @@
                 <button type="submit" class="btn btn-primary">Send</button>
             </form>
         </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9 pt-1" id="chat-connection-status">
+                Connecting to chat...</div>
+        </div>
     </main>
+    <script>
+        const other_user_id = {{ request()->id }};
+        const user_id = {{ auth()->user()->id }};
+    </script>
 </x-app-layout>
