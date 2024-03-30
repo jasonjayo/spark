@@ -161,7 +161,7 @@ if ($hasProfile) {
                     <label for="work">Profession</label>
                   
                 </div>
-
+<!-- make the input box for this smaller so i can put the button beside it  -->
                 <div class="form-floating mb-3">
                     <!-- Location -->
                     <input id="location" name="location" type="text" class="form-control" size=20

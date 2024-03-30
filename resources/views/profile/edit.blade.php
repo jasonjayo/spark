@@ -15,6 +15,7 @@
     <li><a href="/profile" class="dropdown-item">Edit Profile</a></li>
     <li><a href="/profile?section=section2" class="dropdown-item">Update Password</a></li>
     <li><a href="/profile?section=section3"class="dropdown-item">Delete Account</a></li>
+    <li><a href="/profile?section=section4"class="dropdown-item">Update Photos</a></li>
   </ul>
 </div>
 </div>
@@ -40,7 +41,7 @@
 
             <!-- Delete Account -->
             @elseif (isset($_GET['section']) && $_GET['section'] == "section3")
-            <div i class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-m">
                     @include('profile.partials.delete-user-form')
                 </div>
@@ -49,6 +50,13 @@
             <!-- Photo Selection 
             need array of photos, then foreach photo display a wee div and then make
         -->
+        @elseif (isset($_GET['section']) && $_GET['section'] == "section4")
+            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                <div class="max-w-m">
+                    @include('profile.partials.profile-photos')
+                </div>
+            </div>
+
 
 
 
