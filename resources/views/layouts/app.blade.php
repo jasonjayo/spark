@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Spark') }}</title>
+    <title>{{ ($title ?? "") . " | " . config('app.name') }}</title>
     <link rel="icon" type="image/png" href="{{ asset('./images/logos/spark_small.png') }}">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -22,7 +21,7 @@
     </script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
 </head>
@@ -39,6 +38,7 @@
                 </div>
             </header>
         @endif
+
         {{-- <div class="position-fixed top-0 left-0 bottom-0 spark-bg-primary d-flex">
             <ul class="nav-links list-group text-white d-flex flex-column justify-content-center fs-5">
                 <a href="./dashboard" class="text-decoration-none text-white">
@@ -70,7 +70,7 @@
         <main>
             {{ $slot }}
         </main>
-{{--         
+        {{--
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 

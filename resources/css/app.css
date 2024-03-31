@@ -124,3 +124,11 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--bs-gray-500);
 }
+#toasts {
+    position: fixed;
+    left: 100px;
+    bottom: 50px;
+}
+.toast {
+    margin: 1em 0;
+}

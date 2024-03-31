@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -31,8 +31,8 @@
     <div
         class="cover-container container d-flex h-100 p-3 mx-auto flex-column">
         <div class="inner-cover">
-            
-            
+
+
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
@@ -53,7 +53,7 @@
             </div>
         @endif
         </div>
-        
+
     </div>
 </body>
 

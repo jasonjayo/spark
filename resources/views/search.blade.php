@@ -6,6 +6,8 @@
 @endPushOnce
 
 <x-app-layout>
+    <x-slot:title>Search</x-slot>
+
     <div class="fluid-container m-0 min-h-screen">
         <div class="search row">
         <form class="col-12 sideform col-md-5 col-lg-3 d-flex flex-column" action="" method="GET" id="filters_form"
@@ -75,7 +77,7 @@
             <input hidden type="text" id="filter_interests" name="interests" value={{ old('interests') }}>
         </form>
 
-       
+
 
         <div class="col-12 col-md-7 col-lg-9">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 m-4 g-4">
@@ -84,9 +86,12 @@
                         <x-profile-card :profile="$profile" />
                     </div>
                 @endforeach
-                <div class="mb-4">{{ $sql }}</div>
-
             </div>
         </div>
     </div>
+
+    <script>
+        // debug
+        console.log("{{$sql}}");
+    </script>
 </x-app-layout>

@@ -39,14 +39,31 @@ function displayMessage(msg) {
     document.querySelector("#messages").appendChild(listItem);
 }
 function sendMessage(e) {
-    const message_box = document.querySelector("#message");
     e.preventDefault();
-    axios
-        .post("/api/chat", {
-            recipient_id: other_user_id,
-            content: message_box.value,
-        })
-        .then((res) => {});
-    message_box.value = "";
+    const message_box = document.querySelector("#message");
+    if (message_box.value != "") {
+        axios
+            .post("/api/chat", {
+                recipient_id: other_user_id,
+                content: message_box.value,
+            })
+            .then((res) => {})
+            .catch((e) => {
+                console.log(e);
+                let toast_message = `<div class="toast show align-items-center text-bg-primary bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                    Couldn't send message. Please try again.
+                    ${e.code} (${e.response.status})
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`;
+                document.querySelector("#toasts").innerHTML += toast_message;
+            });
+        message_box.value = "";
+    }
 }
-document.querySelector("#send-msg-form").addEventListener("click", sendMessage);
+document
+    .querySelector("#send-msg-form")
+    .addEventListener("submit", sendMessage);

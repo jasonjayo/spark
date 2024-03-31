@@ -1,5 +1,7 @@
 <x-app-layout>
 
+    <x-slot:title>Your Profile</x-slot>
+
     <div
         class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8  shadow p-2 mb-3 bg-white rounded d-flex justify-content-between">
         <div class="prof">

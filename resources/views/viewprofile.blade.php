@@ -1,8 +1,10 @@
 @props(['profile'])
 @use('PhpGeoMath\Model\Polar3dPoint')
 <head>
-    
+
 <x-app-layout>
+    <x-slot:title>{{ $profile->user->first_name }}'s profile</x-slot>
+
     <div class="container profile-container">
         <section class="mt-6 space-y-6">
             <div class="card profile-card">
