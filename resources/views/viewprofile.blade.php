@@ -1,5 +1,7 @@
 @props(['profile'])
 @use('PhpGeoMath\Model\Polar3dPoint')
+<head>
+    
 <x-app-layout>
     <div class="container profile-container">
         <section class="mt-6 space-y-6">
@@ -62,21 +64,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="fixed-bottom">
-                    <a href="#" class="btn btn-send-message fixed-bottom">Send Message</a>
-                </div>
         </section>
     </div>
     <div style="margin-top: 20px;"></div>
-    <div class="container favorties-container">
-        <section class="mt-6 space-y-6">
-            <div class="card profile-card">
-                <h1 class="favorites-title">My Favorites</h1>
-                <div class="favorite-song"><span class="mysong">Song</span>{{ $profile->fav_song }}</div>
-                <div class="favorite-food"><span class="myfood">Food</span>{{ $profile->fav_food }}</div>
-                <div class="favorite-movie"><span class ="mymovie">Movie</span>{{ $profile->fav_movie }}</div>
+    <div class="container favorites-container mt-6">
+        <div class="card profile-card">
+            <h1 class="favorites-title text-uppercase">My Favorites</h1>
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="favorite-square">
+                        <span class="material-symbols-outlined icon">headphones</span>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_song }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="favorite-square">
+                        <span class="material-symbols-outlined icon">movie</span>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_movie }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="favorite-square">
+                        <span class="material-symbols-outlined icon">restaurant</span>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_food }}</div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </div>
     <!-- Link to the CSS file -->
     <link href="{{ asset('css/viewprofile.css') }}" rel="stylesheet">

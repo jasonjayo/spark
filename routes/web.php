@@ -33,6 +33,7 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     })->name('dashboard');
 
     Route::get("/search", [ProfileController::class, "index"])->name('search');
+    Route::get('/viewprofile', [ProfileController::class, 'index'])->name('viewprofile');
     Route::get('/viewprofile/{id}', [ProfileController::class, 'show'])->name('viewprofile');
 
     // chat
