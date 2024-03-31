@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -18,6 +19,7 @@ class UpdateLastActive
      */
     public function handle(Request $request, Closure $next): Response
     {
+        date_default_timezone_set("Europe/Dublin");
         $hasProfile = isset(Auth::user()->profile);
         if (!$hasProfile) {
             if (!str_contains(request()->route()->getName(), "profile.")) {
