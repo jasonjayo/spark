@@ -85,3 +85,6 @@ function displayToastError(message) {
 document
     .querySelector("#send-msg-form")
     .addEventListener("submit", sendMessage);
+window.whisperTyping = function () {
+    Echo.private(chatChannel).whisper("typing", {});
+};
