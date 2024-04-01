@@ -14,15 +14,9 @@ let interests_selected = [];
 const filter_inputs = document.querySelectorAll(
     "#filters_form input, #filters_form select"
 );
-min_age_filter.addEventListener("input", (e) => {
-    min_age_val.innerText = e.target.value;
-});
-max_age_filter.addEventListener("input", (e) => {
-    max_age_val.innerText = e.target.value;
-});
 filter_inputs.forEach((input) => {
     input.addEventListener("change", () => {
-        form.submit();
+        // form.submit();
     });
 });
 // bring in from previous search

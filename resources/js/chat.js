@@ -1,12 +1,21 @@
-const chat_first_id = Math.min(user_id, other_user_id),
-    chat_second_id = Math.max(user_id, other_user_id);
-Echo.private(`chat.${chat_first_id}.${chat_second_id}`).listen(
-    "ChatSent",
-    (e) => {
+const chat_first_id = Math.min(user_id, other_user.id),
+    chat_second_id = Math.max(user_id, other_user.id),
+    chatChannel = `chat.${chat_first_id}.${chat_second_id}`,
+    typingAlert = document.querySelector("#typing-alert");
+let typingAlertTimeout;
+Echo.private(chatChannel)
+    .listen("ChatSent", (e) => {
         displayMessage(e.chat);
+        typingAlert.style.visibility = "hidden";
         jumpToLatest();
-    }
-);
+    })
+    .listenForWhisper("typing", (e) => {
+        clearTimeout(typingAlertTimeout);
+        typingAlert.style.visibility = "visible";
+        typingAlertTimeout = setTimeout(() => {
+            typingAlert.style.visibility = "hidden";
+        }, 3500);
+    });
 const chat_connection_status = document.querySelector(
     "#chat-connection-status"
 );
@@ -41,28 +50,37 @@ function displayMessage(msg) {
 function sendMessage(e) {
     e.preventDefault();
     const message_box = document.querySelector("#message");
-    if (message_box.value != "") {
-        axios
-            .post("/api/chat", {
-                recipient_id: other_user_id,
-                content: message_box.value,
-            })
-            .then((res) => {})
-            .catch((e) => {
-                console.log(e);
-                let toast_message = `<div class="toast show align-items-center text-bg-primary bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                    Couldn't send message. Please try again.
-                    ${e.code} (${e.response.status})
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`;
-                document.querySelector("#toasts").innerHTML += toast_message;
-            });
-        message_box.value = "";
+    const message_content = message_box.value;
+    if (message_content) {
+        if (message_content.length <= 255) {
+            axios
+                .post(`${URL_BASE}/api/chat`, {
+                    recipient_id: other_user.id,
+                    content: message_content,
+                })
+                .then((res) => {})
+                .catch((e) => {
+                    displayToastError(`${e.code} (${e.response.status}`);
+                    console.log(e);
+                    message_box.value = message_content;
+                });
+            message_box.value = "";
+        } else {
+            displayToastError("Your message is more than 255 characters");
+        }
     }
+}
+function displayToastError(message) {
+    let toast_message = `<div class="toast show align-items-center text-bg-primary bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+        Couldn't send message. Please try again.
+        ${message}
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>`;
+    document.querySelector("#toasts").innerHTML += toast_message;
 }
 document
     .querySelector("#send-msg-form")
