@@ -82,6 +82,8 @@ class ProfileController extends Controller
             'bio' => "required|max:1000",
             'university' => "nullable|max:50",
             'work' => "nullable|max:50",
+            'interested_in' => 'required',
+            'seeking' => 'required',
             'fav_movie' => "nullable|max:50",
             'fav_food' => "nullable|max:50",
             'fav_song' => "nullable|max:50",
@@ -104,8 +106,8 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
     public function show($id): View
-{
-    $profile = Profile::findOrFail($id);
-    return view('viewprofile', ['profile' => $profile]);
-}
+    {
+        $profile = Profile::findOrFail($id);
+        return view('viewprofile', ['profile' => $profile]);
+    }
 }
