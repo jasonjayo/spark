@@ -3,7 +3,10 @@
     border-right: 0px;
 }
 .search {
-    height: 100%;
+    height: 85vh;
+}
+.row {
+    padding: 0;
 }
 @media (min-width: 992px) {
     .sideform {
