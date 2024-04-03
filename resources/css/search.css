@@ -3,7 +3,7 @@
     border-right: 0px;
 }
 .search {
-    height: 85vh;
+    height: 83vh;
 }
 .row {
     padding: 0;
@@ -11,6 +11,7 @@
 @media (min-width: 992px) {
     .sideform {
         border-bottom: 0px;
+        height: 84vh;
         border-right: 1px solid var(--spk-color-primary-2);
     }
 }
