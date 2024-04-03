@@ -16,7 +16,7 @@ const filter_inputs = document.querySelectorAll(
 );
 filter_inputs.forEach((input) => {
     input.addEventListener("change", () => {
-        // form.submit();
+        form.submit();
     });
 });
 // bring in from previous search

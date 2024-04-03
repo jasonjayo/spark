@@ -36,7 +36,7 @@ function jumpToLatest() {
 jumpToLatest();
 function displayMessage(msg) {
     let listItem = document.createElement("li");
-    listItem.classList = "m-1 p-2 d-inline-block rounded-3";
+    listItem.classList = "m-1 p-2 d-inline-block rounded-3 chat-message";
     const isOwnMsg = user_id === parseInt(msg.sender_id);
     if (!isOwnMsg) {
         listItem.classList += " bg-secondary text-light align-self-start ";
@@ -60,7 +60,7 @@ function sendMessage(e) {
                 })
                 .then((res) => {})
                 .catch((e) => {
-                    displayToastError(`${e.code} (${e.response.status}`);
+                    displayToastError(`${e.code} (${e.response.status})`);
                     console.log(e);
                     message_box.value = message_content;
                 });
