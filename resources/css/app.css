@@ -13,6 +13,12 @@
     --spk-color-secondary-1: #b183c1;
     --bs-btn-bg: var(--spk-color-primary-1);
     --bs-btn-hover-bg: var(--spk-color-primary-2);
+    --bs-gutter-x: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+.min-h-screen {
+    min-height: 100vh;
 }
 .spk-bg {
     background-color: var(--spk-color-background);
@@ -106,7 +112,7 @@
     list-style-type: none;
     padding: 0;
     /* max-width: 700px; */
-    height: 68vh;
+    height: 59vh;
     overflow-y: scroll;
 }
 ::-webkit-scrollbar {
@@ -134,6 +140,9 @@
 }
 #typing-alert {
     visibility: hidden;
+}
+#chat-connection-status,
+#typing-alert {
     font-size: 0.95em;
 }
 .typing-dot {

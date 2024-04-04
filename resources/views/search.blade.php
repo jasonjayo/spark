@@ -9,13 +9,13 @@
     <x-slot:title>Search</x-slot>
 
 
-    <div class="fluid-container m-0 min-h-screen">
-        <div class="search row">
+    <div class="fluid-container search m-0">
+        <div class=" row">
             <form class="col-12 sideform col-md-5 col-lg-3 d-flex flex-column" action="" method="GET"
                 id="filters_form">
 
 
-                <div class="form-label-group my-3 mx-4" x-data="{ min_age: {{ old('min_age'), 18 }} }">
+                <div class="form-label-group my-3 mx-4" x-data="{ min_age: {{ old('min_age', 18) }} }">
                     <label for="filter_min_age" class="form-label">Min age</label>
                     <span id="min_age_val" x-text="min_age"></span>
                     <input type="range" class="form-range" min="18" max="100" id="filter_min_age"
@@ -96,6 +96,6 @@
 
         <script>
             // debug
-            console.log("{{ $sql }}");
+            // console.log("{{ $sql }}");
         </script>
 </x-app-layout>

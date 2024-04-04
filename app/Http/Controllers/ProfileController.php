@@ -78,22 +78,22 @@ class ProfileController extends Controller
     {
         if ($request->has('profile')) {
 
-            $formFields = $request->validate([
-                'gender' => "required|max:1",
-                'tagline' => "nullable|max:50",
-                'bio' => "required|max:1000",
-                'university' => "nullable|max:50",
-                'work' => "nullable|max:50",
-                'fav_movie' => "nullable|max:50",
-                'fav_food' => "nullable|max:50",
-                'fav_song' => "nullable|max:50",
-                'personality_type' => "nullable|max:4",
-                'height' => "nullable|numeric|max:50",
-                'languages' => "nullable|max:50",
-                'location' => "nullable|max:30",
-            ]);
-
-
+        $formFields = $request->validate([
+            'gender' => "required|max:1",
+            'tagline' => "nullable|max:50",
+            'bio' => "required|max:1000",
+            'university' => "nullable|max:50",
+            'work' => "nullable|max:50",
+            'interested_in' => 'required',
+            'seeking' => 'required',
+            'fav_movie' => "nullable|max:50",
+            'fav_food' => "nullable|max:50",
+            'fav_song' => "nullable|max:50",
+            'personality_type' => "nullable|max:4",
+            'height' => "nullable|numeric|max:50",
+            'languages' => "nullable|max:50",
+            'location' => "nullable|max:30",
+        ]);
 
             // check if creating new profile or updating existing
             if (!isset(Auth::user()->profile)) {
