@@ -6,23 +6,27 @@
         @csrf
 
         <!-- Email Address -->
-        <div class="form-floating">
-            <label for="email" :value="__('Email')" />
-            <input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+
+        <div class="form-floating mb-3">
+        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+        <x-input-label for="email" :value="__('Email')" />
+           
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="form-floating">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="form-control"
+        <x-text-input id="password" class="form-control"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
+            <x-input-label for="password" :value="__('Password')" />
+
+         
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+
 
         <!-- Remember Me -->
         <div class="checkbox mt-3 mb-3">
