@@ -8,21 +8,20 @@
         <!-- Email Address -->
 
         <div class="form-floating mb-3">
-        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-        <x-input-label for="email" :value="__('Email')" />
-           
+            <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required
+                autofocus autocomplete="username" />
+            <x-input-label for="email" :value="__('Email')" />
+
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="form-floating">
-        <x-text-input id="password" class="form-control"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <x-text-input id="password" class="form-control" type="password" name="password" required
+                autocomplete="current-password" />
             <x-input-label for="password" :value="__('Password')" />
 
-         
+
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -36,12 +35,19 @@
             </label>
         </div>
         @if (Route::has('password.request'))
+            <div>
                 <a class="text-muted" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
-            @endif
+            </div>
+        @endif
+        <div class="mt-1">
+            <a class="text-muted" href="{{ route('register') }}">
+                {{ __('Need to register?') }}
+            </a>
+        </div>
         <div class="mt-4 items-center">
-           
+
 
             <x-primary-button class="btn btn-lg btn-primary btn-block full-w">
                 {{ __('Log in') }}

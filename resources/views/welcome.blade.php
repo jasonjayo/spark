@@ -21,37 +21,33 @@
 </head>
 
 <body class="antialiased overflow-hidden min-h-screen welcome text-white text-center">
-<div class="hero shadow">
-            <img height="fit" src="{{ asset('./images/dashboard/pexels-taryn-elliott-4390580.jpg') }}" />
-                <div class="hero-text">
-                    <h1 class="cover-heading">Spark</h1>
-                    <p class="lead">Spark a connection. Speed Dating, make a real connection.</p>
-                </div>
-            </div>
-    <div
-        class="cover-container container d-flex h-100 p-3 mx-auto flex-column">
+    <div class="hero shadow">
+        <img height="fit" src="{{ asset('./images/dashboard/pexels-taryn-elliott-4390580.jpg') }}" />
+        <div class="hero-text">
+            <h1 class="cover-heading"><x-application-logo id="hero-logo"></x-application-logo></h1>
+            <p class="lead">Spark a connection. Speed Dating, make a real connection.</p>
+        </div>
+    </div>
+    <div class="cover-container container d-flex h-100 p-3 mx-auto flex-column">
         <div class="inner-cover">
 
 
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="btn btn-lg mx-2 mt-4 btn-secondary">Dashboard</a>
-                @else
-                <div class="d-flex">
-                    <a href="{{ route('login') }}"
-                        class="btn btn-lg mx-2 btn-secondary">Log
-                        in</a>
+            @if (Route::has('login'))
+                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="btn btn-lg mx-2 mt-4 btn-secondary">Dashboard</a>
+                    @else
+                        <div class="d-flex">
+                            <a href="{{ route('login') }}" class="btn btn-lg mx-2 btn-secondary">Log
+                                in</a>
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
-                            class="btn btn-lg mx-2 btn-secondary">Register</a>
-                    @endif
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="btn btn-lg mx-2 btn-secondary">Register</a>
+                            @endif
+                        </div>
+                    @endauth
                 </div>
-                @endauth
-            </div>
-        @endif
+            @endif
         </div>
 
     </div>
