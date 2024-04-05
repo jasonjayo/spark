@@ -29,8 +29,6 @@
         align-items: center;
         justify-content: center;
     }
-    x-primary-button {
-    }
     .form-label-group > x-input-label {
         position: absolute;
         top: 0;
@@ -50,88 +48,90 @@
     .btn {
         align-self: center;
         width: 100%;
-        
+
         --bs-btn-bg: var(--spk-color-primary-1);
         --bs-btn-hover-bg: var(--spk-color-primary-1);
+        --bs-btn-active-bg: var(--spk-color-secondary-1);
     }
 }
 .form-label-group > x-text-input,
-    .form-label-group > x-input-label {
-        padding: var(--input-padding-y) var(--input-padding-x);
+.form-label-group > x-input-label {
+    padding: var(--input-padding-y) var(--input-padding-x);
+}
+.pass-forget {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--spk-color-primary-2);
+}
+.logo > * {
+    align-self: center;
+    max-width: 256px;
+    max-height: 256px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-label-group > x-input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0; /* Override default `<label>` margin */
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: all 0.1s ease-in-out;
+    a {
+        text-decoration: none;
     }
-    .pass-forget {
-        background-color: white;
-        padding: 16px;
-        border-radius: 8px;
-        border: 1px solid var(--spk-color-primary-2);
-    }
-    .logo > * {
-        align-self: center;
-        max-width: 256px;
-        max-height: 256px;
-    }
-    .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    x-primary-button {
-    }
-    .form-label-group > x-input-label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        margin-bottom: 0; /* Override default `<label>` margin */
-        line-height: 1.5;
-        color: #495057;
-        border: 1px solid transparent;
-        border-radius: 0.25rem;
-        transition: all 0.1s ease-in-out;
-        a {
-            text-decoration: none;
-        }
+}
+.btn {
+    align-self: center;
+    width: 100%;
+    border: 0;
+    --bs-btn-bg: var(--spk-color-primary-1);
+    --bs-btn-hover-bg: var(--spk-color-primary-1);
+}
+.welcome {
+    background-color: var(--spk-color-primary-1);
+    height: 100vh;
+    h1 {
+        font-size: 60pt;
+        font-weight: 700;
     }
     .btn {
-        align-self: center;
-        width: 100%;
         border: 0;
-        --bs-btn-bg: var(--spk-color-primary-1);
-        --bs-btn-hover-bg: var(--spk-color-primary-1);
+        --bs-btn-bg: var(--spk-color-secondary-1);
+        --bs-btn-hover-bg: var(--spk-color-secondary-1);
     }
-    .welcome {
-        background-color: var(--spk-color-primary-1);
-        height: 100vh;
-        h1 {
-            font-size: 60pt;
-            font-weight: 700;
-        }
-        .btn {
-            border: 0;
-            --bs-btn-bg: var(--spk-color-secondary-1);
-            --bs-btn-hover-bg: var(--spk-color-secondary-1);
-        }
-    }
-    .hero {
-        position: relative;
-        display: flex;
+}
+.hero {
+    position: relative;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    width: 100vw;
+    img {
+        object-fit: cover;
         text-align: center;
-        align-items: center;
-        justify-content: center;
-        height: 50vh;
-        width: 100vw;
-        img {
-            object-fit: cover;
-            text-align: center;
-            height: 100%;
-            width: 100%;
-        }
-        .hero-text {
-            position: absolute;
-            top: 50%;
+        height: 100%;
+        width: 100%;
+    }
+    .hero-text {
+        position: absolute;
+        top: 50%;
         left: 50%;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         transform: translate(-50%, -50%);
-        }
     }
+    #hero-logo {
+        width: 25vw;
+    }
+}

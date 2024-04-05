@@ -22,7 +22,7 @@
                             required autocomplete="current-password" placeholder="Password" />
             <x-input-label for="password" :value="__('Password')" />
 
-         
+
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -36,12 +36,19 @@
             </label>
         </div>
         @if (Route::has('password.request'))
+            <div>
                 <a class="text-muted" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
-            @endif
+            </div>
+        @endif
+        <div class="mt-1">
+            <a class="text-muted" href="{{ route('register') }}">
+                {{ __('Need to register?') }}
+            </a>
+        </div>
         <div class="mt-4 items-center">
-           
+
 
             <x-primary-button class="btn btn-lg btn-primary btn-block full-w">
                 {{ __('Log in') }}
