@@ -31,12 +31,12 @@
     }
 </style>
 <nav class="nav navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
-    <a href=" {{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
+    <a href="{{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-            <a href=" {{ route('dashboard') }}" class="text-decoration-none text-black">
+            <a href="{{ route('dashboard') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('dashboard'),
@@ -53,17 +53,19 @@
                     <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
-            <a href=" {{ route('chat.show', 1) }}" class="text-decoration-none text-black">
+            <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                    'spark-bg-secondary text-white' => Str::contains(request()->route()->getName(), 'chat'),
+                    'spark-bg-secondary text-white' => Str::contains(
+                        request()->route()->getName(),
+                        'chat'),
                 ])>
                     <i class="bi-chat-dots fs-1"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
                 </li>
             </a>
 
 
-            <a href=" {{ route('profile.edit') }}" class="text-decoration-none text-black">
+            <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('profile'),
@@ -82,7 +84,7 @@
 
 <nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around  z-1 spark-bg-primary">
     <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-        <a href="./dashboard" class="text-decoration-none text-black">
+        <a href="{{ route('dashboard') }}" class="text-decoration-none text-black">
             <li @class([
                 'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                 'spark-bg-secondary' => Request::is('dashboard'),
@@ -90,7 +92,7 @@
                 <i class="bi-stars fs-1 text-white"> </i>
             </li>
         </a>
-        <a href="./search" class="text-decoration-none text-black">
+        <a href="{{ route('search') }}" class="text-decoration-none text-black">
             <li @class([
                 'p-3 mx-3 px-4 rounded d-flex text-center align-items-center',
                 'spark-bg-secondary' => Request::is('search'),
@@ -98,13 +100,13 @@
                 <i class="bi-search fs-1 text-white"> </i>
             </li>
         </a>
-        <a href="./search" class="text-decoration-none text-black">
+        <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
             <li class="p-3 mx-3 px-4 rounded d-flex text-center align-items-center">
                 <i class="bi-chat-dots fs-1 text-white"></i>
             </li>
         </a>
 
-        <a href="./profile" class="text-decoration-none text-black">
+        <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
             <li @class([
                 'p-3 ml-3 px-4 rounded d-flex text-center align-items-center',
                 'spark-bg-secondary' => Request::is('profile'),

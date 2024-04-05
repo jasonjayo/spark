@@ -1,14 +1,34 @@
 @props(['profile'])
 @use('PhpGeoMath\Model\Polar3dPoint')
+@use ('App\Models\Photo')
+@use ('App\Models\Profile')
 
 @pushOnce('styles')
     <style>
         /* can be removed if this remains empty */
     </style>
+    
 @endPushOnce
+<?php 
+ $photoUrls = array();
+?>
+
+@foreach (Photo::where('user_id', $profile->user_id)->get() as $photo) 
+  <?php    array_push($photoUrls, $photo->photo_url); ?>
+  @endforeach
+
+  <?php 
+  if (Arr::get($photoUrls, 0) == null) {
+    $coverPhoto = "https://placehold.co/300x300?text=Photo";
+} else {
+    $coverPhoto = asset('images/profilePhotos/' . $photoUrls[0]);
+}
+  ?>
+  
+  
 
 <div class="card h-100 profile-card">
-    <img src="https://placehold.co/300x300?text=Photo" class="card-img-top"
+    <img src="{{ $coverPhoto }}" class="card-img-top"
         alt="Photo of {{ $profile->user->first_name }}">
     <div class="card-body">
         <h4 class="card-title d-flex justify-content-between">

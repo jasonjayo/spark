@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
+use App\Models\Photo;
 
 class ProfileController extends Controller
 {
@@ -75,6 +76,7 @@ class ProfileController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        if ($request->has('profile')) {
 
         $formFields = $request->validate([
             'gender' => "required|max:1",
@@ -90,21 +92,49 @@ class ProfileController extends Controller
             'personality_type' => "nullable|max:4",
             'height' => "nullable|numeric|max:50",
             'languages' => "nullable|max:50",
-            'location' => "nullable|max:30",
+            'location' => "nullable|max:40",
         ]);
 
-        // check if creating new profile or updating existing
-        if (!isset(Auth::user()->profile)) {
-            $formFields["user_id"] = Auth::user()->id;
-            // new
-            Profile::create($formFields);
-        } else {
-            // update
-            Auth::user()->profile->update($formFields);
+            // check if creating new profile or updating existing
+            if (!isset(Auth::user()->profile)) {
+                $formFields["user_id"] = Auth::user()->id;
+                // new
+                Profile::create($formFields);
+            } else {
+                // update
+                Auth::user()->profile->update($formFields);
+            }
+
+            return Redirect::route('profile.edit')->with('status', 'profile-updated');
         }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        if ($request->has('photo')) { {
+
+
+                $request->validate([
+                    'image' => 'required|mimes:jpg,png,jpeg|max:5048',
+                    'photoName' => 'required'
+
+                ]);
+
+                $newImageName = time() . '-' . $request->photoName . '.' . $request->image->extension();
+
+                $request->image->move(public_path('images/profilePhotos'), $newImageName);
+
+                $photo = Photo::create([
+                    'user_id' => $request->user()->id,
+                    'photo_url' => $newImageName
+                ]);
+
+
+                return back()->with('status', "photo-saved");
+                ;
+            }
+
+        }
+        
     }
+
     public function show($id): View
     {
         $profile = Profile::findOrFail($id);

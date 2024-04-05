@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Events\ChatSent;
-
+use App\Models\User;
 use Pusher\Pusher;
 
 class ChatController extends Controller
@@ -19,7 +19,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return view("chat");
+        return view("chat-index");
     }
 
     /**
@@ -52,6 +52,12 @@ class ChatController extends Controller
      */
     public function show(string $id)
     {
+        try {
+            $other_user = User::findOrFail(request()->id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return view("error")->with(["message" => "User with ID '" . request()->id . "' doesn't exist.", "code" => 404]);
+        }
+
         $messages = Chat::where(function ($query) use ($id) {
             $query->where("sender_id", "=", Auth::user()->id)->where("recipient_id", "=", $id);
         })->orWhere(function ($query) use ($id) {
@@ -59,6 +65,7 @@ class ChatController extends Controller
         })->get();
         return view("chat", [
             "messages" => $messages,
+            "other_user" => $other_user
         ]);
     }
 

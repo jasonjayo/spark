@@ -13,6 +13,12 @@
     --spk-color-secondary-1: #b183c1;
     --bs-btn-bg: var(--spk-color-primary-1);
     --bs-btn-hover-bg: var(--spk-color-primary-2);
+    --bs-gutter-x: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+.min-h-screen {
+    min-height: 100vh;
 }
 .spk-bg {
     background-color: var(--spk-color-background);

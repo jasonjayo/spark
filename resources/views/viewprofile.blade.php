@@ -1,9 +1,18 @@
 @props(['profile'])
 @use('PhpGeoMath\Model\Polar3dPoint')
+@use ('App\Models\Photo')
 <head>
 
 <x-app-layout>
     <x-slot:title>{{ $profile->user->first_name }}'s profile</x-slot>
+
+<?php 
+ $photoUrls = array();
+?>
+
+@foreach (Photo::where('user_id', $profile->user_id)->get() as $photo) 
+  <?php    array_push($photoUrls, $photo->photo_url); ?>
+  @endforeach
 
     <div class="container profile-container">
         <section class="mt-6 space-y-6">
@@ -12,14 +21,26 @@
                     <div class="col-lg-4 col-md-12 mb-3 mb-lg-0">
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://placehold.co/300x300?text=Photo1" class="d-block w-100"
+                            
+                                 @foreach ($photoUrls as $index => $photoUrl)
+                                    <?php   
+                                        if ($index == 0) {
+                                            $activeClass = 'carousel-item active';
+                                        } else if($index > 0){
+                                            $activeClass = 'carousel-item';
+                                        }
+                                                                    ?>
+                                 
+                                    <div class="{{$activeClass}}">
+                                    <img 
+                                    src="{{ asset('images/profilePhotos/' . $photoUrl) }}"
+                                    class="d-block w-100"
                                         alt="Photo 1">
                                 </div>
-                                <div class="carousel-item">
-                                    <img src="https://placehold.co/300x300?text=Photo2" class="d-block w-100"
-                                        alt="Photo 2">
-                                </div>
+                                    @endforeach
+                                
+                                
+                               
                             </div>
                             <button class="carousel-control-prev" type="button"
                                 data-bs-target="#carouselExampleControls" data-bs-slide="prev">

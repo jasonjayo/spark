@@ -10,39 +10,27 @@
         const user_id = {{ auth()->user()->id }};
         const other_user = {
             id: {{ request()->id }},
-            first_name: "{{ User::find(request()->id)->first_name }}"
+            first_name: "{{ $other_user->first_name }}"
         }
     </script>
 
     <x-slot:title>Chat</x-slot>
 
     <main class="container p-3">
-        <div class="row ms-2 me-2 mb-2">
+        <div class="row ms-2 me-2 mb-2 d-none d-md-block">
             <div class="col-2">
                 Hello, {{ Auth::user()->first_name }}
             </div>
         </div>
         <div class="row">
-            <div class="col-3">
+            <div class="col-12 col-md-3 d-none d-md-block">
                 <?php
                 // // need to update this so it also shows if I sent the only message
                 // $statement = $pdo->prepare('SELECT DISTINCT users.username, users.id,  last_activity, (select count(*) from messages where sender_id = users.id and receiver_id = :me and opened = 0) AS unread_count FROM messages JOIN users ON users.id = messages.sender_id WHERE receiver_id = :me');
                 ?>
-                <ul class='list-group'>
-                    @foreach (Profile::all() as $profile)
-                        <a class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-                            href='{{ route('chat.show', $profile->user->id) }}'>
-                            {{ $profile->user->first_name }}
-                            @if ($profile->isActive())
-                                <span title="Active now" class="online-now ms-3 text-bg-success rounded-circle"></span>
-                            @else
-                                <span title="Offline" class="offline ms-3 text-bg-secondary rounded-circle"></span>
-                            @endif
-                        </a>
-                    @endforeach
-                </ul>
+                <x-chat-user-list></x-chat-user-list>
             </div>
-            <div id="inner" class="col-9">
+            <div id="inner" class="col-12 col-md-9">
                 <ul id="messages" class="d-flex flex-column p-3 m-auto">
                     @foreach ($messages as $message)
                         @php
@@ -58,8 +46,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9" id="typing-alert" x-data>
+            <div class="col-3 d-none d-md-block"></div>
+            <div class="col-md-9 col-12" id="typing-alert" x-data>
                 <span class="text-secondary"><span x-text="other_user.first_name"></span> is typing</span>
                 <span class="typing-dot text-secondary rounded"></span>
                 <span class="typing-dot text-secondary rounded"></span>
@@ -67,8 +55,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <form class="col-9 m-auto d-flex pt-2" id="send-msg-form" x-data="">
+            <div class="col-3 d-none d-md-block"></div>
+            <form class="col-12 col-md-9 m-auto d-flex pt-2" id="send-msg-form" x-data="">
                 @csrf
                 <label class="visually-hidden" for="message">Message</label>
                 <input autocomplete="off" type="text" class="form-control me-2" id="message" placeholder="Message"
@@ -78,8 +66,8 @@
             </form>
         </div>
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-9 pt-1 text-secondary" id="chat-connection-status">
+            <div class="col-3 d-none d-md-block"></div>
+            <div class="col-12 col-md-9 pt-1 text-secondary" id="chat-connection-status">
                 Connecting to chat...
             </div>
         </div>

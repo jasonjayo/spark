@@ -230,7 +230,7 @@
 
 
                 <div class="flex items-center gap-4 g">
-                    <x-primary-button class="btn btn-primary">{{ __('Save') }}</x-primary-button>
+                    <x-primary-button class="btn btn-primary" name="profile">{{ __('Save') }}</x-primary-button>
                 </div>
 
                 <script>
