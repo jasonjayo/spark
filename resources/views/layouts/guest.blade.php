@@ -30,7 +30,7 @@
     @endif
     <div class="min-h-screen flex justify-center items-center m-12 sm:pt-0 dark:bg-gray-900">
         <div class="logo items-center justify-center">
-            <x-application-logo />
+            <x-application-logo class="mb-4" />
 
         </div>
 

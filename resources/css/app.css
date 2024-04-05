@@ -13,6 +13,7 @@
     --spk-color-secondary-1: #b183c1;
     --bs-btn-bg: var(--spk-color-primary-1);
     --bs-btn-hover-bg: var(--spk-color-primary-2);
+    --bs-btn-active-bg: var(--spk-color-secondary-1);
     --bs-gutter-x: 0;
     padding: 0;
     overflow-x: hidden;
@@ -29,6 +30,7 @@
 .btn-primary {
     --bs-btn-bg: var(--spk-color-primary-1);
     --bs-btn-hover-bg: var(--spk-color-primary-2);
+    --bs-btn-active-bg: var(--spk-color-secondary-1);
     border: 0;
 }
 .btn-secondary {

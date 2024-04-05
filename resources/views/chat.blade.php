@@ -40,7 +40,7 @@
                             'm-1 p-2 d-inline-block rounded-3 chat-message',
                             'bg-primary text-light align-self-end' => !$isOwnMsg,
                             'bg-secondary text-light align-self-start' => $isOwnMsg,
-                        ])>{{ $message->content }}</li>
+                        ]) title="{{ $message->created }}">{{ $message->content }}</li>
                     @endforeach
                 </ul>
             </div>
