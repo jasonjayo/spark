@@ -8,17 +8,18 @@
         <!-- Email Address -->
 
         <div class="form-floating mb-3">
-            <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-label for="email" :value="__('Email')" />
-
+        <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Email"/>
+        <x-input-label for="email" :value="__('Email')" />
+           
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="form-floating">
-            <x-text-input id="password" class="form-control" type="password" name="password" required
-                autocomplete="current-password" />
+        <x-text-input id="password" class="form-control"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" placeholder="Password" />
             <x-input-label for="password" :value="__('Password')" />
 
 
