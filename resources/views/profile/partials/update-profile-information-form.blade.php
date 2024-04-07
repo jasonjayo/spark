@@ -37,7 +37,7 @@
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            <ul class="mb-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -112,7 +112,7 @@
                     <div class="form-floating mb-3">
                         <!-- Bio -->
                         <textarea class="form-control" name="bio" style="height:100px" cols="50" maxlength="1000"
-                            placeholder="Describe yourself here...">{{ old('gender', $hasProfile ? $profile->bio : '') }}</textarea>
+                            placeholder="Describe yourself here...">{{ old('bio', $hasProfile ? $profile->bio : '') }}</textarea>
                         <label for="bio">Bio<label />
                     </div>
 
@@ -171,7 +171,7 @@
                     <div class="form-floating mb-3">
                         <!-- Location -->
                         <input id="location" name="location" type="text" class="form-control" size=20
-                            maxlength=20 value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
+                            maxlength=40 value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                         <label for="location">Location</label>
                         <button class="mt-1 btn btn-primary" id="update-location">Update location</button>
                     </div>
@@ -181,6 +181,7 @@
 
                 <div class="">
                     <h2>Extra Bits</h2>
+                    <p>These fields are optional.</p>
                     <div class="form-floating mb-3">
                         <!-- Favoutite Movie -->
                         <input id="fav_movie" name="fav_movie" type="text" class="form-control" maxlength=50

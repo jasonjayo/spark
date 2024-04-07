@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("welcome");
 
 
 
@@ -43,7 +43,7 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     Route::get("chat/{id}", [ChatController::class, "show"])->name("chat.show");
     // Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 
-   
+
 });
 
 require __DIR__ . '/auth.php';
