@@ -14,7 +14,7 @@
             <form class="col-12 sideform col-md-5 col-lg-3 d-flex flex-column" action="" method="GET"
                 id="filters_form">
 
-
+            <div>
                 <div class="form-label-group my-3 mx-4" x-data="{ min_age: {{ old('min_age', 18) }} }">
                     <label for="filter_min_age" class="form-label">Min age</label>
                     <span id="min_age_val" x-text="min_age"></span>
@@ -79,6 +79,7 @@
                 </div>
 
                 <input hidden type="text" id="filter_interests" name="interests" value={{ old('interests') }}>
+            </div>
             </form>
 
 
