@@ -82,7 +82,7 @@
     </div>
 </nav>
 
-<nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around  z-1 spark-bg-primary">
+<nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around z-4 spark-bg-primary">
     <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
         <a href="{{ route('dashboard') }}" class="text-decoration-none text-black">
             <li @class([
