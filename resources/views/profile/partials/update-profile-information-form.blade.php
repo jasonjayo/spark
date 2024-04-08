@@ -168,10 +168,12 @@
 
                     </div>
                     <!-- make the input box for this smaller so i can put the button beside it  -->
+                    <p>Location must be in the format latitude, longitude - for example, 52.654, -8.622</p>
                     <div class="form-floating mb-3">
                         <!-- Location -->
                         <input id="location" name="location" type="text" class="form-control" size=20
-                            maxlength=40 value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
+                            maxlength=40 pattern="(-)?\d+(\.\d+)?,\s?(-)?\d+(\.\d+)?"
+                            value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                         <label for="location">Location</label>
                         <button class="mt-1 btn btn-primary" id="update-location">Update location</button>
                     </div>

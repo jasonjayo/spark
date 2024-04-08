@@ -119,18 +119,21 @@ class Profile extends Model
     {
         if (isset(Auth::user()->profile->location) && isset($this->location)) {
             $current_user_lat_long = explode(',', Auth::user()->profile->location);
-            $current_user_loc = new Polar3dPoint(
-                $current_user_lat_long[0],
-                $current_user_lat_long[1],
-                Polar3dPoint::EARTH_RADIUS_IN_METERS,
-            );
             $other_user_lat_long = explode(',', $this->location);
-            $other_user_loc = new Polar3dPoint(
-                $other_user_lat_long[0],
-                $other_user_lat_long[1],
-                Polar3dPoint::EARTH_RADIUS_IN_METERS,
-            );
-            return 'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
+            if (count($current_user_lat_long) == 2 && count($other_user_lat_long) == 2) {
+                $current_user_loc = new Polar3dPoint(
+                    $current_user_lat_long[0],
+                    $current_user_lat_long[1],
+                    Polar3dPoint::EARTH_RADIUS_IN_METERS,
+                );
+                $other_user_loc = new Polar3dPoint(
+                    $other_user_lat_long[0],
+                    $other_user_lat_long[1],
+                    Polar3dPoint::EARTH_RADIUS_IN_METERS,
+                );
+                return 'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
+            }
+            return null;
         }
         return null;
     }
