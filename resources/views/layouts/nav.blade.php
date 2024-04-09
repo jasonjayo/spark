@@ -30,7 +30,11 @@
         min-height: 70vh;
     }
 </style>
-<nav class="nav navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
+<div class="alert alert-secondary mb-0" role="alert" x-cloak x-data x-show="window.location.host === '78.153.209.28'">
+    Please access the site through <a href="https://findyourspark.ie">findyourspark.ie</a>
+</div>
+<nav class="nav
+    navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
     <a href="{{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 

@@ -183,3 +183,6 @@
     max-width: 60%;
     word-wrap: break-word;
 }
+[x-cloak] {
+    display: none !important;
+}

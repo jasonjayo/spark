@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ ($title ?? "") . " | " . config('app.name') }}</title>
+    <title>{{ ($title ?? '') . ' | ' . config('app.name') }}</title>
     <link rel="icon" type="image/png" href="{{ asset('./images/logos/spark_small.png') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -82,6 +82,9 @@
         </form> --}}
     </div>
     @stack('scripts')
+    <script>
+        const user_id = {{ Auth::user()->id ?? null }};
+    </script>
 </body>
 
 </html>
