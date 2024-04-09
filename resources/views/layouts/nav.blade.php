@@ -30,7 +30,7 @@
         min-height: 70vh;
     }
 </style>
-<div class="alert alert-secondary mb-0" role="alert" x-data x-show="window.location.host === '78.153.209.28'">
+<div class="alert alert-secondary mb-0" role="alert" x-cloak x-data x-show="window.location.host === '78.153.209.28'">
     Please access the site through <a href="https://findyourspark.ie">findyourspark.ie</a>
 </div>
 <nav class="nav
