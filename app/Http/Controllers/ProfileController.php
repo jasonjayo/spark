@@ -137,4 +137,12 @@ class ProfileController extends Controller
         $profile = Profile::findOrFail($id);
         return view('viewprofile', ['profile' => $profile]);
     }
+
+    public function updateLocation(Request $request)
+    {
+        $user = Auth::user();
+        $user->profile->location = $request->location;
+        $user->profile->save();
+        return response(null, 200);
+    }
 }
