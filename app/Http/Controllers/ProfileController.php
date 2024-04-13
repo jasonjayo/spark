@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         $request->flash(); // allows use of old in search.blade.php
-        $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests']));
+        $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests', 'max_distance', 'query']));
         $sql = $query->toRawSQL();
         return view("search", [
             "profiles" => $query->get(),

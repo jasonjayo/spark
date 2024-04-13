@@ -7,7 +7,6 @@
 
 <x-app-layout>
     <script>
-        const user_id = {{ auth()->user()->id }};
         const other_user = {
             id: {{ request()->id }},
             first_name: "{{ $other_user->first_name }}"

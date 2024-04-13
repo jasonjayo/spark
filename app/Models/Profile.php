@@ -55,7 +55,31 @@ class Profile extends Model
 
     public function scopeFilter($query, array $filters)
     {
+
         $query->join("users", "profiles.user_id", "=", "users.id");
+
+        if (array_key_exists("max_distance", $filters) && $filters["max_distance"] < 100) {
+            $coords = explode(",", Auth::user()->profile->location);
+            $lat = floatval($coords[0]);
+            $long = floatval($coords[1]);
+
+            $query->select("*")->from(DB::raw("(select user_id,
+            ST_Distance_Sphere(
+                POINT(?, ?),
+                POINT(
+                    SUBSTRING_INDEX(location, ',', 1),
+                    SUBSTRING_INDEX(location, ',', -1)
+                )
+            ) / 1000 AS distance
+            FROM profiles) distances natural join profiles"), []);
+
+            $query->setBindings([$lat, $long]);
+
+            $query->where("distance", "<", $filters["max_distance"]);
+        }
+
+
+
         if (array_key_exists("min_age", $filters)) {
             $now = date_create("now");
             $max_dob = $now->sub(new DateInterval("P" . $filters["min_age"] . "Y"));
@@ -85,6 +109,11 @@ class Profile extends Model
             // then get users from main query who also appear in this result
             $users_with_interest = DB::table("interest_user")->select("user_id")->whereIn("interest_id", array_filter(explode(",", $filters["interests"])));
             $query->whereIn("users.id", $users_with_interest);
+        }
+
+        if (array_key_exists("query", $filters) && $filters["query"] != "") {
+            $query->where("first_name", "LIKE", "%" . $filters["query"] . "%");
+            $query->orWhere("tagline", "LIKE", "%" . $filters["query"] . "%");
         }
     }
 
@@ -118,20 +147,14 @@ class Profile extends Model
     public function getDistance()
     {
         if (isset(Auth::user()->profile->location) && isset($this->location)) {
-            $current_user_lat_long = explode(',', Auth::user()->profile->location);
             $other_user_lat_long = explode(',', $this->location);
+            $current_user_lat_long = explode(',', Auth::user()->profile->location);
             if (count($current_user_lat_long) == 2 && count($other_user_lat_long) == 2) {
-                $current_user_loc = new Polar3dPoint(
-                    $current_user_lat_long[0],
-                    $current_user_lat_long[1],
-                    Polar3dPoint::EARTH_RADIUS_IN_METERS,
+                $res = DB::select(
+                    "select ST_Distance_Sphere(POINT(?, ?), POINT(?, ?)) / 1000 AS distance",
+                    [$current_user_lat_long[0], $current_user_lat_long[1], $other_user_lat_long[0], $other_user_lat_long[1]]
                 );
-                $other_user_loc = new Polar3dPoint(
-                    $other_user_lat_long[0],
-                    $other_user_lat_long[1],
-                    Polar3dPoint::EARTH_RADIUS_IN_METERS,
-                );
-                return 'About ' . ceil($current_user_loc->calcGeoDistanceToPoint($other_user_loc) / 1000) . ' km away';
+                return "About " . ceil($res[0]->distance) . " km away";
             }
             return null;
         }
