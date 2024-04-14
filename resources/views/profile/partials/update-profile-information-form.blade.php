@@ -212,8 +212,8 @@
                         <!-- Personality Type -->
                         <input id="personality_type" name="personality_type" type="text" placeholder="ISFJ"
                             class="form-control" size=4 maxlength=4
-                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}" />
-                        <label for="personality_type">Personality Type (Myers Briggs)</label>
+                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}"  pattern="[A-Za-z]{4}" />
+                        <label for="personality_type">Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <!-- Height -->

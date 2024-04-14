@@ -89,7 +89,7 @@ class ProfileController extends Controller
                 'fav_movie' => "nullable|max:50",
                 'fav_food' => "nullable|max:50",
                 'fav_song' => "nullable|max:50",
-                'personality_type' => "nullable|max:4",
+                'personality_type' => "nullable|alpha|max:4",
                 'height' => "nullable|numeric|max:50",
                 'languages' => "nullable|max:50",
                 'location' => "nullable|max:40",
