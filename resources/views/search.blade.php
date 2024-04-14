@@ -14,7 +14,7 @@
             <form class="col-12 sideform col-md-5 col-lg-3 d-flex flex-column" action="" method="GET"
                 id="filters_form">
 
-                <div>
+                <div class="sticky-top">
                     <div class="form-floating my-3 mx-4">
                         <input type="text" class="form-control" id="filter_query" name="query"
                             placeholder="Search name, tagline" autocomplete="off" value="{{ old('query') }}">
