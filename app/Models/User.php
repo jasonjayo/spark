@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -58,5 +59,26 @@ class User extends Authenticatable
         return $this->belongsToMany(Interest::class);
     }
 
- 
+    public function traits(): BelongsToMany
+    {
+        return $this->belongsToMany(SparkTrait::class, "trait_user", "user_id", "trait_id");
+    }
+
+    public function recommendationsAsFirstUser()
+    {
+        return $this->belongsToMany(User::class, 'recommendations', 'user_1_id', 'user_2_id')->withPivot('weight');
+    }
+
+    public function recommendationsAsSecondUser()
+    {
+        return $this->belongsToMany(User::class, 'recommendations', 'user_2_id', 'user_1_id')->withPivot('weight');
+    }
+
+    public function recommendations()
+    {
+        return $this->recommendationsAsFirstUser->toBase()
+            ->merge($this->recommendationsAsSecondUser->toBase())->sortByDesc(function ($recommendation) {
+                return $recommendation->pivot->weight;
+            });;
+    }
 }

@@ -24,6 +24,10 @@
 .spk-bg {
     background-color: var(--spk-color-background);
 }
+.icon {
+    font-size: larger;
+    font-weight: 800;
+}
 .default {
     width: 100vw;
 }
@@ -185,4 +189,56 @@
 }
 [x-cloak] {
     display: none !important;
+}
+.sideform {
+    border-bottom: 1px solid var(--spk-color-primary-2);
+    border-right: 0px;
+    
+}
+h3 {
+    color: var(--spk-color-primary-2);
+    font-weight: 700;
+}
+@media (min-width: 992px) {
+    .sideform {
+        border-bottom: 0px;
+        position: sticky;
+        min-height: 84vh;
+        max-height: 100%;
+        border-right: 1px solid var(--spk-color-primary-2);
+    }
+}
+.chatpage {
+    max-height: 100vh;
+}
+.username {
+    color: black;
+    font-weight: 600;
+}
+.user-row {
+    text-decoration: none;
+    border-top: 2px solid var(--spk-color-secondary-1);
+    border-bottom: 2px solid var(--spk-color-secondary-1);
+    padding: 0px 16px;
+}
+.profile-container {
+    position: relative;
+    padding: 8px;
+    padding-right: 16px;
+}
+.profile-photo {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--spk-color-primary-2);
+}
+.profile-active {
+    position: absolute;
+    top: 20%; 
+    right: 0%; 
+    width: 32px;
+    height:32px;
+    border: 4px solid white;
+    transform: translate(-50%, -50%); 
 }

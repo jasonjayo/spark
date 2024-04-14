@@ -34,7 +34,7 @@
     Please access the site through <a href="https://findyourspark.ie">findyourspark.ie</a>
 </div>
 <nav class="nav
-    navbar d-flex fixed-top justify-content-between p-4 position-relative z-1 bg-white">
+    navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white">
     <a href="{{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 
@@ -45,7 +45,7 @@
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('dashboard'),
                 ])>
-                    <i class="bi-stars fs-1"> </i>
+                    <i class="bi-stars icon"> </i>
                     <span class="d-none mx-2 d-lg-flex">Discover</span>
                 </li>
             </a>
@@ -54,7 +54,7 @@
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('search'),
                 ])>
-                    <i class="bi-search fs-1"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
+                    <i class="bi-search icon"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
             <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
@@ -64,7 +64,7 @@
                         request()->route()->getName(),
                         'chat'),
                 ])>
-                    <i class="bi-chat-dots fs-1"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
+                    <i class="bi-chat-dots icon"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
                 </li>
             </a>
 
@@ -74,7 +74,7 @@
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                     'spark-bg-secondary text-white' => Request::is('profile'),
                 ])>
-                    <i class="bi-person fs-1"></i>
+                    <i class="bi-person icon"></i>
                     <span class="d-none mx-2 d-lg-flex">Profile</span>
 
                 </li>

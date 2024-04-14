@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\RecommendationController;
+use App\Models\Recommendation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,7 +45,10 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     Route::get("chat/{id}", [ChatController::class, "show"])->name("chat.show");
     // Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 
+    Route::get("recommendations", [RecommendationController::class, "generate"]);
 
+    // discovery queue
+    Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
 });
 
 require __DIR__ . '/auth.php';

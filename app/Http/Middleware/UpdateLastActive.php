@@ -19,7 +19,6 @@ class UpdateLastActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        date_default_timezone_set("Europe/Dublin");
         $hasProfile = isset(Auth::user()->profile);
         if (!$hasProfile) {
             if (!str_contains(request()->route()->getName(), "profile.")) {

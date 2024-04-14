@@ -17,12 +17,26 @@ class ProfileController extends Controller
 
     public function index(Request $request)
     {
+
+        $errors = array();
+
+        $min_age = $request->min_age;
+        $max_age = $request->max_age;
+        if (isset($min_age) && isset($max_age)) {
+            if ($min_age > $max_age) {
+                $request->merge(["min_age" => 18, "max_age" => 100]);
+                array_push($errors, "Min age was greater than max, age filters reset.");
+            }
+        }
+
         $request->flash(); // allows use of old in search.blade.php
-        $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests']));
+
+        $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests', 'max_distance', 'query']));
         $sql = $query->toRawSQL();
         return view("search", [
             "profiles" => $query->get(),
-            "sql" => $sql
+            "sql" => $sql,
+            "errors" => $errors
         ]);
     }
 
@@ -89,8 +103,8 @@ class ProfileController extends Controller
                 'fav_movie' => "nullable|max:50",
                 'fav_food' => "nullable|max:50",
                 'fav_song' => "nullable|max:50",
-                'personality_type' => "nullable|max:4",
-                'height' => "nullable|numeric|max:50",
+                'personality_type' => "nullable|alpha|max:4",
+                'height' => "nullable|numeric|decimal:0,2|max:9.99",
                 'languages' => "nullable|max:50",
                 'location' => "nullable|max:40",
             ]);
@@ -141,8 +155,10 @@ class ProfileController extends Controller
     public function updateLocation(Request $request)
     {
         $user = Auth::user();
-        $user->profile->location = $request->location;
-        $user->profile->save();
-        return response(null, 200);
+        if (isset($user->profile)) {
+            $user->profile->location = $request->location;
+            $user->profile->save();
+            return response(null, 200);
+        }
     }
 }

@@ -3,9 +3,8 @@
     <x-slot:title>Dashboard</x-slot>
 
     <div class="container-fluid">
-        Welcome back, {{ Auth::user()->first_name }}
-        <div class="row justify-content-md-center">
-            <a href="" class="dashbtn shadow-lg col-5">
+        <div class="row justify-content-md-center my-4">
+            <a href="{{ route('discovery') }}" class="dashbtn shadow-lg col-5">
                 <img width="fit" src="{{ asset('./images/dashboard/pexels-taryn-elliott-4390580.jpg') }}" />
                 <span>Discovery Queue</span>
             </a>

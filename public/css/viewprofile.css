@@ -57,7 +57,9 @@
 .workingat,
 .studyingat,
 .livingat,
-.speaking {
+.speaking,
+.interests,
+.traits {
     color: #de3163;
     font-weight: bold;
     width: 90px;
@@ -133,7 +135,7 @@
 .profile-tagline {
     margin-bottom: 10px;
     font-weight: bold;
-    color:#de3163
+    color: #de3163;
 }
 
 .favorites-title {

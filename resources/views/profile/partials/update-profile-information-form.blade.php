@@ -168,14 +168,15 @@
 
                     </div>
                     <!-- make the input box for this smaller so i can put the button beside it  -->
-                    <p>Location must be in the format latitude, longitude - for example, 52.654, -8.622</p>
+                    <p>Location will be set automatically by your browser, if you've <a target="_blank"
+                            href="https://docs.buddypunch.com/en/articles/919258-how-to-enable-location-services-for-chrome-safari-edge-and-android-ios-devices-gps-setting">given
+                            permission</a>.</p>
                     <div class="form-floating mb-3">
                         <!-- Location -->
                         <input id="location" name="location" type="text" class="form-control" size=20
-                            maxlength=40 pattern="(-)?\d+(\.\d+)?,\s?(-)?\d+(\.\d+)?"
+                            maxlength=40 pattern="(-)?\d+(\.\d+)?,\s?(-)?\d+(\.\d+)?" readonly
                             value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                         <label for="location">Location</label>
-                        <button class="mt-1 btn btn-primary" id="update-location">Update location</button>
                     </div>
 
                 </div>
@@ -212,13 +213,13 @@
                         <!-- Personality Type -->
                         <input id="personality_type" name="personality_type" type="text" placeholder="ISFJ"
                             class="form-control" size=4 maxlength=4
-                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}" />
-                        <label for="personality_type">Personality Type (Myers Briggs)</label>
+                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}"  pattern="[A-Za-z]{4}" />
+                        <label for="personality_type">Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <!-- Height -->
                         <input id="height" name="height" type="text" class="form-control" size=4
-                            placeholder="1.75m" maxlength=4
+                            placeholder="1.75m" maxlength=4 pattern="^[0-9](\.[0-9]{0,2})?$"
                             value="{{ old('height', $hasProfile ? $profile->height : '') }}" />
                         <label for="height">Height in Meters (e.g., 1.53)</label>
                     </div>
@@ -236,15 +237,6 @@
                     <x-primary-button class="btn btn-primary" name="profile">{{ __('Save') }}</x-primary-button>
                 </div>
 
-                <script>
-                    document.querySelector("#update-location").addEventListener("click", (e) => {
-                        e.preventDefault();
-                        navigator.geolocation.getCurrentPosition((pos) => {
-                            document.querySelector("#location").value =
-                                `${pos.coords.latitude}, ${pos.coords.longitude}`;
-                        });
-                    })
-                </script>
             </div>
         </form>
 </section>
