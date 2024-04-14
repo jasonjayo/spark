@@ -73,6 +73,24 @@
                                         </div>
                                     @endif
 
+                                    <div class="profile-interests">
+                                        <span class="interests">Interests</span>
+                                        @php
+                                            $my_interests = Auth::user()->interests->pluck('id');
+                                            $my_traits = Auth::user()->traits->pluck('id');
+                                        @endphp
+                                        @foreach ($profile->user->interests as $interest)
+                                            <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{ $interest->name }}</span>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="profile-traits">
+                                        <span class="traits">Traits</span>
+                                        @foreach ($profile->user->traits as $trait)
+                                            <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
+                                        @endforeach
+                                    </div>
+
                                     <div class="profile-others">
                                         <div class="profile-personality">{{ $profile->personality_type }}</div>
                                         <div class="profile-height">{{ $profile->height }}<span class="metric">m</span>

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+use DateInterval;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -31,10 +33,13 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $now = date_create("now");
+        $max_dob = $now->sub(new DateInterval("P18Y"));
+
         $request->validate([
             'first_name' => ['required', 'string', 'alpha', 'max:255'],
             'second_name' => ['required', 'string', 'alpha', 'max:255'],
-            'dob' => ['required', 'date', new DateOfBirth],
+            'dob' => ['required', 'date', 'before_or_equal:' . $max_dob->format("Y-m-d")], //new DateOfBirth],
             'email' => ['required', 'string', 'lowercase', 'email:rfc,dns', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);

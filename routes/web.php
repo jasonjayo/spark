@@ -46,6 +46,9 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     // Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 
     Route::get("recommendations", [RecommendationController::class, "generate"]);
+
+    // discovery queue
+    Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
 });
 
 require __DIR__ . '/auth.php';
