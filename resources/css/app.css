@@ -24,6 +24,10 @@
 .spk-bg {
     background-color: var(--spk-color-background);
 }
+.icon {
+    font-size: larger;
+    font-weight: 800;
+}
 .default {
     width: 100vw;
 }

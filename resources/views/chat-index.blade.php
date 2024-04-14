@@ -17,7 +17,7 @@
                 <x-chat-user-list></x-chat-user-list>
             </div>
             <div class="col-9 d-none d-md-block text-center d-flex justify-content-center flex-column">
-                <i class="bi-chat-dots"></i>
+                <i class="bi-chat-dots chat-icon"></i>
                 <h1>Welcome to Spark Chat!</h1>
                 <p>Click on a name to get started.</p>
             </div>
@@ -26,7 +26,7 @@
 </x-app-layout>
 
 <style>
-    .bi-chat-dots {
+    .chat-icon {
         font-size: 4.5em;
     }
 </style>

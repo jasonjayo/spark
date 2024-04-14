@@ -99,6 +99,21 @@
         text-decoration: none;
     }
 }
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-secondary-bg-subtle);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-gray-500);
+}
 .btn {
     align-self: center;
     width: 100%;
