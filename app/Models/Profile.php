@@ -145,19 +145,39 @@ class Profile extends Model
         return date_diff(date_create($this->user->dob), date_create('now'))->y;
     }
 
-    public function getDistance()
+    /**
+     * returns rounded up distance to this user in km or null if either user has no location set
+     * @return int|null
+     * @
+     */
+    public function getNumericalDistance()
     {
         if (isset(Auth::user()->profile->location) && isset($this->location)) {
             $other_user_lat_long = explode(',', $this->location);
             $current_user_lat_long = explode(',', Auth::user()->profile->location);
             if (count($current_user_lat_long) == 2 && count($other_user_lat_long) == 2) {
+                // using DB ST_Distance_Sphere here so distance calculations are consistent
                 $res = DB::select(
                     "select ST_Distance_Sphere(POINT(?, ?), POINT(?, ?)) / 1000 AS distance",
                     [$current_user_lat_long[0], $current_user_lat_long[1], $other_user_lat_long[0], $other_user_lat_long[1]]
                 );
-                return "About " . ceil($res[0]->distance) . " km away";
+                return ceil($res[0]->distance);
             }
             return null;
+        }
+        return null;
+    }
+
+    /**
+     * returns distance string in format "About x km away" or null if no distance available
+     * @return string|null
+     */
+    public function getDistance()
+    {
+        $numerical_distance = $this->getNumericalDistance();
+        if ($numerical_distance !== null) {
+
+            return "About " . $numerical_distance . " km away";
         }
         return null;
     }

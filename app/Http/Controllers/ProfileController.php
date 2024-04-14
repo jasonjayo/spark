@@ -155,8 +155,10 @@ class ProfileController extends Controller
     public function updateLocation(Request $request)
     {
         $user = Auth::user();
-        $user->profile->location = $request->location;
-        $user->profile->save();
-        return response(null, 200);
+        if (isset($user->profile)) {
+            $user->profile->location = $request->location;
+            $user->profile->save();
+            return response(null, 200);
+        }
     }
 }
