@@ -17,7 +17,16 @@
         background-color: white;
         padding: 16px;
         border-radius: 8px;
+        max-height: 800px;
+        width: 256px;
+        overflow: scroll;
+        text-wrap: wrap;
         border: 1px solid var(--spk-color-primary-2);
+    }
+    .error
+    {
+        max-height: 96px;
+        overflow-x: scroll;
     }
     .logo > * {
         align-self: center;
