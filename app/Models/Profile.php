@@ -113,6 +113,7 @@ class Profile extends Model
 
         if (array_key_exists("query", $filters) && $filters["query"] != "") {
             $query->where("first_name", "LIKE", "%" . $filters["query"] . "%");
+            $query->where("second_name", "LIKE", "%" . $filters["query"] . "%");
             $query->orWhere("tagline", "LIKE", "%" . $filters["query"] . "%");
         }
     }

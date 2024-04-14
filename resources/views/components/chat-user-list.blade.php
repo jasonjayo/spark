@@ -1,7 +1,7 @@
 @use('App\Models\Profile')
 
 <ul class='list-group'>
-    @foreach (Profile::all() as $profile)
+    @foreach (Profile::all()->except(Auth::user()->id) as $profile)
         <a class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
             href='{{ route('chat.show', $profile->user->id) }}'>
             {{ $profile->user->first_name }}

@@ -16,9 +16,9 @@
 
                 <div>
                     <div class="form-floating my-3 mx-4">
-                        <input type="text" class="form-control" id="filter_query" name="query" placeholder="Search"
-                            autocomplete="off" value="{{ old('query') }}">
-                        <label for="filter_query">Search</label>
+                        <input type="text" class="form-control" id="filter_query" name="query"
+                            placeholder="Search name, tagline" autocomplete="off" value="{{ old('query') }}">
+                        <label for="filter_query">Search name, tagline</label>
                     </div>
                     <div class="form-label-group my-3 mx-4" x-data="{ min_age: {{ old('min_age', 18) }} }">
                         <label for="filter_min_age" class="form-label">Min age</label>
@@ -95,6 +95,21 @@
                 </div>
             </form>
 
+
+            @foreach ($errors as $error)
+                <div id="toasts">
+                    <div class="toast show align-items-center text-bg-primary bg-danger border-0" role="alert"
+                        aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ $error }}
+                            </div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
 
             <div class="col-12 col-md-7 col-lg-9">
