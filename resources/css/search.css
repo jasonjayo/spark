@@ -1,19 +1,7 @@
-.sideform {
-    border-bottom: 1px solid var(--spk-color-primary-2);
-    border-right: 0px;
-}
+
 .search {
     height: 83vh;
 }
 .row {
     padding: 0;
-}
-@media (min-width: 992px) {
-    .sideform {
-        border-bottom: 0px;
-        position: sticky;
-        min-height: 84vh;
-        max-height: 100%;
-        border-right: 1px solid var(--spk-color-primary-2);
-    }
 }
