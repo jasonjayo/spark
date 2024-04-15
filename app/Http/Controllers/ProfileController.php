@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $query = Profile::filter(request(['min_age', 'max_age', 'gender', 'online_now', 'interests', 'max_distance', 'query']));
         $sql = $query->toRawSQL();
         return view("search", [
-            "profiles" => $query->get(),
+            "profiles" => $query->get()->except(Auth::user()->id),
             "sql" => $sql,
             "errors" => $errors
         ]);
