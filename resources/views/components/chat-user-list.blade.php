@@ -1,6 +1,6 @@
 @use('App\Models\Profile')
 @use ('App\Models\Photo')
-<ul class='list-group gap-1'>
+<ul class='list-group overflow-scroll gap-1'>
     @foreach (Profile::all()->except(Auth::user()->id) as $profile)
         <?php
         $photoUrls = [];

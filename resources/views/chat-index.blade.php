@@ -4,7 +4,7 @@
 
     <main class="fluid-container">
         <div class="row">
-            <div class="col-12 col-md-5 sideform py-4 mx-0">
+            <div class="col-12 col-md-5 sideform-chat  py-4 mx-0">
                 <?php
                 // // need to update this so it also shows if I sent the only message
                 // $statement = $pdo->prepare('SELECT DISTINCT users.username, users.id,  last_activity, (select count(*) from messages where sender_id = users.id and receiver_id = :me and opened = 0) AS unread_count FROM messages JOIN users ON users.id = messages.sender_id WHERE receiver_id = :me');
