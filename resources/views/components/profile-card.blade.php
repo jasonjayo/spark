@@ -5,7 +5,15 @@
 
 @pushOnce('styles')
     <style>
-        /* can be removed if this remains empty */
+        .card:hover {
+            border-width: 2px;
+            border-radius: 3px;
+            border-color: var(--spk-color-primary-1);
+            transition: 0.1s linear;
+        }
+        .card {
+            text-decoration: none;
+        }
     </style>
 @endPushOnce
 <?php
@@ -26,7 +34,7 @@ if (Arr::get($photoUrls, 0) == null) {
 
 
 
-<div class="card h-100 profile-card">
+<a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="card h-100 profile-card">
     <img src="{{ $coverPhoto }}" class="card-img-top" alt="Photo of {{ $profile->user->first_name }}">
     <div class="card-body">
         <h4 class="card-title d-flex justify-content-between">
@@ -56,6 +64,5 @@ if (Arr::get($photoUrls, 0) == null) {
             @endif
         </ul>
         </p>
-        <a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="btn btn-primary">View Profile</a>
     </div>
-</div>
+</a>
