@@ -67,6 +67,7 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
 
     // admin
     Route::get("/admin", [AdminController::class, "dashboard"])->middleware(EnsureAdmin::class);
+
 });
 
 require __DIR__ . '/auth.php';
