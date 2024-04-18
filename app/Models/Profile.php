@@ -78,8 +78,6 @@ class Profile extends Model
             $query->where("distance", "<", $filters["max_distance"]);
         }
 
-
-
         if (array_key_exists("min_age", $filters)) {
             $now = date_create("now");
             $max_dob = $now->sub(new DateInterval("P" . $filters["min_age"] . "Y"));
@@ -113,7 +111,7 @@ class Profile extends Model
 
         if (array_key_exists("query", $filters) && $filters["query"] != "") {
             $query->where("first_name", "LIKE", "%" . $filters["query"] . "%");
-            $query->where("second_name", "LIKE", "%" . $filters["query"] . "%");
+            $query->orWhere("second_name", "LIKE", "%" . $filters["query"] . "%");
             $query->orWhere("tagline", "LIKE", "%" . $filters["query"] . "%");
         }
     }
@@ -186,5 +184,36 @@ class Profile extends Model
     {
         return ($duration->y * 365.25 * 24 * 60) + ($duration->d * 24 * 60)
             + ($duration->h * 60) + $duration->i;
+    }
+
+    private function getMessagesBuilder($id)
+    {
+        return Chat::where(function ($query) use ($id) {
+            $query->where('sender_id', '=', Auth::user()->id)->where('recipient_id', '=', $id);
+        })
+            ->orWhere(function ($query) use ($id) {
+                $query->where('sender_id', '=', $id)->where('recipient_id', '=', Auth::user()->id);
+            });
+    }
+
+    public function getLatestMessageWith($id)
+    {
+        return $this->getMessagesBuilder($id)->first();
+    }
+
+    public function getMessagesWith($id)
+    {
+        Chat::where('sender_id', '=', $id)
+            ->where('recipient_id', '=', Auth::user()->id)
+            ->update(["read" => 1]);
+        return $this->getMessagesBuilder($id)->get();
+    }
+
+    public function getUnreadMessagesCountWith($id)
+    {
+        return Chat::where('sender_id', '=', $id)
+            ->where('recipient_id', '=', Auth::user()->id)
+            ->where("read", "=", "0")
+            ->count();
     }
 }

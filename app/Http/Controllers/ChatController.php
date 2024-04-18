@@ -58,11 +58,7 @@ class ChatController extends Controller
             return view("error")->with(["message" => "User with ID '" . request()->id . "' doesn't exist.", "code" => 404]);
         }
 
-        $messages = Chat::where(function ($query) use ($id) {
-            $query->where("sender_id", "=", Auth::user()->id)->where("recipient_id", "=", $id);
-        })->orWhere(function ($query) use ($id) {
-            $query->where("sender_id", "=", $id)->where("recipient_id", "=", Auth::user()->id);
-        })->get();
+        $messages = Auth::user()->profile->getMessagesWith(intval($id));
         return view("chat", [
             "messages" => $messages,
             "other_user" => $other_user

@@ -22,16 +22,21 @@
         <a class=' bg-white user-row d-flex justify-content-between align-items-center'
             href='{{ route('chat.show', $profile->user->id) }}'>
             <div class="profile-container">
-            <img class="profile-photo" src="{{$coverPhoto}}">
+                <img class="profile-photo" src="{{ $coverPhoto }}">
                 @if ($profile->isActive())
-                <span title="Active now" class=" profile-active online-now text-bg-success rounded-circle"></span>
+                    <span title="Active now" class=" profile-active online-now text-bg-success rounded-circle"></span>
                 @else
                     <span title="Offline" class="profile-active offline text-bg-secondary rounded-circle"></span>
                 @endif
             </div>
-            
-           
-            </img>
+            @php
+                $latest_message = Auth::user()->profile->getLatestMessageWith($profile->user->id);
+                $unread_count = Auth::user()->profile->getUnreadMessagesCountWith($profile->user->id);
+            @endphp
+            @if ($latest_message)
+                Unread: {{ $unread_count }}
+                {{ $latest_message->content }}
+            @endif
             <div class="username">{{ $profile->user->first_name }} </div>
         </a>
     @endforeach
