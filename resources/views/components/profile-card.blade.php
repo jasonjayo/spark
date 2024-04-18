@@ -1,5 +1,4 @@
 @props(['profile'])
-@use('PhpGeoMath\Model\Polar3dPoint')
 @use ('App\Models\Photo')
 @use ('App\Models\Profile')
 
@@ -11,6 +10,7 @@
             border-color: var(--spk-color-primary-1);
             transition: 0.1s linear;
         }
+
         .card {
             text-decoration: none;
         }

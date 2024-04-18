@@ -105,4 +105,9 @@ class User extends Authenticatable
     {
         return Auth::user()->admin === 1;
     }
+
+    public function bans(): HasMany
+    {
+        return $this->hasMany(Ban::class, "user_id", "id");
+    }
 }

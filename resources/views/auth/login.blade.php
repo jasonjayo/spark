@@ -2,6 +2,22 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    @if (session('ban'))
+        @php
+            $ban = session('ban');
+        @endphp
+        <div class="alert alert-danger" role="alert">
+            <h5>Account Banned</h5>
+            @if ($ban->active_to)
+                Your account is banned until {{ $ban->active_to }}.
+            @else
+                Your account is permanently banned.
+            @endif
+            <br>Reason: {{ $ban->reason }}
+            <br>Ban ID: {{ $ban->id }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}" class="form-signin">
         @csrf
 

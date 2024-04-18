@@ -55,7 +55,7 @@ class ChatController extends Controller
         try {
             $other_user = User::findOrFail(request()->id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return view("error")->with(["message" => "User with ID '" . request()->id . "' doesn't exist.", "code" => 404]);
+            return redirect()->route("error")->with(["message" => "User with ID '" . request()->id . "' doesn't exist.", "code" => 404]);
         }
 
         $messages = Auth::user()->profile->getMessagesWith(intval($id));
