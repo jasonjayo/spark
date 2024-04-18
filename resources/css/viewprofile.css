@@ -156,14 +156,13 @@
     color: white;
     font-weight: bold;
     position: relative;
-}
-
-.icon {
-    font-size: 3rem;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding-right: 40px;
+    .icon {
+        font-size: 3rem;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding-right: 40px;
+    }
 }
 
 .favorite-item {

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Middleware\EnsureAdmin;
 use App\Models\Recommendation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +27,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth', 'update_last_active'])->group(function () {
+Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(function () {
     // the post here either creates a new Profile entry on DB or Photo entry on DB depending on the name of the submit button passed in the post request.
     Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -49,6 +51,22 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
 
     // discovery queue
     Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
+    Route::post("react", [RecommendationController::class, "react"])->name("react");
+
+    // report & ban
+    Route::post("report", [AdminController::class, "report"])->name("report.create");
+    Route::post("ban", [AdminController::class, "ban"])->middleware(EnsureAdmin::class)->name("ban.create");
+    Route::post("closeReport", [AdminController::class, "closeReport"])->middleware(EnsureAdmin::class)->name("report.close");
+    Route::post("revokeBan", [AdminController::class, "revokeBan"])->middleware(EnsureAdmin::class)->name("ban.revoke");
+
+
+    // error
+    Route::get("error", function () {
+        return view("error");
+    })->name("error");
+
+    // admin
+    Route::get("/admin", [AdminController::class, "dashboard"]);
 });
 
 require __DIR__ . '/auth.php';

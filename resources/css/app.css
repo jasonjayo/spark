@@ -118,7 +118,7 @@
     list-style-type: none;
     padding: 0;
     /* max-width: 700px; */
-    height: 59vh;
+    height: 71vh;
     overflow-y: scroll;
 }
 ::-webkit-scrollbar {
@@ -194,7 +194,6 @@
 .sideform {
     border-bottom: 1px solid var(--spk-color-primary-2);
     border-right: 0px;
-    
 }
 h3 {
     color: var(--spk-color-primary-2);
@@ -243,10 +242,24 @@ h3 {
 }
 .profile-active {
     position: absolute;
-    top: 20%; 
-    right: 0%; 
+    top: 20%;
+    right: 0%;
     width: 32px;
-    height:32px;
+    height: 32px;
     border: 4px solid white;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
+}
+#discovery-empty-icon {
+    color: var(--spk-color-primary-2);
+    font-size: 3.5em;
+}
+.recommendation-score {
+    width: 200px;
+    background: #fff;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.recommendation-bar {
+    height: 100%;
 }
