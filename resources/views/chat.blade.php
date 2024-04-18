@@ -17,7 +17,6 @@
 
     <main class="container-fluid chat-page">
         <div class="row">
-            <div class="col-12 sideform col-md-5 d-none d-md-block">
 
             <div class="col-12 sideform-chat col-md-5 d-none d-md-block">
                 <?php
