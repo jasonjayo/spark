@@ -14,6 +14,13 @@
             <?php array_push($photoUrls, $photo->photo_url); ?>
         @endforeach
 
+        <form action="{{ route('report.create') }} " method="POST">
+            @csrf
+            <input type="number" name="reported_id" hidden value="{{ $profile->user->id }}">
+            <input type="text" name="reason" value="Test report">
+            <input type="submit">
+        </form>
+
         <div class="container profile-container">
             @if (session('match'))
                 <div class="row">
@@ -21,6 +28,17 @@
                         <div class="alert alert-success fs-4" role="alert">
                             <b class="me-3">🎉 Congratulations - it's a match! </b>
                             You can now chat with {{ $profile->user->first_name }}.
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            {{-- sent from AdminController --}}
+            @if (session('report_id'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            Report created successfully (Report ID: {{ session('report_id') }})
                         </div>
                     </div>
                 </div>

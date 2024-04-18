@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PhotoController;
@@ -50,6 +51,9 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
     // discovery queue
     Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
     Route::post("react", [RecommendationController::class, "react"])->name("react");
+
+    // report
+    Route::post("report", [AdminController::class, "report"])->name("report.create");
 });
 
 require __DIR__ . '/auth.php';
