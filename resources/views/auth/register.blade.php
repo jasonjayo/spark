@@ -1,13 +1,16 @@
 <x-guest-layout>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('register') }}" class="form-signin">
+
         @csrf
 
         <!-- First Name -->
         <div class="form-floating mb-3">
             <x-text-input id="first_name" class="form-control" type="text" name="first_name" :value="old('first_name')"
+
                 required autofocus autocomplete="given-name" placeholder="{{ __('First Name') }}" />
             <x-input-label for="first_name" :value="__('First Name')" />
 
@@ -35,6 +38,7 @@
         <!-- Email Address -->
         <div class="form-floating mb-3">
             <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email')"
+
                 required autocomplete="username" placeholder="{{ __('Email') }}" />
             <x-input-label for="email" :value="__('Email')" />
 
@@ -47,7 +51,7 @@
                 autocomplete="new-password" placeholder="{{ __('Password') }}" />
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2 overflow-scroll  error" />
         </div>
 
         <!-- Confirm Password -->
@@ -56,7 +60,7 @@
                 name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirm Password') }}" />
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 overflow-scroll error" />
         </div>
 
         <!-- Password Requirements -->

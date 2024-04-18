@@ -130,11 +130,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--bs-secondary-bg-subtle);
+    background: var(--spk-color-secondary-1);
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--bs-gray-500);
+    background: var(--spk-color-primary-2);
 }
 #toasts {
     position: fixed;
@@ -205,6 +206,13 @@ h3 {
         position: sticky;
         min-height: 84vh;
         max-height: 100%;
+        border-right: 1px solid var(--spk-color-primary-2);
+    }
+    .sideform-chat {
+        border-bottom: 0px;
+        position: sticky;
+        max-height: 89vh;
+        overflow-y: scroll;
         border-right: 1px solid var(--spk-color-primary-2);
     }
 }

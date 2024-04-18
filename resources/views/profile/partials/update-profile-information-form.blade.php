@@ -6,14 +6,17 @@
 <section>
 
     <?php
-    $firstToUpper = ucfirst($user->first_name);
-    $secondToUpper = ucfirst($user->second_name);
-    $user = Auth::user();
-    $hasProfile = isset($user->profile);
-    if ($hasProfile) {
-        $profile = $user->profile;
-    }
-    ?>
+$firstToUpper = ucfirst($user->first_name);
+$secondToUpper = ucfirst($user->second_name);
+$user = Auth::user();
+$hasProfile = isset($user->profile);
+if ($hasProfile) {
+    $profile = $user->profile;
+}
+
+$hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
+?>
+
 
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -30,9 +33,16 @@
     </form>
 
     @if (session('status') === 'profile-updated')
-        <div class="alert alert-success" role="alert">
-            Profile saved!
+    @if($hasPhotos->isEmpty())
+    <div class="alert alert-success" role="alert">
+            Profile saved! Why not upload some pictures to your profile in the Update Photos section!
         </div>
+        @else 
+        <div class="alert alert-success" role="alert">
+            Profile saved! 
+        </div>
+        @endif
+
     @endif
 
     @if ($errors->any())
