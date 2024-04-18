@@ -22,6 +22,14 @@
         overflow: scroll;
         text-wrap: wrap;
         border: 1px solid var(--spk-color-primary-2);
+        max-width: 400px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .error
+    {
+        max-height: 96px;
+        overflow-x: scroll;
     }
     .error
     {

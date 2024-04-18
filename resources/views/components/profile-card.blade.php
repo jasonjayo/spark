@@ -34,6 +34,8 @@ if (Arr::get($photoUrls, 0) == null) {
 
 
 
+
+
 <a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="card h-100 profile-card">
     <img src="{{ $coverPhoto }}" class="card-img-top" alt="Photo of {{ $profile->user->first_name }}">
     <div class="card-body">
