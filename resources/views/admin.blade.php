@@ -19,8 +19,9 @@
                             <input required type="number" class="form-control" id="ban_user_id" name="user_id">
                         </div>
                         <div class="mb-3">
-                            <label for="ban_reason" class="form-label" autocomplete="off">Reason</label>
-                            <input required type="text" class="form-control" id="ban_reason" name="reason">
+                            <label for="ban_reason" class="form-label">Reason</label>
+                            <input required type="text" class="form-control" autocomplete="off" id="ban_reason"
+                                name="reason">
                         </div>
                         <div class="mb-3">
                             <label for="ban_report_id" class="form-label">Linked report (optional)</label>
