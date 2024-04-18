@@ -49,6 +49,7 @@ Route::middleware(['auth', 'update_last_active'])->group(function () {
 
     // discovery queue
     Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
+    Route::post("react", [RecommendationController::class, "react"])->name("react");
 });
 
 require __DIR__ . '/auth.php';

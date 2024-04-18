@@ -40,10 +40,10 @@
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-            <a href="{{ route('dashboard') }}" class="text-decoration-none text-black">
+            <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                    'spark-bg-secondary text-white' => Request::is('dashboard'),
+                    'spark-bg-secondary text-white' => Request::is('discovery'),
                 ])>
                     <i class="bi-stars icon"> </i>
                     <span class="d-none mx-2 d-lg-flex">Discover</span>
@@ -88,10 +88,10 @@
 
 <nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around z-4 spark-bg-primary">
     <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-        <a href="{{ route('dashboard') }}" class="text-decoration-none text-black">
+        <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
             <li @class([
                 'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                'spark-bg-secondary' => Request::is('dashboard'),
+                'spark-bg-secondary' => Request::is('discovery'),
             ])>
                 <i class="bi-stars fs-1 text-white"> </i>
             </li>

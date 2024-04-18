@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
@@ -76,9 +78,31 @@ class User extends Authenticatable
 
     public function recommendations()
     {
-        return $this->recommendationsAsFirstUser->toBase()
-            ->merge($this->recommendationsAsSecondUser->toBase())->sortByDesc(function ($recommendation) {
-                return $recommendation->pivot->weight;
-            });;
+        // return $this->recommendationsAsFirstUser
+        //     ->merge($this->recommendationsAsSecondUser)->sortByDesc(function ($recommendation) {
+        //         return $recommendation->pivot->weight;
+        //     });
+        // $recommendationIds = Recommendation::where("user_1_id", "=", Auth::user()->id)->pluck("id");
+        // return User::whereIn("id", $recommendationIds);
+        return $this->belongsToMany(User::class, 'recommendations', 'user_1_id', 'user_2_id')
+            ->withPivot('weight')
+            ->orderBy("pivot_weight", "desc");
+    }
+
+    public function reactionsReceived()
+    {
+        return $this->belongsToMany(User::class, "reactions", "recipient_id", "sender_id")
+            ->withPivot("type");
+    }
+
+    public function reactionsSent()
+    {
+        return $this->belongsToMany(User::class, "reactions", "sender_id", "recipient_id")
+            ->withPivot("type");
+    }
+
+    public function isAdmin()
+    {
+        return Auth::user()->admin === 1;
     }
 }

@@ -1,5 +1,4 @@
 @props(['profile'])
-@use('PhpGeoMath\Model\Polar3dPoint')
 @use ('App\Models\Photo')
 
 <head>
@@ -16,6 +15,16 @@
         @endforeach
 
         <div class="container profile-container">
+            @if (session('match'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success fs-4" role="alert">
+                            <b class="me-3">🎉 Congratulations - it's a match! </b>
+                            You can now chat with {{ $profile->user->first_name }}.
+                        </div>
+                    </div>
+                </div>
+            @endif
             <section class="mt-6 space-y-6">
                 <div class="card profile-card">
                     <div class="row g-0">
@@ -59,6 +68,10 @@
                                     <div class="d-flex align-items-center">
                                         <h2 class="profile-name">{{ $profile->user->first_name }}, <span
                                                 class="age">{{ $profile->getAge() }}</span></h2>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-primary mt-3 mb-3"
+                                            href="{{ route('chat.show', $profile->user->id) }}">Chat</a>
                                     </div>
                                     <div class="profile-languages"><span class="speaking">I speak</span>
                                         {{ $profile->languages }}</div>
