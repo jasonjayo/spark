@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
 use App\Models\Photo;
+use Illuminate\Support\Facades\DB;
+
 
 class ProfileController extends Controller
 {
@@ -142,6 +144,12 @@ class ProfileController extends Controller
 
 
                 return back()->with('status', "photo-saved");
+            }
+        }
+        if ($request->has('photoDelete')) { {
+                $photoId = $request->photoId;
+                DB::table('photos')->where('id', $photoId)->delete();
+                return back()->with('status', "photo-deleted");
             }
         }
     }
