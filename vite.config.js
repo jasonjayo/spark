@@ -11,6 +11,7 @@ export default defineConfig({
                 "resources/js/search.js",
                 "resources/css/search.css",
                 "resources/js/chat.js",
+                "resources/css/viewprofile.css",
             ],
             refresh: true,
         }),

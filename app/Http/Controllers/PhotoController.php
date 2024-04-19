@@ -32,8 +32,5 @@ class PhotoController extends Controller
 
 
         return back()->with('status', "photo-saved");
-        ;
     }
-
-
 }

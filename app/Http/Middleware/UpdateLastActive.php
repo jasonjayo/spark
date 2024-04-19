@@ -19,17 +19,20 @@ class UpdateLastActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $hasProfile = isset(Auth::user()->profile);
-        if (!$hasProfile) {
-            if (!str_contains(request()->route()->getName(), "profile.")) {
-                return redirect("profile");
+        if (!Auth::user()->isAdmin()) {
+            $hasProfile = isset(Auth::user()->profile);
+            if (!$hasProfile) {
+                if (!str_contains(request()->route()->getName(), "profile.")) {
+                    return redirect("profile");
+                }
+                return $next($request);
+            } else {
+                $user = $request->user();
+                $user->profile->last_active = date_create("now");
+                $user->profile->save();
+                return $next($request);
             }
-            return $next($request);
-        } else {
-            $user = $request->user();
-            $user->profile->last_active = date_create("now");
-            $user->profile->save();
-            return $next($request);
         }
+        return $next($request);
     }
 }
