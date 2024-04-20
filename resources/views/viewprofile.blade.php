@@ -144,55 +144,115 @@
                         <div class="card-body">
                             <div class="profile-info">
                                 <div class="d-flex align-items-center">
-                                    <h2 class="profile-name">{{ $profile->user->first_name }}, <span
-                                            class="age">{{ $profile->getAge() }}</span></h2>
+                                    <h2 class="profile-name">{{ $profile->user->first_name }}, {{ $profile->getAge() }}</h2>
                                 </div>
                                 <div>
-                                    <a class="btn btn-primary mt-3 mb-3"
-                                        href="{{ route('chat.show', $profile->user->id) }}">Chat</a>
+                                    <div class="profile-tagline">{{ $profile->tagline }}</div>
+                                    <a class="btn btn-primary mt-3 mb-3" href="{{ route('chat.show', $profile->user->id) }}">Say Hi!</a>
                                 </div>
-                                <div class="profile-languages"><span class="speaking">I speak</span>
-                                    {{ $profile->languages }}</div>
-                                <div class="profile-work"><span class="workingat">Work</span> {{ $profile->work }}
-                                </div>
-                                <div class="profile-university"><span class="studyingat">University</span>
-                                    {{ $profile->university }}</div>
-                                @if ($profile->getDistance() != null)
-                                    <div class="profile-location">
-                                        <span class="livingat">Home</span>
-                                        <span class="distance">{{ $profile->getDistance() }}</span>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-location">
+                                                <span class="material-symbols-outlined">location_on</span>
+                                                <span class="distance">{{ $profile->getDistance() }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                @endif
-
-                                <div class="profile-interests">
-                                    <span class="interests">Interests</span>
-                                    @php
-                                        $my_interests = Auth::user()->interests->pluck('id');
-                                        $my_traits = Auth::user()->traits->pluck('id');
-                                    @endphp
-                                    @foreach ($profile->user->interests as $interest)
-                                        <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{ $interest->name }}</span>
-                                    @endforeach
-                                </div>
-
-                                <div class="profile-traits">
-                                    <span class="traits">Traits</span>
-                                    @foreach ($profile->user->traits as $trait)
-                                        <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
-                                    @endforeach
-                                </div>
-
-                                <div class="profile-others">
-                                    <div class="profile-personality">{{ $profile->personality_type }}</div>
-                                    <div class="profile-height">{{ $profile->height }}<span class="metric">m</span>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-languages">
+                                                <span class="material-symbols-outlined">language</span>
+                                                {{ $profile->languages ?? 'Languages not provided' }}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="profile-interest">{{ $profile->interested_in->getLabel() }}</div>
-                                    <div class="profile-seeking">{{ $profile->seeking->getLabel() }}</div>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-work">
+                                                <span class="material-symbols-outlined">work</span>
+                                                {{ $profile->work ?? 'Work not specified' }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="profile-line"></div>
-                                <div class="profile-tagline">{{ $profile->tagline }}</div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-university">
+                                                <span class="material-symbols-outlined">school</span>
+                                                {{ $profile->university ?? 'University not specified' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-personality">
+                                                <span class="material-symbols-outlined">psychology_alt</span>
+                                                {{ $profile->personality_type ?? 'Personality type not provided'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-height">
+                                                <span class="material-symbols-outlined">height</span>
+                                                <span class="height-value">{{ $profile->height ?? 'Height not provided' }}</span><span class="metric">m</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-interest">
+                                                <span class="material-symbols-outlined">heart_check</span>
+                                                {{ $profile->interested_in->getLabel() }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-seeking">
+                                                <span class="material-symbols-outlined">search</span>
+                                                {{ $profile->seeking->getLabel() }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="profile-info">
+                                            <div class="profile-traits">
+                                                <span class="material-symbols-outlined">waving_hand</span>
+                                                @foreach ($profile->user->traits as $trait)
+                                                    <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
+                                                @endforeach
+                                                @if(count($profile->user->traits) == 0)
+                                                    <span>No traits specified</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-info">
+                                            <div class="profile-interests">
+                                                <span class="material-symbols-outlined">interests</span>
+                                                @php
+                                                    $my_interests = Auth::user()->interests->pluck('id');
+                                                @endphp
+                                                @foreach ($profile->user->interests as $interest)
+                                                    <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{ $interest->name }}</span>
+                                                @endforeach
+                                                @if(count($profile->user->interests) == 0)
+                                                    <span>No interests specified</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
                                 <div class="profile-bio">{{ $profile->bio }}</div>
-
                             </div>
                         </div>
                     </div>
@@ -207,19 +267,19 @@
                 <div class="col">
                     <div class="favorite-square">
                         <span class="material-symbols-outlined icon">headphones</span>
-                        <div class="favorite-item text-uppercase">{{ $profile->fav_song }}</div>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_song ?? 'Favorite Song' }}</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="favorite-square">
                         <span class="material-symbols-outlined icon">movie</span>
-                        <div class="favorite-item text-uppercase">{{ $profile->fav_movie }}</div>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_movie ?? 'Favorite Movie' }}</div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="favorite-square">
                         <span class="material-symbols-outlined icon">restaurant</span>
-                        <div class="favorite-item text-uppercase">{{ $profile->fav_food }}</div>
+                        <div class="favorite-item text-uppercase">{{ $profile->fav_food ?? 'Favorite Food' }}</div>
                     </div>
                 </div>
             </div>

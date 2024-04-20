@@ -12,12 +12,6 @@
 .mt-6 {
     margin-top: 0.2rem;
 }
-
-.mb-3,
-.mb-lg-0 {
-    margin-bottom: 1rem;
-}
-
 .d-block {
     display: block;
 }
@@ -33,9 +27,17 @@
 .d-flex {
     display: flex;
 }
-
-.align-items-center {
+.profile-info {
     align-items: center;
+}
+.material-symbols-outlined {
+    font-size: 24px;
+    margin-right: 5px;
+    color: #de3163;
+    margin-bottom: 10px;
+}
+.profile-info span {
+    vertical-align: middle;
 }
 
 .profile-card {
@@ -46,32 +48,6 @@
     font-size: 50px;
     font-weight: bold;
 }
-
-.workingat,
-.studyingat,
-.livingat,
-.speaking,
-.interests,
-.traits {
-    color: #de3163;
-    font-weight: bold;
-    width: 90px;
-    display: inline-block;
-    text-align: left;
-    margin-right: 10px;
-}
-.livingat {
-    margin-bottom: 10px;
-}
-
-.profile-line {
-    width: 100%;
-    height: 1px;
-    background-color: #de3163;
-    margin: 20px 0;
-    margin-bottom: 20px;
-}
-
 .profile-bio {
     max-height: 100px;
     overflow: auto;
@@ -106,25 +82,6 @@
         margin-top: 20px;
     }
 }
-
-.profile-others {
-    display: flex;
-    align-items: center;
-}
-
-.profile-others > div {
-    margin-right: 10px;
-}
-
-.profile-others > div:last-child {
-    margin-right: 0;
-}
-
-.profile-others > div::after {
-    content: "|";
-    margin-left: 10px;
-}
-
 .profile-tagline {
     margin-bottom: 10px;
     font-weight: bold;
