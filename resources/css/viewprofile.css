@@ -2,6 +2,7 @@
 
 .container {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .space-y-6 > * + * {
@@ -9,11 +10,7 @@
 }
 
 .mt-6 {
-    margin-top: 1.5rem;
-}
-
-.mt-6 {
-    margin-top: 1.5rem;
+    margin-top: 0.2rem;
 }
 
 .mb-3,
@@ -42,16 +39,12 @@
 }
 
 .profile-card {
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
 }
 .profile-name {
-    font-size: 24px;
+    font-size: 50px;
     font-weight: bold;
-}
-
-.profile-info {
-    margin-top: 20px;
 }
 
 .workingat,
@@ -166,5 +159,44 @@
 }
 
 .favorite-item {
-    font-size: 1.5rem; /* Adjust the font size as needed */
+    font-size: 1.5rem;
+}
+@media (max-width: 768px) {
+    .position-absolute {
+        z-index: 999;
+    }
+}
+.btn-report {
+    background-color: transparent !important;
+    color: #de3163 !important;
+    border-color: transparent !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+.btn-report:hover {
+    background-color: transparent !important;
+    color: #b61a47 !important;
+    border-color: transparent !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.modal-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-subtitle {
+    color: #6c757d;
+    font-size: 14px;
+    margin-top: 5px;
 }
