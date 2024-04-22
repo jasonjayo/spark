@@ -160,17 +160,26 @@ $hasTraits = false;
 <div class="ph3 mt4">
   <h1 class="f6 fw6 ttu tracked">Traits</h1>
   @foreach (SparkTrait::get() as $trait)
-  <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0">{{ $trait->name}}</button>
+  <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color"
+  href="#0"
+  data-trait-name="{{ $trait->name }}"
+   data-trait-id=" {{ $trait->id }}"
+   data-trait-category="testCat"
+   onclick="addSelectedTrait(this)">
+   {{ $trait->name}}
+</button>
   @endforeach
 </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onClick="print()">AGH</button>
-        <form action="{{ route('profile.addUserInterests') }}" method="POST">
+        <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
             @csrf
-            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />             
-        <button type="submit" class="btn btn-primary">Save changes</button>
+
+            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
+            <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
+                   
+        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
 </form>
       </div>
     </div>
@@ -196,7 +205,11 @@ $hasTraits = false;
     </form>
 
 <!-- Modal -->
-
+   @if(session('status') === 'interestsAndTraits-created')
+   <div class="alert alert-success" role="alert">
+           Your chosen interests and traits have been saved!!
+        </div>
+        @endif
 
     @if (session('status') === 'profile-updated')
     @if($hasPhotos->isEmpty())
@@ -410,10 +423,10 @@ $hasTraits = false;
                 </div>
   
                 <div class="flex items-center gap-4 g">
-                    <button class="btn btn-primary" name="profile">Save</button>
+                    <button class="btn btn-primary" name="profile">Save Profile</button>
                     <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
+ Interests and Traits
 </button>
                 </div>
             </div>
@@ -425,15 +438,12 @@ $hasTraits = false;
        interestInput.value += interestId + ",";
         }
     </script>
-
-    <!-- <script>
-        function print(){
-         let idbruh = interestsSelected[0].id;
-         let huh = idbruh.toString();
-        let elem = document.getElementById(huh);
-        // let val = elem.value;
-            return confirm(elem);
+    <script>
+        function addSelectedTrait(e) {
+            var traitId = e.getAttribute("data-trait-id");
+            var traitInput = document.querySelector('#traits');
+            traitInput.value += traitId + ",";
         }
-        </script> -->
+        </script>
         </form>
 </section>

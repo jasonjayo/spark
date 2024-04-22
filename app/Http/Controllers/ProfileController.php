@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SparkTrait;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -171,7 +172,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function addUserInterests(Request $request)
+    public function addUserInterestsAndTraits(Request $request)
     {
         $interests = array_filter(explode(",", $request->interests));
 
@@ -182,19 +183,14 @@ class ProfileController extends Controller
             }
         }
 
-        dd($my->interests());
+        $traits = array_filter(explode(",", $request->traits));
 
-
-        // if ($my->recommendations->contains(User::find($second_user_id))) {
-        //     $my->recommendations()->updateExistingPivot($second_user_id, [
-        //         "weight" => $weight
-        //     ]);
-        // } else {
-        //     $my->recommendations()->attach($second_user_id, [
-        //         "weight" => $weight
-        //     ]);
-        // }
-
-
+        foreach ($traits as $trait) {
+            $my = Auth::user();
+            if (!$my->traits->contains(SparkTrait::find($trait))) {
+                $my->traits()->attach($trait);
+            }
+        }
+        return back()->with('status', "interestsAndTraits-created");
     }
 }
