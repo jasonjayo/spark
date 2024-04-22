@@ -177,7 +177,7 @@ class ProfileController extends Controller
 
         foreach ($interests as $interest) {
             $my = Auth::user();
-            if (!$my->interests->contains($interest)) {
+            if (!$my->interests->contains(Interest::find($interest))) {
                 $my->interests()->attach($interest);
             }
         }
