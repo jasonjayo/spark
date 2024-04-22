@@ -2,8 +2,116 @@
 @use('App\Enums\InterestedIn')
 @use('App\Enums\Seeking')
 @use('App\Models\User')
+@use('App\Models\Interest')
+@use('App\Models\SparkTrait')
 
 <section>
+<style>
+    .ba {
+    border-style: solid;
+    border-width: 1px;
+}
+
+.br-pill {
+    border-radius: 9999px;
+}
+
+.bw1 {
+    border-width: .125rem;
+}
+
+.bw2 {
+    border-width: .25rem;
+}
+
+.dib {
+    display: inline-block;
+}
+
+.fw6 {
+    font-weight: 600;
+}
+
+.tracked {
+    letter-spacing: .1em;
+}
+
+.link {
+    text-decoration: none;
+    transition: color .15s ease-in;
+}
+
+.link:link, .link:visited {
+    transition: color .15s ease-in;
+}
+
+.link:hover {
+    transition: color .15s ease-in;
+}
+
+.link:active {
+    transition: color .15s ease-in;
+}
+
+.link:focus {
+    transition: color .15s ease-in;
+    outline: 1px dotted currentColor;
+}
+
+.pv2 {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.ph3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.mb2 {
+    margin-bottom: .5rem;
+}
+
+.mb4 {
+    margin-bottom: 2rem;
+}
+
+.mt4 {
+    margin-top: 2rem;
+}
+
+.ttu {
+    text-transform: uppercase;
+}
+
+.f6 {
+    font-size: .875rem;
+}
+
+.dim {
+    opacity: 1;
+    transition: opacity .15s ease-in;
+}
+
+.dim:hover, .dim:focus {
+    opacity: .5;
+    transition: opacity .15s ease-in;
+}
+
+.dim:active {
+    opacity: .8;
+    transition: opacity .15s ease-out;
+}
+.intr_color {
+    border-color: var(--spk-color-primary-1);
+    color: var(--spk-color-primary-1);
+}
+.traits_color {
+    border-color: var( --spk-color-secondary-1);
+    color : var( --spk-color-secondary-1);
+}
+</style>
+
 
     <?php
 $firstToUpper = ucfirst($user->first_name);
@@ -15,7 +123,67 @@ if ($hasProfile) {
 }
 
 $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
+$userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
+$usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
+$hasInterests = false;
+$hasTraits = false;
+
+
+
+
 ?>
+<script>
+    var interestsSelected = [];
+</script>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Interests and Traits</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <h6 class="modal-title" id="exampleModalLabel">  Hey There! Care to tell us about some of your interests and traits?</h6>
+        <div class="ph3 mt4">
+  <h1 class="f6 fw6 ttu tracked">Interests</h1>
+  @foreach (Interest::get() as $interest)
+  <button id="test" 
+  class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
+   href="#0"
+   data-interest-name="{{ $interest->name }}"
+   data-interest-id=" {{ $interest->id }}"
+   data-interest-category="testCat"
+   onClick="addSelectedInterest(this)">
+   {{ $interest->name}}
+</button>
+ @endforeach
+</div>
+<div class="ph3 mt4">
+  <h1 class="f6 fw6 ttu tracked">Traits</h1>
+  @foreach (SparkTrait::get() as $trait)
+  <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0">{{ $trait->name}}</button>
+  @endforeach
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onClick="print()">AGH</button>
+        <form>
+            <script>
+                for(let i = 0; i < interestsSelected.length; i++){
+                    var hello = document.createElement("input");
+                    hello.setAttribute('class', 'testInput');
+                    hello.setAttribute('id', interestsSelected[i].id);
+                  
+                }
+             </script>
+        <button type="button" class="btn btn-primary">Save changes</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <header>
@@ -26,18 +194,24 @@ $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Update your account's profile information.") }}
         </p>
+        <div> 
+      
+</div>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
 
+<!-- Modal -->
+
+
     @if (session('status') === 'profile-updated')
     @if($hasPhotos->isEmpty())
     <div class="alert alert-success" role="alert">
             Profile saved! Why not upload some pictures to your profile in the Update Photos section!
         </div>
-        @else 
+        @else
         <div class="alert alert-success" role="alert">
             Profile saved! 
         </div>
@@ -55,7 +229,6 @@ $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
         </div>
     @endif
 
-
     <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
         @csrf
 
@@ -65,12 +238,14 @@ $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
             </div>
         @endif
 
+        
 
 
         <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
             @csrf
 
             <div class="container d-flex flex-column ">
+    
                 <!-- Basic Details Div -->
                 <div class="mb-3">
                     <h2>Basic Details</h2>
@@ -241,12 +416,38 @@ $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
                         <label for="languages">Languages Spoken</label>
                     </div>
                 </div>
-
-
+  
                 <div class="flex items-center gap-4 g">
-                    <x-primary-button class="btn btn-primary" name="profile">{{ __('Save') }}</x-primary-button>
+                    <button class="btn btn-primary" name="profile">Save</button>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
                 </div>
+                
 
             </div>
+
+            <script>
+    function addSelectedInterest(button) {
+        let interest = {
+            id: button.getAttribute('data-interest-id'), 
+            name: button.getAttribute('data-interest-name'),
+            category: button.getAttribute('data-interest-category')
+        };
+interestsSelected.push(interest);
+return confirm(interestsSelected.toString()) ; 
+        }
+    </script>
+
+    <script>
+        function print(){
+         let idbruh = interestsSelected[0].id;
+         let huh = idbruh.toString();
+        let elem = document.getElementById(huh);
+        // let val = elem.value;
+            return confirm(elem);
+        }
+        </script>
         </form>
 </section>
