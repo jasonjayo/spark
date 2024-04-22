@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use App\Models\Profile;
 use App\Models\Photo;
 use Illuminate\Support\Facades\DB;
+use App\Models\Interest;
 
 
 class ProfileController extends Controller
@@ -168,5 +169,32 @@ class ProfileController extends Controller
             $user->profile->save();
             return response(null, 200);
         }
+    }
+
+    public function addUserInterests(Request $request)
+    {
+        $interests = array_filter(explode(",", $request->interests));
+
+        foreach ($interests as $interest) {
+            $my = Auth::user();
+            if (!$my->interests->contains($interest)) {
+                $my->interests()->attach($interest);
+            }
+        }
+
+        dd($my->interests());
+
+
+        // if ($my->recommendations->contains(User::find($second_user_id))) {
+        //     $my->recommendations()->updateExistingPivot($second_user_id, [
+        //         "weight" => $weight
+        //     ]);
+        // } else {
+        //     $my->recommendations()->attach($second_user_id, [
+        //         "weight" => $weight
+        //     ]);
+        // }
+
+
     }
 }

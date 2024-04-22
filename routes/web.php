@@ -33,6 +33,7 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post("/addUserInterests", [ProfileController::class, "addUserInterests"])->name("profile.addUserInterests");
 
     Route::get('/dashboard', function () {
         return view('dashboard');

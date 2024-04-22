@@ -132,9 +132,7 @@ $hasTraits = false;
 
 
 ?>
-<script>
-    var interestsSelected = [];
-</script>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -154,7 +152,7 @@ $hasTraits = false;
    data-interest-name="{{ $interest->name }}"
    data-interest-id=" {{ $interest->id }}"
    data-interest-category="testCat"
-   onClick="addSelectedInterest(this)">
+   onclick="addSelectedInterest(this)">
    {{ $interest->name}}
 </button>
  @endforeach
@@ -169,16 +167,10 @@ $hasTraits = false;
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onClick="print()">AGH</button>
-        <form>
-            <script>
-                for(let i = 0; i < interestsSelected.length; i++){
-                    var hello = document.createElement("input");
-                    hello.setAttribute('class', 'testInput');
-                    hello.setAttribute('id', interestsSelected[i].id);
-                  
-                }
-             </script>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <form action="{{ route('profile.addUserInterests') }}" method="POST">
+            @csrf
+            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />             
+        <button type="submit" class="btn btn-primary">Save changes</button>
 </form>
       </div>
     </div>
@@ -424,23 +416,17 @@ $hasTraits = false;
   Launch demo modal
 </button>
                 </div>
-                
-
             </div>
 
             <script>
-    function addSelectedInterest(button) {
-        let interest = {
-            id: button.getAttribute('data-interest-id'), 
-            name: button.getAttribute('data-interest-name'),
-            category: button.getAttribute('data-interest-category')
-        };
-interestsSelected.push(interest);
-return confirm(interestsSelected.toString()) ; 
+    function addSelectedInterest(e) {
+       var interestId = e.getAttribute("data-interest-id");
+       var interestInput =  document.querySelector("#interests");
+       interestInput.value += interestId + ",";
         }
     </script>
 
-    <script>
+    <!-- <script>
         function print(){
          let idbruh = interestsSelected[0].id;
          let huh = idbruh.toString();
@@ -448,6 +434,6 @@ return confirm(interestsSelected.toString()) ;
         // let val = elem.value;
             return confirm(elem);
         }
-        </script>
+        </script> -->
         </form>
 </section>
