@@ -15,7 +15,7 @@
 
     <x-slot:title>Chat</x-slot>
 
-    <main class="container-fluid chat-page">
+    <main class="fluid-container chat-page">
         <div class="row">
 
             <div class="col-12 sideform-chat col-md-5 d-none d-md-block">
