@@ -61,7 +61,7 @@ class ChatController extends Controller
             return redirect()->route("error")->with(["message" => "User with ID '" . request()->id . "' doesn't exist.", "code" => 404]);
         }
 
-        $messages = Auth::user()->profile->getMessagesWith(intval($id));
+        $messages = Auth::user()->getMessagesWith(intval($id));
         return view("chat", [
             "messages" => $messages,
             "other_user" => $other_user
