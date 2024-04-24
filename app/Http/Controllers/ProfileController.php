@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SparkTrait;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -11,6 +12,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Profile;
 use App\Models\Photo;
+use Illuminate\Support\Facades\DB;
+use App\Models\Interest;
+
 
 class ProfileController extends Controller
 {
@@ -144,6 +148,12 @@ class ProfileController extends Controller
                 return back()->with('status', "photo-saved");
             }
         }
+        if ($request->has('photoDelete')) { {
+                $photoId = $request->photoId;
+                DB::table('photos')->where('id', $photoId)->delete();
+                return back()->with('status', "photo-deleted");
+            }
+        }
     }
 
     public function show($id): View
@@ -160,5 +170,27 @@ class ProfileController extends Controller
             $user->profile->save();
             return response(null, 200);
         }
+    }
+
+    public function addUserInterestsAndTraits(Request $request)
+    {
+        $interests = array_filter(explode(",", $request->interests));
+
+        foreach ($interests as $interest) {
+            $my = Auth::user();
+            if (!$my->interests->contains(Interest::find($interest))) {
+                $my->interests()->attach($interest);
+            }
+        }
+
+        $traits = array_filter(explode(",", $request->traits));
+
+        foreach ($traits as $trait) {
+            $my = Auth::user();
+            if (!$my->traits->contains(SparkTrait::find($trait))) {
+                $my->traits()->attach($trait);
+            }
+        }
+        return back()->with('status', "interestsAndTraits-created");
     }
 }

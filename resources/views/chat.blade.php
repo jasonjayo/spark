@@ -17,17 +17,16 @@
 
     <main class="container-fluid chat-page">
         <div class="row">
-            <div class="col-12 sideform col-md-5 d-none d-md-block">
 
-            <div class="col-12 sideform-chat col-md-5 d-none d-md-block">
+            <div class="col-12 sideform-chat col-md-4 d-none d-md-block g-0">
                 <?php
                 // // need to update this so it also shows if I sent the only message
                 // $statement = $pdo->prepare('SELECT DISTINCT users.username, users.id,  last_activity, (select count(*) from messages where sender_id = users.id and receiver_id = :me and opened = 0) AS unread_count FROM messages JOIN users ON users.id = messages.sender_id WHERE receiver_id = :me');
                 ?>
-                <h3>Your Sparks:</h3>
+                <h3 class="p-3">Your Sparks:</h3>
                 <x-chat-user-list></x-chat-user-list>
             </div>
-            <div id="inner" class="col-12 col-md-7 bg-white">
+            <div id="inner" class="col-12 col-md-8 bg-white">
                 <ul id="messages" class="d-flex flex-column p-3 m-auto">
                     @foreach ($messages as $message)
                         @php

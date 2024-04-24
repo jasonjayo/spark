@@ -28,4 +28,20 @@ class Report extends Model
     {
         return $this->hasOne(User::class, 'id', 'reporter_id');
     }
+
+    public function getReportedName()
+    {
+        if ($this->reported) {
+            return $this->reported->first_name . " " . $this->reported->second_name;
+        }
+        return "Deleted user";
+    }
+
+    public function getReporterName()
+    {
+        if ($this->reporter) {
+            return $this->reporter->first_name . " " . $this->reporter->second_name;
+        }
+        return "Deleted user";
+    }
 }

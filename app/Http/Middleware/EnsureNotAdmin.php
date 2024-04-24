@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Illuminate\Support\Facades\Auth;
-
-class EnsureAdmin
+class EnsureNotAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,9 +16,9 @@ class EnsureAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->isAdmin()) {
+        if (!Auth::user()->isAdmin()) {
             return $next($request);
         }
-        return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
+        return redirect()->route("error")->with(["message" => "Admin users cannot access this page", "code" => 401]);
     }
 }
