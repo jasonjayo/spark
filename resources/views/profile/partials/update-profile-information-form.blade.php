@@ -6,185 +6,182 @@
 @use('App\Models\SparkTrait')
 
 <section>
-<style>
-    .ba {
-    border-style: solid;
-    border-width: 1px;
-}
+    <style>
+        .ba {
+            border-style: solid;
+            border-width: 1px;
+        }
 
-.br-pill {
-    border-radius: 9999px;
-}
+        .br-pill {
+            border-radius: 9999px;
+        }
 
-.bw1 {
-    border-width: .125rem;
-}
+        .bw1 {
+            border-width: .125rem;
+        }
 
-.bw2 {
-    border-width: .25rem;
-}
+        .bw2 {
+            border-width: .25rem;
+        }
 
-.dib {
-    display: inline-block;
-}
+        .dib {
+            display: inline-block;
+        }
 
-.fw6 {
-    font-weight: 600;
-}
+        .fw6 {
+            font-weight: 600;
+        }
 
-.tracked {
-    letter-spacing: .1em;
-}
+        .tracked {
+            letter-spacing: .1em;
+        }
 
-.link {
-    text-decoration: none;
-    transition: color .15s ease-in;
-}
+        .link {
+            text-decoration: none;
+            transition: color .15s ease-in;
+        }
 
-.link:link, .link:visited {
-    transition: color .15s ease-in;
-}
+        .link:link,
+        .link:visited {
+            transition: color .15s ease-in;
+        }
 
-.link:hover {
-    transition: color .15s ease-in;
-}
+        .link:hover {
+            transition: color .15s ease-in;
+        }
 
-.link:active {
-    transition: color .15s ease-in;
-}
+        .link:active {
+            transition: color .15s ease-in;
+        }
 
-.link:focus {
-    transition: color .15s ease-in;
-    outline: 1px dotted currentColor;
-}
+        .link:focus {
+            transition: color .15s ease-in;
+            outline: 1px dotted currentColor;
+        }
 
-.pv2 {
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-}
+        .pv2 {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
 
-.ph3 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
+        .ph3 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
 
-.mb2 {
-    margin-bottom: .5rem;
-}
+        .mb2 {
+            margin-bottom: .5rem;
+        }
 
-.mb4 {
-    margin-bottom: 2rem;
-}
+        .mb4 {
+            margin-bottom: 2rem;
+        }
 
-.mt4 {
-    margin-top: 2rem;
-}
+        .mt4 {
+            margin-top: 2rem;
+        }
 
-.ttu {
-    text-transform: uppercase;
-}
+        .ttu {
+            text-transform: uppercase;
+        }
 
-.f6 {
-    font-size: .875rem;
-}
+        .f6 {
+            font-size: .875rem;
+        }
 
-.dim {
-    opacity: 1;
-    transition: opacity .15s ease-in;
-}
+        .dim {
+            opacity: 1;
+            transition: opacity .15s ease-in;
+        }
 
-.dim:hover, .dim:focus {
-    opacity: .5;
-    transition: opacity .15s ease-in;
-}
+        .dim:hover,
+        .dim:focus {
+            opacity: .5;
+            transition: opacity .15s ease-in;
+        }
 
-.dim:active {
-    opacity: .8;
-    transition: opacity .15s ease-out;
-}
-.intr_color {
-    border-color: var(--spk-color-primary-1);
-    color: var(--spk-color-primary-1);
-}
-.traits_color {
-    border-color: var( --spk-color-secondary-1);
-    color : var( --spk-color-secondary-1);
-}
-</style>
+        .dim:active {
+            opacity: .8;
+            transition: opacity .15s ease-out;
+        }
+
+        .intr_color {
+            border-color: var(--spk-color-primary-1);
+            color: var(--spk-color-primary-1);
+        }
+
+        .traits_color {
+            border-color: var(--spk-color-secondary-1);
+            color: var(--spk-color-secondary-1);
+        }
+    </style>
 
 
     <?php
-$firstToUpper = ucfirst($user->first_name);
-$secondToUpper = ucfirst($user->second_name);
-$user = Auth::user();
-$hasProfile = isset($user->profile);
-if ($hasProfile) {
-    $profile = $user->profile;
-}
-
-$hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
-$userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
-$usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
-$hasInterests = false;
-$hasTraits = false;
-
-
-
-
-?>
+    $firstToUpper = ucfirst($user->first_name);
+    $secondToUpper = ucfirst($user->second_name);
+    $user = Auth::user();
+    $hasProfile = isset($user->profile);
+    if ($hasProfile) {
+        $profile = $user->profile;
+    }
+    
+    $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
+    $userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
+    $usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
+    $hasInterests = false;
+    $hasTraits = false;
+    
+    ?>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Interests and Traits</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <h6 class="modal-title" id="exampleModalLabel">  Hey There! Care to tell us about some of your interests and traits?</h6>
-        <div class="ph3 mt4">
-  <h1 class="f6 fw6 ttu tracked">Interests</h1>
-  @foreach (Interest::get() as $interest)
-  <button id="test" 
-  class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
-   href="#0"
-   data-interest-name="{{ $interest->name }}"
-   data-interest-id=" {{ $interest->id }}"
-   data-interest-category="testCat"
-   onclick="addSelectedInterest(this)">
-   {{ $interest->name}}
-</button>
- @endforeach
-</div>
-<div class="ph3 mt4">
-  <h1 class="f6 fw6 ttu tracked">Traits</h1>
-  @foreach (SparkTrait::get() as $trait)
-  <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color"
-  href="#0"
-  data-trait-name="{{ $trait->name }}"
-   data-trait-id=" {{ $trait->id }}"
-   data-trait-category="testCat"
-   onclick="addSelectedTrait(this)">
-   {{ $trait->name}}
-</button>
-  @endforeach
-</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
-            @csrf
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Interests and Traits</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="modal-title" id="exampleModalLabel"> Hey There! Care to tell us about some of your
+                        interests and traits?</h6>
+                    <div class="ph3 mt4">
+                        <h1 class="f6 fw6 ttu tracked">Interests</h1>
+                        @foreach (Interest::get() as $interest)
+                            <button id="test" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
+                                href="#0" data-interest-name="{{ $interest->name }}"
+                                data-interest-id=" {{ $interest->id }}" data-interest-category="testCat"
+                                onclick="addSelectedInterest(this)">
+                                {{ $interest->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                    <div class="ph3 mt4">
+                        <h1 class="f6 fw6 ttu tracked">Traits</h1>
+                        @foreach (SparkTrait::get() as $trait)
+                            <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0"
+                                data-trait-name="{{ $trait->name }}" data-trait-id=" {{ $trait->id }}"
+                                data-trait-category="testCat" onclick="addSelectedTrait(this)">
+                                {{ $trait->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
+                        @csrf
 
-            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
-            <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
-                   
-        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-</form>
-      </div>
+                        <input type="hidden" class="interestInput" value="" name="interests" id="interests" />
+                        <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
+
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <header>
@@ -195,31 +192,31 @@ $hasTraits = false;
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
             {{ __("Update your account's profile information.") }}
         </p>
-        <div> 
-      
-</div>
+        <div>
+
+        </div>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
 
-<!-- Modal -->
-   @if(session('status') === 'interestsAndTraits-created')
-   <div class="alert alert-success" role="alert">
-           Your chosen interests and traits have been saved!!
+    <!-- Modal -->
+    @if (session('status') === 'interestsAndTraits-created')
+        <div class="alert alert-success" role="alert">
+            Your chosen interests and traits have been saved!!
         </div>
-        @endif
+    @endif
 
     @if (session('status') === 'profile-updated')
-    @if($hasPhotos->isEmpty())
-    <div class="alert alert-success" role="alert">
-            Profile saved! Why not upload some pictures to your profile in the Update Photos section!
-        </div>
+        @if ($hasPhotos->isEmpty())
+            <div class="alert alert-success" role="alert">
+                Profile saved! Why not upload some pictures to your profile in the Update Photos section!
+            </div>
         @else
-        <div class="alert alert-success" role="alert">
-            Profile saved! 
-        </div>
+            <div class="alert alert-success" role="alert">
+                Profile saved!
+            </div>
         @endif
 
     @endif
@@ -243,14 +240,14 @@ $hasTraits = false;
             </div>
         @endif
 
-        
+
 
 
         <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
             @csrf
 
             <div class="container d-flex flex-column ">
-    
+
                 <!-- Basic Details Div -->
                 <div class="mb-3">
                     <h2>Basic Details</h2>
@@ -268,18 +265,22 @@ $hasTraits = false;
 
                         <input id="first_name" name="first_name" type="text"
                             class="form-control mt-1 block {$gray-500}-bg-subtle"
-                            value="{{ old('first_name', $firstToUpper) }}" required autofocus autocomplete="given-name"
-                            readonly />
+                            value="{{ old('first_name', $firstToUpper) }}" required readonly />
                         <label for="first_name">First Name</label>
                         <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
                     </div>
 
                     <div class="form-floating mb-3"> <!-- Second Name Input -->
                         <input id="second_name" name="second_name" type="text" class="form-control mt-1 block w-full"
-                            value="{{ old('second_name', $secondToUpper) }}" required autofocus
-                            autocomplete="family-name" readonly />
+                            value="{{ old('second_name', $secondToUpper) }}" required readonly />
                         <label for="second_name">Second Name </label>
                         <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                    </div>
+
+                    <div class="form-floating mb-3"> <!-- DOB -->
+                        <input id="dob" name="dob" type="date" class="form-control mt-1 block w-full"
+                            value="{{ $hasProfile ? $profile->user->dob : '' }}" required readonly />
+                        <label for="second_name">Date of Birth </label>
                     </div>
                 </div>
 
@@ -361,13 +362,13 @@ $hasTraits = false;
                     <p>Location will be set automatically by your browser, if you've <a target="_blank"
                             href="https://docs.buddypunch.com/en/articles/919258-how-to-enable-location-services-for-chrome-safari-edge-and-android-ios-devices-gps-setting">given
                             permission</a>.</p>
-                    <div class="form-floating mb-3">
+                    {{-- <div class="form-floating mb-3">
                         <!-- Location -->
                         <input id="location" name="location" type="text" class="form-control" size=20
                             maxlength=40 pattern="(-)?\d+(\.\d+)?,\s?(-)?\d+(\.\d+)?" readonly
                             value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                         <label for="location">Location</label>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -403,7 +404,8 @@ $hasTraits = false;
                         <!-- Personality Type -->
                         <input id="personality_type" name="personality_type" type="text" placeholder="ISFJ"
                             class="form-control" size=4 maxlength=4
-                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}"  pattern="[A-Za-z]{4}" />
+                            value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}"
+                            pattern="[A-Za-z]{4}" />
                         <label for="personality_type">Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -421,29 +423,30 @@ $hasTraits = false;
                         <label for="languages">Languages Spoken</label>
                     </div>
                 </div>
-  
+
                 <div class="flex items-center gap-4 g">
                     <button class="btn btn-primary" name="profile">Save Profile</button>
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
- Interests and Traits
-</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Interests and Traits
+                    </button>
                 </div>
             </div>
 
             <script>
-    function addSelectedInterest(e) {
-       var interestId = e.getAttribute("data-interest-id");
-       var interestInput =  document.querySelector("#interests");
-       interestInput.value += interestId + ",";
-        }
-    </script>
-    <script>
-        function addSelectedTrait(e) {
-            var traitId = e.getAttribute("data-trait-id");
-            var traitInput = document.querySelector('#traits');
-            traitInput.value += traitId + ",";
-        }
-        </script>
+                function addSelectedInterest(e) {
+                    var interestId = e.getAttribute("data-interest-id");
+                    var interestInput = document.querySelector("#interests");
+                    interestInput.value += interestId + ",";
+                }
+            </script>
+            <script>
+                function addSelectedTrait(e) {
+                    var traitId = e.getAttribute("data-trait-id");
+                    var traitInput = document.querySelector('#traits');
+                    traitInput.value += traitId + ",";
+                }
+            </script>
         </form>
 </section>

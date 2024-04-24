@@ -32,13 +32,15 @@
                         <input type="range" class="form-range" min="18" max="100" id="filter_max_age"
                             name="max_age" x-model="max_age">
                     </div>
-                    <div class="form-label-group my-3 mx-4" x-data="{ max_distance: {{ old('max_distance', 100) }} }">
-                        <label for="filter_max_distance" class="form-label">Max distance</label>
-                        <span id="max_distance_val" x-text="max_distance"></span><span
-                            x-show="max_distance >= 100">+</span> km
-                        <input type="range" class="form-range" min="1" max="100" id="filter_max_distance"
-                            name="max_distance" x-model="max_distance">
-                    </div>
+                    @if (!Auth::user()->isAdmin())
+                        <div class="form-label-group my-3 mx-4" x-data="{ max_distance: {{ old('max_distance', 100) }} }">
+                            <label for="filter_max_distance" class="form-label">Max distance</label>
+                            <span id="max_distance_val" x-text="max_distance"></span><span
+                                x-show="max_distance >= 100">+</span> km
+                            <input type="range" class="form-range" min="1" max="100"
+                                id="filter_max_distance" name="max_distance" x-model="max_distance">
+                        </div>
+                    @endif
                     <div class="form-label-group my-3 mx-4">
                         <label for="filter_gender" class="form-label">Gender</label>
                         <select class="form-select" name="gender" id="filter_gender">

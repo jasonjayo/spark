@@ -1,7 +1,7 @@
 @use('App\Models\Profile')
 @use ('App\Models\Photo')
 
-<ul class='list-group overflow-scroll gap-1'>
+<ul class='list-group overflow-y-scroll gap-3'>
 
     @foreach (Profile::all()->except(Auth::user()->id) as $profile)
         <?php
@@ -19,7 +19,7 @@
             $coverPhoto = asset('images/profilePhotos/' . $photoUrls[0]);
         }
         ?>
-        <a class=' bg-white user-row d-flex justify-content-between align-items-center'
+        <a class='bg-white text-secondary user-row d-flex align-items-center'
             href='{{ route('chat.show', $profile->user->id) }}'>
             <div class="profile-container">
                 <img class="profile-photo" src="{{ $coverPhoto }}">
@@ -30,14 +30,24 @@
                 @endif
             </div>
             @php
-                $latest_message = Auth::user()->profile->getLatestMessageWith($profile->user->id);
-                $unread_count = Auth::user()->profile->getUnreadMessagesCountWith($profile->user->id);
+                $latest_message = Auth::user()->getLatestMessageWith($profile->user->id);
+                $unread_count = Auth::user()->getUnreadMessagesCountWith($profile->user->id);
             @endphp
-            @if ($latest_message)
-                Unread: {{ $unread_count }}
-                {{ $latest_message->content }}
-            @endif
-            <div class="username">{{ $profile->user->first_name }} </div>
+            <div class="ms-3">
+                <div class="username">{{ $profile->user->first_name }} </div>
+                <div>
+                    @if ($latest_message)
+                        @if ($unread_count > 0)
+                            <span class="badge rounded-pill text-bg-primary">{{ $unread_count }}</span>
+                        @endif
+                        @if ($latest_message->sender_id == Auth::user()->id)
+                            You:
+                        @endif
+                        {{ $latest_message->content }}
+                    @endif
+                </div>
+            </div>
+
         </a>
     @endforeach
 </ul>

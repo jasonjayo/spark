@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -103,11 +105,47 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return Auth::user()->admin === 1;
+        return Auth::user()->admin == 1;
     }
 
     public function bans(): HasMany
     {
         return $this->hasMany(Ban::class, "user_id", "id");
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class);
+    }
+
+    private function getMessagesBuilder($id)
+    {
+        return Chat::where(function ($query) use ($id) {
+            $query->where('sender_id', '=', Auth::user()->id)->where('recipient_id', '=', $id);
+        })
+            ->orWhere(function ($query) use ($id) {
+                $query->where('sender_id', '=', $id)->where('recipient_id', '=', Auth::user()->id);
+            });
+    }
+
+    public function getLatestMessageWith($id)
+    {
+        return $this->getMessagesBuilder($id)->orderBy("created", "desc")->first();
+    }
+
+    public function getMessagesWith($id)
+    {
+        Chat::where('sender_id', '=', $id)
+            ->where('recipient_id', '=', Auth::user()->id)
+            ->update(["read" => 1]);
+        return $this->getMessagesBuilder($id)->get();
+    }
+
+    public function getUnreadMessagesCountWith($id)
+    {
+        return Chat::where('sender_id', '=', $id)
+            ->where('recipient_id', '=', Auth::user()->id)
+            ->where("read", "=", "0")
+            ->count();
     }
 }
