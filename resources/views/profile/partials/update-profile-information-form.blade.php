@@ -433,10 +433,8 @@ var selectedTraits = [];
 
             <script>
     function addSelectedInterest(e) {
-        interestActive = !interestActive;
-        if (interestActive == true) {
        var interestId = e.getAttribute("data-interest-id");
-       // add to array here with a comma 
+       if (!selectedInterests.includes(interestId)) {
        selectedInterests.push(interestId);
        var interestInput =  document.querySelector("#interests");
        interestInput.value = selectedInterests.toString();
@@ -445,11 +443,12 @@ var selectedTraits = [];
         else {
             e.classList.remove("on");
             var removeIndex = selectedInterests.indexOf(interestId);
-            newInput = selectedInterests.slice(removeIndex);
+            newInput = selectedInterests.splice(removeIndex, 1);
             console.log(selectedInterests);
             
         }
-        }
+    }
+        
     </script>
     <script>
         function addSelectedTrait(e) {
