@@ -8,8 +8,9 @@
 <section>
 <style>
     .ba {
-    border-style: solid;
-    border-width: 1px;
+     border-style: solid;
+    border-width: 1px; 
+     
 }
 
 .br-pill {
@@ -41,22 +42,11 @@
     transition: color .15s ease-in;
 }
 
-.link:link, .link:visited {
+/* .link:link, .link:visited {
     transition: color .15s ease-in;
-}
+} */
 
-.link:hover {
-    transition: color .15s ease-in;
-}
 
-.link:active {
-    transition: color .15s ease-in;
-}
-
-.link:focus {
-    transition: color .15s ease-in;
-    outline: 1px dotted currentColor;
-}
 
 .pv2 {
     padding-top: .5rem;
@@ -80,9 +70,6 @@
     margin-top: 2rem;
 }
 
-.ttu {
-    text-transform: uppercase;
-}
 
 .f6 {
     font-size: .875rem;
@@ -98,17 +85,25 @@
     transition: opacity .15s ease-in;
 }
 
-.dim:active {
+/* .dim:active {
     opacity: .8;
     transition: opacity .15s ease-out;
-}
+} */
 .intr_color {
-    border-color: var(--spk-color-primary-1);
+    border-color:  var(--spk-color-primary-1);
     color: var(--spk-color-primary-1);
 }
 .traits_color {
     border-color: var( --spk-color-secondary-1);
     color : var( --spk-color-secondary-1);
+}
+.on {
+   opacity: 0.5;
+    outline-style : solid;
+    outline-width : 2px;
+    outline-color: var( --spk-color-primary-1);
+    transition : outline .02s linear;
+    transition : opacity .15s ease-in-out;
 }
 </style>
 
@@ -127,11 +122,13 @@ $userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())
 $usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
 $hasInterests = false;
 $hasTraits = false;
-
-
-
-
 ?>
+<script>
+var interestActive = false;
+var traitActive = false; 
+var selectedInterests = []; 
+var selectedTraits = [];
+</script>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -147,7 +144,7 @@ $hasTraits = false;
   <h1 class="f6 fw6 ttu tracked">Interests</h1>
   @foreach (Interest::get() as $interest)
   <button id="test" 
-  class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
+  class="f6  dim br-pill ba ph3 pv2 mb2 dib intr_color"
    href="#0"
    data-interest-name="{{ $interest->name }}"
    data-interest-id=" {{ $interest->id }}"
@@ -176,7 +173,7 @@ $hasTraits = false;
         <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
             @csrf
 
-            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
+            <input type="text" class="interestInput" value="" name="interests" id="interests" />   
             <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
                    
         <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
@@ -303,7 +300,7 @@ $hasTraits = false;
                         <!-- Bio -->
                         <textarea class="form-control" name="bio" style="height:100px" cols="50" maxlength="1000"
                             placeholder="Describe yourself here...">{{ old('bio', $hasProfile ? $profile->bio : '') }}</textarea>
-                        <label for="bio">Bio<label />
+                        <label for="bio">Write a bio about yourself here...<label />
                     </div>
 
                     <div class="form-floating mb-3">
@@ -311,7 +308,7 @@ $hasTraits = false;
                         <input id="tagline" name="tagline" type="text" class="form-control" size="50"
                             placeholder="I am a coffee lover!" maxlength="50"
                             value="{{ old('tagline', $hasProfile ? $profile->tagline : '') }}" />
-                        <label for="tagline">Tagline</label>
+                        <label for="tagline">First thing you'd say when you meet someone new?</label>
 
                     </div>
 
@@ -345,7 +342,7 @@ $hasTraits = false;
                         <input name="university" type="text" class="form-control" id="floatingInput"
                             placeholder="University of Limerick" size="50" maxlength="50"
                             value="{{ old('university', $hasProfile ? $profile->university : '') }}">
-                        <label for="floatingInput">University </label>
+                        <label for="floatingInput">Where do you study?</label>
 
                     </div>
 
@@ -354,7 +351,7 @@ $hasTraits = false;
                         <input id="work" name="work" type="text" class="form-control" size="50"
                             placeholder="Barista" maxlength="50"
                             value="{{ old('work', $hasProfile ? $profile->work : '') }}" />
-                        <label for="work">Profession</label>
+                        <label for="work">What do you work as?</label>
 
                     </div>
                     <!-- make the input box for this smaller so i can put the button beside it  -->
@@ -380,7 +377,7 @@ $hasTraits = false;
                         <input id="fav_movie" name="fav_movie" type="text" class="form-control" maxlength=50
                             value="{{ old('fav_movie', $hasProfile ? $profile->fav_movie : '') }}"
                             placeholder="seven" />
-                        <label for="fav_movie">Favourite Movie</label>
+                        <label for="fav_movie">Your top choice for a movie to watch?</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -388,7 +385,7 @@ $hasTraits = false;
                         <input id="fav_food" name="fav_food" type="text" class="form-control" size=50
                             placeholder="Pizza" maxlength=50
                             value="{{ old('fav_food', $hasProfile ? $profile->fav_food : '') }}">
-                        <label for="fav_food">Favourite Food</label>
+                        <label for="fav_food">One dish that you could eat for the rest of your life?</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -396,7 +393,7 @@ $hasTraits = false;
                         <input id="fav_song" name="fav_song" type="text" class="form-control" size=50
                             placeholder="Everything She Wants" maxlength=50
                             value="{{ old('fav_song', $hasProfile ? $profile->fav_song : '') }}">
-                        <label for="fav_song">Favourite Song</label>
+                        <label for="fav_song">What is your all-time favourite song?</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -418,7 +415,7 @@ $hasTraits = false;
                         <input id="languages" name="languages" type="text" class="form-control" size=50
                             placeholder="Gaeilge, English" maxlength=50
                             value="{{ old('languages', $hasProfile ? $profile->languages : '') }}" />
-                        <label for="languages">Languages Spoken</label>
+                        <label for="languages">Do you speak any lanuages?</label>
                     </div>
                 </div>
   
@@ -433,17 +430,33 @@ $hasTraits = false;
 
             <script>
     function addSelectedInterest(e) {
+        interestActive = !interestActive;
+        if (interestActive == true) {
        var interestId = e.getAttribute("data-interest-id");
+       // add to array here with a comma 
+       selectedInterests.push(interestId);
        var interestInput =  document.querySelector("#interests");
-       interestInput.value += interestId + ",";
+       interestInput.value = selectedInterests.toString();
+       e.classList.add("on");
+        }
+        else {
+            e.classList.remove("on");
+            var removeIndex = selectedInterests.indexOf(interestId);
+            newInput = selectedInterests.slice(removeIndex);
+            console.log(selectedInterests);
+            
+        }
         }
     </script>
     <script>
         function addSelectedTrait(e) {
+            traitsActive = !traitsActive;
+            if (traitsActive == true) {
             var traitId = e.getAttribute("data-trait-id");
             var traitInput = document.querySelector('#traits');
             traitInput.value += traitId + ",";
         }
+    }
         </script>
         </form>
 </section>
