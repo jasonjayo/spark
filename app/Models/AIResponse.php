@@ -4,21 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Photo extends Model
+class AIResponse extends Model
 {
     use HasFactory;
 
+    protected $table = "ai_responses";
     public $timestamps = false;
 
     protected $fillable = [
-        'user_id',
-        'photo_url',
+        "user_1_id",
+        "user_2_id",
+        "content"
     ];
-
-    public function user(): HasOne
-    {
-        return $this->hasOne(User::class);
-    }
 }

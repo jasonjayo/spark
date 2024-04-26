@@ -35,20 +35,30 @@
 </div>
 <nav class="nav
     navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white">
-    <a href="{{ route('dashboard') }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
+
+    @php
+        if (Auth::user()->isAdmin()) {
+            $home = route('admin');
+        } else {
+            $home = route('dashboard');
+        }
+    @endphp
+    <a href="{{ $home }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-            <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
-                <li @class([
-                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                    'spark-bg-secondary text-white' => Request::is('discovery'),
-                ])>
-                    <i class="bi-stars icon"> </i>
-                    <span class="d-none mx-2 d-lg-flex">Discover</span>
-                </li>
-            </a>
+            @if (!Auth::user()->isAdmin())
+                <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
+                    <li @class([
+                        'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                        'spark-bg-secondary text-white' => Request::is('discovery'),
+                    ])>
+                        <i class="bi-stars icon"> </i>
+                        <span class="d-none mx-2 d-lg-flex">Discover</span>
+                    </li>
+                </a>
+            @endif
             <a href=" {{ route('search') }}" class="text-decoration-none text-black">
                 <li @class([
                     'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
@@ -68,19 +78,18 @@
                 </li>
             </a>
 
+            @if (!Auth::user()->isAdmin())
+                <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
+                    <li @class([
+                        'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                        'spark-bg-secondary text-white' => Request::is('profile'),
+                    ])>
+                        <i class="bi-person icon"></i>
+                        <span class="d-none mx-2 d-lg-flex">Profile</span>
 
-            <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
-                <li @class([
-                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                    'spark-bg-secondary text-white' => Request::is('profile'),
-                ])>
-                    <i class="bi-person icon"></i>
-                    <span class="d-none mx-2 d-lg-flex">Profile</span>
-
-                </li>
-            </a></a>
-
-
+                    </li>
+                </a></a>
+            @endif
 
         </ul>
     </div>
@@ -88,14 +97,17 @@
 
 <nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around z-4 spark-bg-primary">
     <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
-        <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
-            <li @class([
-                'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                'spark-bg-secondary' => Request::is('discovery'),
-            ])>
-                <i class="bi-stars fs-1 text-white"> </i>
-            </li>
-        </a>
+        @if (!Auth::user()->isAdmin())
+            <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
+                <li @class([
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary' => Request::is('discovery'),
+                ])>
+                    <i class="bi-stars fs-1 text-white"> </i>
+                </li>
+            </a>
+        @endif
+
         <a href="{{ route('search') }}" class="text-decoration-none text-black">
             <li @class([
                 'p-3 mx-3 px-4 rounded d-flex text-center align-items-center',
@@ -110,16 +122,17 @@
             </li>
         </a>
 
-        <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
-            <li @class([
-                'p-3 ml-3 px-4 rounded d-flex text-center align-items-center',
-                'spark-bg-secondary' => Request::is('profile'),
-            ])>
-                <i class="bi-person fs-1 text-white"></i>
+        @if (!Auth::user()->isAdmin())
+            <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
+                <li @class([
+                    'p-3 ml-3 px-4 rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary' => Request::is('profile'),
+                ])>
+                    <i class="bi-person fs-1 text-white"></i>
 
-            </li>
-        </a></a>
-
+                </li>
+            </a>
+        @endif
 
 
     </ul>

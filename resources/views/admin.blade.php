@@ -78,6 +78,15 @@
         @endif
 
         <div class="row">
+            <div class="col-3">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button class="btn btn-primary">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
             <h1 class="col-12">
                 Reports
             </h1>
@@ -100,12 +109,22 @@
                         @foreach (Report::all() as $report)
                             <tr>
                                 <th scope="row">{{ $report->id }}</th>
-                                <td><a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                                        href="viewprofile/{{ $report->reporter_id }}">{{ $report->reporter->first_name . ' ' . $report->reporter->second_name }}
-                                    </a>
+
+                                <td>
+                                    @if ($report->reporter)
+                                        <a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                                            href="viewprofile/{{ $report->reporter_id }}">
+                                    @endif
+                                    {{ $report->getReporterName() }}
+                                    @if ($report->reporter)
+                                        </a>
+                                    @endif
                                 </td>
-                                <td><a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                                        href="viewprofile/{{ $report->reported_id }}">{{ $report->reported->first_name . ' ' . $report->reported->second_name }}</a>
+                                <td>
+                                    <a class="link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                                        href="viewprofile/{{ $report->reported_id }}">
+                                        {{ $report->getReportedName() }}
+                                    </a>
                                 </td>
                                 <td>{{ $report->reason }}</td>
                                 <td>{{ $report->status }}</td>
@@ -113,7 +132,8 @@
                                     @if ($report->status != 'CLOSED')
                                         <button class="btn btn-primary me-1" data-bs-toggle="modal"
                                             data-bs-target="#banModal" data-reported-id="{{ $report->reported_id }}"
-                                            data-report-id="{{ $report->id }}" x-on:click="prepBanModal">Ban</button>
+                                            data-report-id="{{ $report->id }}"
+                                            x-on:click="prepBanModal">Ban</button>
                                         <form action="{{ route('report.close') }}" method="POST"
                                             class="d-inline-block">
                                             @csrf

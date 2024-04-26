@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureNotBanned;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -66,6 +67,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'update_last_active' => \App\Http\Middleware\UpdateLastActive::class,
-        'ensure_not_banned' => \App\Http\Middleware\EnsureNotBanned::class
+        'ensure_not_banned' => \App\Http\Middleware\EnsureNotBanned::class,
+        'ensure_admin' => \App\Http\Middleware\EnsureAdmin::class,
+        'ensure_not_admin' => \App\Http\Middleware\EnsureNotAdmin::class
     ];
 }

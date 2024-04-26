@@ -66,7 +66,7 @@ class RecommendationController extends Controller
                 $weight = -9999;
             }
 
-            if ($my->recommendations->contains(User::find($second_user_id))) {
+            if ($my->recommendations->contains($second_user_id)) {
                 $my->recommendations()->updateExistingPivot($second_user_id, [
                     "weight" => $weight
                 ]);
