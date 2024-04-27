@@ -30,6 +30,7 @@
 }
 .default {
     width: 100vw;
+    padding-bottom: 96px;
 }
 .btn-primary {
     --bs-btn-bg: var(--spk-color-primary-1);
@@ -213,6 +214,9 @@ h3 {
         max-height: 89vh;
         overflow-y: scroll;
         border-right: 1px solid var(--spk-color-primary-2);
+    }
+    .default {
+        width: 100vw;
     }
 }
 .chatpage {
