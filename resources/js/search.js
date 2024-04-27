@@ -49,15 +49,7 @@ interest_pill_close_btns.forEach((btn) => {
 });
 // update hidden input
 function updateInterestsSelectedInput() {
-    if (interests_selected.length > 0) {
-        let interests_selected_serialised = "";
-        interests_selected.forEach((interest_selected) => {
-            interests_selected_serialised += interest_selected + ",";
-        });
-        interests_filter.value = interests_selected_serialised;
-    } else {
-        interests_filter.value = "";
-    }
+    interests_filter.value = interests_selected.toString();
 }
 function removeSelectedInterest(interest_id) {
     interests_selected.splice(interests_selected.indexOf(interest_id), 1);

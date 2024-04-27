@@ -6,12 +6,11 @@
 @use('App\Models\SparkTrait')
 
 <section>
-<style>
-    .ba {
-     border-style: solid;
-    border-width: 1px; 
-     
-}
+    <style>
+        .ba {
+            border-style: solid;
+            border-width: 1px;
+        }
 
         .br-pill {
             border-radius: 9999px;
@@ -42,7 +41,7 @@
             transition: color .15s ease-in;
         }
 
-/* .link:link, .link:visited {
+        /* .link:link, .link:visited {
     transition: color .15s ease-in;
 } */
 
@@ -86,50 +85,51 @@
             transition: opacity .15s ease-in;
         }
 
-/* .dim:active {
+        /* .dim:active {
     opacity: .8;
     transition: opacity .15s ease-out;
 } */
-.intr_color {
-    border-color:  var(--spk-color-primary-1);
-    color: var(--spk-color-primary-1);
-}
-.traits_color {
-    border-color: var( --spk-color-secondary-1);
-    color : var( --spk-color-secondary-1);
-}
-.on {
-   opacity: 0.5;
-    outline-style : solid;
-    outline-width : 2px;
-    outline-color: var( --spk-color-primary-1);
-    transition : outline .02s linear;
-    transition : opacity .15s ease-in-out;
-}
-</style>
+        .intr_color {
+            border-color: var(--spk-color-primary-1);
+            color: var(--spk-color-primary-1);
+        }
+
+        .traits_color {
+            border-color: var(--spk-color-secondary-1);
+            color: var(--spk-color-secondary-1);
+        }
+
+        .on {
+            opacity: 0.5;
+            outline-style: solid;
+            outline-width: 2px;
+            outline-color: var(--spk-color-primary-1);
+            transition: outline .02s linear;
+            transition: opacity .15s ease-in-out;
+        }
+    </style>
 
 
     <?php
-$firstToUpper = ucfirst($user->first_name);
-$secondToUpper = ucfirst($user->second_name);
-$user = Auth::user();
-$hasProfile = isset($user->profile);
-if ($hasProfile) {
-    $profile = $user->profile;
-}
-
-$hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
-$userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
-$usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
-$hasInterests = false;
-$hasTraits = false;
-?>
-<script>
-var interestActive = false;
-var traitActive = false; 
-var selectedInterests = []; 
-var selectedTraits = [];
-</script>
+    $firstToUpper = ucfirst($user->first_name);
+    $secondToUpper = ucfirst($user->second_name);
+    $hasProfile = isset($user->profile);
+    if ($hasProfile) {
+        $profile = $user->profile;
+    }
+    
+    $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
+    $userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
+    $usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
+    $hasInterests = false;
+    $hasTraits = false;
+    ?>
+    <script>
+        var interestActive = false;
+        var traitActive = false;
+        var selectedInterests = [];
+        var selectedTraits = [];
+    </script>
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -170,15 +170,15 @@ var selectedTraits = [];
                     <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
                         @csrf
 
-            <input type="text" class="interestInput" value="" name="interests" id="interests" />   
-            <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
-                   
-        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-</form>
-      </div>
+                        <input type="text" class="interestInput" value="" name="interests" id="interests" />
+                        <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
+
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <header>
@@ -243,6 +243,8 @@ var selectedTraits = [];
         <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
             @csrf
 
+            <input type="text" value="{{ $user->id }}" hidden>
+
             <div class="container d-flex flex-column ">
 
                 <!-- Basic Details Div -->
@@ -276,7 +278,7 @@ var selectedTraits = [];
 
                     <div class="form-floating mb-3"> <!-- DOB -->
                         <input id="dob" name="dob" type="date" class="form-control mt-1 block w-full"
-                            value="{{ $hasProfile ? $profile->user->dob : '' }}" required readonly />
+                            value="{{ $user->dob }}" required readonly />
                         <label for="second_name">Date of Birth </label>
                     </div>
                 </div>
@@ -432,33 +434,31 @@ var selectedTraits = [];
             </div>
 
             <script>
-    function addSelectedInterest(e) {
-       var interestId = e.getAttribute("data-interest-id");
-       if (!selectedInterests.includes(interestId)) {
-       selectedInterests.push(interestId);
-       var interestInput =  document.querySelector("#interests");
-       interestInput.value = selectedInterests.toString();
-       e.classList.add("on");
-        }
-        else {
-            e.classList.remove("on");
-            var removeIndex = selectedInterests.indexOf(interestId);
-            newInput = selectedInterests.splice(removeIndex, 1);
-            console.log(selectedInterests);
-            
-        }
-    }
-        
-    </script>
-    <script>
-        function addSelectedTrait(e) {
-            traitsActive = !traitsActive;
-            if (traitsActive == true) {
-            var traitId = e.getAttribute("data-trait-id");
-            var traitInput = document.querySelector('#traits');
-            traitInput.value += traitId + ",";
-        }
-    }
-        </script>
+                function addSelectedInterest(e) {
+                    var interestId = e.getAttribute("data-interest-id");
+                    if (!selectedInterests.includes(interestId)) {
+                        selectedInterests.push(interestId);
+                        var interestInput = document.querySelector("#interests");
+                        interestInput.value = selectedInterests.toString();
+                        e.classList.add("on");
+                    } else {
+                        e.classList.remove("on");
+                        var removeIndex = selectedInterests.indexOf(interestId);
+                        newInput = selectedInterests.splice(removeIndex, 1);
+                        console.log(selectedInterests);
+
+                    }
+                }
+            </script>
+            <script>
+                function addSelectedTrait(e) {
+                    traitsActive = !traitsActive;
+                    if (traitsActive == true) {
+                        var traitId = e.getAttribute("data-trait-id");
+                        var traitInput = document.querySelector('#traits');
+                        traitInput.value += traitId + ",";
+                    }
+                }
+            </script>
         </form>
 </section>

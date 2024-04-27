@@ -14,7 +14,7 @@ use App\Models\Profile;
 use App\Models\Photo;
 use Illuminate\Support\Facades\DB;
 use App\Models\Interest;
-
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -91,10 +91,14 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-
     public function store(Request $request): RedirectResponse
     {
         if ($request->has('profile')) {
+
+            $user = User::findOrFail($request->id);
+            if (!Auth::user()->isAdmin() && $user->id != Auth::user()->id) {
+                return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
+            }
 
             $formFields = $request->validate([
                 'gender' => "required|max:1",
@@ -114,19 +118,24 @@ class ProfileController extends Controller
             ]);
 
             // check if creating new profile or updating existing
-            if (!isset(Auth::user()->profile)) {
-                $formFields["user_id"] = Auth::user()->id;
+            if (!isset($user->profile)) {
+                $formFields["user_id"] = $user->id;
                 // new
                 Profile::create($formFields);
             } else {
                 // update
-                Auth::user()->profile->update($formFields);
+                $user->profile->update($formFields);
             }
 
-            return Redirect::route('profile.edit')->with('status', 'profile-updated');
+            return back()->with('status', 'profile-updated');
         }
 
         if ($request->has('photo')) { {
+
+                $user = User::findOrFail($request->id);
+                if (!Auth::user()->isAdmin() && $user->id != Auth::user()->id) {
+                    return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
+                }
 
 
                 $request->validate([
@@ -140,7 +149,7 @@ class ProfileController extends Controller
                 $request->image->move(public_path('images/profilePhotos'), $newImageName);
 
                 $photo = Photo::create([
-                    'user_id' => $request->user()->id,
+                    'user_id' => $user->id,
                     'photo_url' => $newImageName
                 ]);
 

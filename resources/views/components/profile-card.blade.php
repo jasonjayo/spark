@@ -5,14 +5,15 @@
 @pushOnce('styles')
     <style>
         .card:hover {
-            border-width: 2px;
-            border-radius: 3px;
             border-color: var(--spk-color-primary-1);
             transition: 0.1s linear;
         }
 
         .card {
             text-decoration: none;
+            border-width: 2px;
+            border-radius: 3px;
+            border-color: transparent;
         }
     </style>
 @endPushOnce
