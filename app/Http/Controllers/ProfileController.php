@@ -132,12 +132,12 @@ class ProfileController extends Controller
             return back()->with('status', 'profile-updated');
         }
 
-        if ($request->has('photo')) { {
+        // if ($request->has('photo')) { {
 
-                $user = User::findOrFail($request->id);
-                if (!Auth::user()->isAdmin() && $user->id != Auth::user()->id) {
-                    return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
-                }
+        //         $user = User::findOrFail($request->id);
+        //         if (!Auth::user()->isAdmin() && $user->id != Auth::user()->id) {
+        //             return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
+        //         }
 
 
         //         $request->validate([
@@ -150,10 +150,10 @@ class ProfileController extends Controller
 
         //         $request->image->move(public_path('images/profilePhotos'), $imageName);
 
-                $photo = Photo::create([
-                    'user_id' => $user->id,
-                    'photo_url' => $newImageName
-                ]);
+                // $photo = Photo::create([
+                //     'user_id' => $user->id,
+                //     'photo_url' => $newImageName
+                // ]);
 
 
         //         return back()->with('status', "photo-saved");
