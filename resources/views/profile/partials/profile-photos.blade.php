@@ -2,45 +2,45 @@
 
 <section>
     <style>
-
-.imgContainer {
-position: relative;
-}
-.img {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  transition: .5s ease;
-  backface-visibility: hidden;
-  object-fit: cover;
-  width : 230px;
-  height : 200px;
-  border-radius: 10%;
-  border: 3px solid #b61a47;
-  overflow: auto;
- 
-}
-.buttonContainer {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
-        .imgContainer:hover .img{
-           opacity: 0.3;
+        .imgContainer {
+            position: relative;
         }
-        .imgContainer:hover .buttonContainer{
-           opacity: 1;
-        }
-       
-     
 
-        </style>
-<header>
+        .img {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            transition: .5s ease;
+            backface-visibility: hidden;
+            object-fit: cover;
+            width: 230px;
+            height: 200px;
+            border-radius: 10%;
+            border: 3px solid #b61a47;
+            overflow: auto;
+
+        }
+
+        .buttonContainer {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .imgContainer:hover .img {
+            opacity: 0.3;
+        }
+
+        .imgContainer:hover .buttonContainer {
+            opacity: 1;
+        }
+    </style>
+    <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Update Photos') }}
         </h2>
@@ -53,47 +53,51 @@ position: relative;
         <div class="alert alert-success" role="alert">
             Photo saved!
         </div>
-        @elseif (session('status') === 'photo-deleted')
+    @elseif (session('status') === 'photo-deleted')
         <div class="alert alert-success" role="alert">
-          Photo deleted!
+            Photo deleted!
         </div>
     @endif
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-<form method="post" action="{{ route('photo.store') }}" enctype="multipart/form-data">
-@csrf
-    <div class="mb-3">
-  <label for="image" class="form-label">
-    <h4>Add Photo</h4>
-  </label>
-  <input class="form-control" type="file" name="image" id="image">
-</div>
+    <form method="post" action="{{ route('profile.store') }}" enctype="multipart/form-data">
+        @csrf
 
-<div class="form-floating mb-3"> 
-<input class="form-control mb-3" type="text" name="photoName" id="photoName" placeholder="Selfie with my Dog">
-<label for="photoName">Photo Name </label>
-</div>
+        <input type="text" name="id" value="{{ $user->id }}" hidden>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">
+                <h4>Add Photo</h4>
+            </label>
+            <input class="form-control" type="file" name="image" id="image">
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control mb-3" type="text" name="photoName" id="photoName"
+                placeholder="Selfie with my Dog">
+            <label for="photoName">Photo Name </label>
+        </div>
 
 <!-- <input class="form-control mb-3" type="text" name="photoName"> -->
 <button type="submit" name="photo" class="btn btn-primary">Upload Photo</button>
 </form>
 
 
-<br>
+        <br>
 
-<div class="mb-3 mt-4">
-    <h4>Current Photo Selection</h4>
-</div>
-    <div class="container">
-    <div class="row ">
+        <div class="mb-3 mt-4">
+            <h4>Current Photo Selection</h4>
+        </div>
+        <div class="container">
+            <div class="row ">
 
 <form method="post" action="{{ route('photo.destroy') }}">
 @csrf

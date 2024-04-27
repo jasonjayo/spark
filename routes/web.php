@@ -34,6 +34,9 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         Route::post("closeReport", [AdminController::class, "closeReport"])->name("report.close");
         Route::post("revokeBan", [AdminController::class, "revokeBan"])->name("ban.revoke");
         Route::get("/admin", [AdminController::class, "dashboard"])->name("admin");
+        Route::delete("/deleteUserAccount", [AdminController::class, "deleteUserAccount"])->name("deleteUserAccount");
+
+        Route::get("/updateUserAccount/{id}", [AdminController::class, "updateUserAccount"])->name("updateUserAccount");
     });
 
     Route::middleware(['ensure_not_admin'])->group(function () {
@@ -46,6 +49,8 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         // discovery queue
         Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
         Route::post("react", [RecommendationController::class, "react"])->name("react");
+
+        Route::delete("match", [RecommendationController::class, "deleteMatch"])->name("deleteMatch");
 
         // ai suggestions
         Route::get("/aiSuggestions/{id}", [ChatController::class, "getAISuggestions"])->name("aiSuggestions");

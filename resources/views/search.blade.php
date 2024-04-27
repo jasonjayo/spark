@@ -82,7 +82,7 @@
                         <button class="btn btn-primary">Search</button>
 
                     </div>
-                    <div class="col-12 w-100">
+                    <div class="col-12 mx-4">
                         @foreach (array_filter(explode(',', old('interests'))) as $interest_id)
                             <span class="interest-pill badge rounded-pill p-2 text-bg-secondary"
                                 data-interest-id="{{ $interest_id }}">

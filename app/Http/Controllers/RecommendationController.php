@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AIResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Models\Profile;
 use App\Models\Recommendation;
+use App\Models\SparkMatch;
 use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
@@ -98,12 +100,34 @@ class RecommendationController extends Controller
                 return $user->id === intval($id);
             });
             if ($reactionReceived->pivot->type === "LIKE") {
+                // match
+                $user_1_id = min($my->id, $id);
+                $user_2_id = max($my->id, $id);
+                SparkMatch::updateOrCreate(["user_1_id" => $user_1_id, "user_2_id" => $user_2_id]);
                 return redirect()->route("viewprofile", ["id" => $id])->with(["match" => true]);
             }
         }
 
-        return redirect()->route("discovery")->with([
+        return back()->with([
             "recommendations" => $this->generate()
         ]);
+    }
+
+    public function deleteMatch(Request $req)
+    {
+        $my = Auth::user();
+        $id = $req->id;
+
+        $user_1_id = min($my->id, $id);
+        $user_2_id = max($my->id, $id);
+
+        // remove match
+        SparkMatch::where(["user_1_id" => $user_1_id, "user_2_id" => $user_2_id])->first()->delete();
+        // remove unmatching user's reaction
+        $req->user()->reactionsSent()->detach($req->id);
+        // remove ai date suggestions
+        AIResponse::where('user_1_id', $user_1_id)->where('user_2_id', $user_2_id)->first()->delete();
+
+        return back();
     }
 }

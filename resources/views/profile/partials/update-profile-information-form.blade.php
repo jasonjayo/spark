@@ -6,12 +6,11 @@
 @use('App\Models\SparkTrait')
 
 <section>
-<style>
-    .ba {
-     border-style: solid;
-    border-width: 1px; 
-     
-}
+    <style>
+        .ba {
+            border-style: solid;
+            border-width: 1px;
+        }
 
         .br-pill {
             border-radius: 9999px;
@@ -42,7 +41,7 @@
             transition: color .15s ease-in;
         }
 
-/* .link:link, .link:visited {
+        /* .link:link, .link:visited {
     transition: color .15s ease-in;
 } */
 
@@ -86,7 +85,7 @@
             transition: opacity .15s ease-in;
         }
 
-/* .dim:active {
+        /* .dim:active {
     opacity: .8;
     transition: opacity .15s ease-out;
 } */
@@ -261,6 +260,8 @@ var selectedTraits = [];
         <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
             @csrf
 
+            <input type="text" value="{{ $user->id }}" hidden>
+
             <div class="container d-flex flex-column ">
 
                 <!-- Basic Details Div -->
@@ -294,7 +295,7 @@ var selectedTraits = [];
 
                     <div class="form-floating mb-3"> <!-- DOB -->
                         <input id="dob" name="dob" type="date" class="form-control mt-1 block w-full"
-                            value="{{ $hasProfile ? $profile->user->dob : '' }}" required readonly />
+                            value="{{ $user->dob }}" required readonly />
                         <label for="second_name">Date of Birth </label>
                     </div>
                 </div>

@@ -67,16 +67,18 @@
                     <i class="bi-search icon"> </i><span class="d-none mx-2 d-lg-flex">Search</span>
                 </li>
             </a>
-            <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
-                <li @class([
-                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
-                    'spark-bg-secondary text-white' => Str::contains(
-                        request()->route()->getName(),
-                        'chat'),
-                ])>
-                    <i class="bi-chat-dots icon"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
-                </li>
-            </a>
+            @if (!Auth::user()->isAdmin())
+                <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
+                    <li @class([
+                        'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                        'spark-bg-secondary text-white' => Str::contains(
+                            request()->route()->getName(),
+                            'chat'),
+                    ])>
+                        <i class="bi-chat-dots icon"></i><span class="d-none mx-2 d-lg-flex">Chat</span>
+                    </li>
+                </a>
+            @endif
 
             @if (!Auth::user()->isAdmin())
                 <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">
@@ -116,11 +118,14 @@
                 <i class="bi-search fs-1 text-white"> </i>
             </li>
         </a>
-        <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
-            <li class="p-3 mx-3 px-4 rounded d-flex text-center align-items-center">
-                <i class="bi-chat-dots fs-1 text-white"></i>
-            </li>
-        </a>
+
+        @if (!Auth::user()->isAdmin())
+            <a href="{{ route('chat.index') }}" class="text-decoration-none text-black">
+                <li class="p-3 mx-3 px-4 rounded d-flex text-center align-items-center">
+                    <i class="bi-chat-dots fs-1 text-white"></i>
+                </li>
+            </a>
+        @endif
 
         @if (!Auth::user()->isAdmin())
             <a href="{{ route('profile.edit') }}" class="text-decoration-none text-black">

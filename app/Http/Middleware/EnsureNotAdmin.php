@@ -19,6 +19,6 @@ class EnsureNotAdmin
         if (!Auth::user()->isAdmin()) {
             return $next($request);
         }
-        return redirect()->route("error")->with(["message" => "Admin users cannot access this page", "code" => 401]);
+        return redirect()->route("admin");
     }
 }

@@ -1,9 +1,12 @@
 @props(['profile'])
 @use ('App\Models\Photo')
 @use ('App\Models\AIResponse')
+@use ('App\Models\SparkMatch')
 
 
-@vite(['resources/css/viewprofile.css'])
+@pushOnce('scripts')
+    @vite(['resources/js/viewprofile.js', 'resources/css/viewprofile.css'])
+@endPushOnce
 
 <x-app-layout>
     <x-slot:title>{{ $profile->user->first_name }}'s profile</x-slot>
@@ -13,7 +16,20 @@
     $first_user_id = min($my->id, $profile->user->id);
     $second_user_id = max($my->id, $profile->user->id);
     $date_ideas = AIResponse::where('user_1_id', $first_user_id)->where('user_2_id', $second_user_id)->first();
+    
+    $match = SparkMatch::where(['user_1_id' => $first_user_id, 'user_2_id' => $second_user_id])->first();
     ?>
+    <div id="loader"
+        class="d-none flex-column justify-content-center align-items-center position-fixed start-0 top-0 bottom-0 end-0 z-2">
+        <div id="loader-background" class="position-absolute start-0 top-0 bottom-0 end-0">
+        </div>
+        <div class="spinner-border text-light z-3" style="width: 5rem; height: 5rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="mt-4 text-white z-3 fs-5">
+            <b>Working</b>
+        </div>
+    </div>
 
     @if (Auth::user()->isAdmin())
         <div class="container mt-4">
@@ -60,13 +76,38 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this user's account?<br>This action cannot be undone.
+                        <form id="deleteUserForm" method="POST" action="{{ route('deleteUserAccount') }}">
+                            @csrf
+                            @method('delete')
+                            <input type="text" name="id" hidden value="{{ $profile->user->id }}">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="deleteAccountConfirm" type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
+
     <div class="container profile-container">
         @if (session('match'))
             <div class="row">
                 <div class="col-12">
                     <div class="alert alert-success fs-4" role="alert">
-                        <b class="me-3">🎉 Congratulations - it's a match! </b>
+                        <b class="me-3">🎉 It's a match! </b>
                         You can now chat with {{ $profile->user->first_name }}.
                     </div>
                 </div>
@@ -107,12 +148,13 @@
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="ban-modal-header modal-header">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                                <div class="modal-title-container">
+                                <div class="ban-modal-title-container modal-title-container">
                                     <h5 class="modal-title" id="reportModalLabel">Report</h5>
-                                    <p class="modal-subtitle">Don't worry, {{ $profile->user->first_name }} won't
+                                    <p class="ban-modal-subtitle modal-subtitle">Don't worry,
+                                        {{ $profile->user->first_name }} won't
                                         find out.</p>
                                 </div>
                             </div>
@@ -125,11 +167,11 @@
                                         <div class="mb-3">
                                             <div class="d-grid gap-2">
                                                 <button type="submit" class="btn btn-report" name="reason"
-                                                    value="inappropriate_messages">Inappropriate Messages</button>
+                                                    value="Inappropriate Messages">Inappropriate Messages</button>
                                                 <button type="submit" class="btn btn-report" name="reason"
-                                                    value="inappropriate_photos">Inappropriate Photos</button>
+                                                    value="Inappropriate Photos">Inappropriate Photos</button>
                                                 <button type="submit" class="btn btn-report" name="reason"
-                                                    value="spam">Feels like Spam</button>
+                                                    value="Spam">Feels like Spam</button>
                                                 <button type="button" class="btn btn-report"
                                                     data-bs-toggle="collapse"
                                                     data-bs-target="#otherReasonField">Other</button>
@@ -194,16 +236,57 @@
                                     <h2 class="profile-name">{{ $profile->user->first_name }},
                                         {{ $profile->getAge() }}</h2>
                                 </div>
+                                @if ($match)
+                                    <div class="d-flex">
+                                        <span>Matched on {{ date_create($match->created)->format('d/m/Y') }}</span>
+                                        <form action="{{ route('deleteMatch') }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="text" name="id" hidden
+                                                value="{{ $profile->user->id }}">
+                                            <input class="ms-2 p-0 border-0 text-decoration-underline unmatch-btn"
+                                                type="submit" value="Unmatch">
+                                        </form>
+                                    </div>
+                                @endif
                                 <div>
                                     <div class="profile-tagline">{{ $profile->tagline }}</div>
-                                    <a class="btn btn-primary mt-3 mb-3"$
-                                        href="{{ route('chat.show', $profile->user->id) }}">Say Hi!</a>
-                                    @if (!$date_ideas)
-                                        <a class="btn btn-primary mt-3 mb-3"
+                                </div>
+                                <div class="d-flex gap-2 mb-4">
+                                    @if (!$match && !Auth::user()->isAdmin())
+                                        <form action="{{ route('react') }}" method="POST" class="m-0">
+                                            @csrf
+                                            <input hidden type="text" name="id"
+                                                value="{{ $profile->user->id }}">
+                                            <input hidden type="text" name="type" value="LIKE">
+                                            <button type="submit" class="btn btn-primary text-uppercase">
+                                                <b>Like</b>
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if ($match)
+                                        <a class="btn btn-primary"$
+                                            href="{{ route('chat.show', $profile->user->id) }}">
+                                            Say Hi!
+                                        </a>
+                                    @endif
+                                    @if ($match && !$date_ideas)
+                                        <a class="btn btn-secondary" id="generateAISuggestionsBtn"
                                             href="{{ route('aiSuggestions', $profile->user->id) }}">✨
-                                            Get Date Ideas</a>
+                                            Generate Date Ideas
+                                        </a>
+                                    @endif
+
+                                    {{-- admin --}}
+                                    @if (Auth::user()->isAdmin())
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal">
+                                            Delete
+                                        </button>
                                     @endif
                                 </div>
+
+
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="profile-info">

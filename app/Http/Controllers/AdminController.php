@@ -6,6 +6,7 @@ use App\Models\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
+use App\Models\User;
 use Termwind\Components\Raw;
 
 class AdminController extends Controller
@@ -60,5 +61,20 @@ class AdminController extends Controller
     public function dashboard()
     {
         return view("admin");
+    }
+
+    // method for admin to delete a user account
+    public function deleteUserAccount(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+        return redirect()->route("admin")->with(["account_deleted" => true]);
+    }
+
+    public function updateUserAccount(Request $req)
+    {
+        return view('profile.edit', [
+            'user' => User::findOrFail($req->id),
+        ]);
     }
 }

@@ -16,10 +16,12 @@
                     <i class="bi bi-gear"></i>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="/profile" class="dropdown-item">Edit Profile</a></li>
-                    <li><a href="/profile?section=section2" class="dropdown-item">Update Password</a></li>
-                    <li><a href="/profile?section=section3" class="dropdown-item">Delete Account</a></li>
-                    <li><a href="/profile?section=section4" class="dropdown-item">Update Photos</a></li>
+                    <li><a href="?" class="dropdown-item">Edit Profile</a></li>
+                    @if (!Auth::user()->isAdmin())
+                        <li><a href="?section=section2" class="dropdown-item">Update Password</a></li>
+                        <li><a href="?section=section3" class="dropdown-item">Delete Account</a></li>
+                    @endif
+                    <li><a href="?section=section4" class="dropdown-item">Update Photos</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

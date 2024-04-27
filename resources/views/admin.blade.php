@@ -77,6 +77,16 @@
             </div>
         @endif
 
+        @if (session('account_deleted'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-success" role="alert">
+                        Account successfully deleted
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-3">
                 <form action="{{ route('logout') }}" method="POST">
