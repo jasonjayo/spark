@@ -99,12 +99,13 @@
     color : var( --spk-color-secondary-1);
 }
 .on {
-   opacity: 0.5;
-    outline-style : solid;
-    outline-width : 2px;
-    outline-color: var( --spk-color-primary-1);
-    transition : outline .02s linear;
-    transition : opacity .15s ease-in-out;
+  
+    background-color : var( --spk-color-primary-1);
+    color : white;
+}
+.onTwo {
+    background-color: var( --spk-color-secondary-1);
+    color : white;
 }
 </style>
 
@@ -125,8 +126,6 @@ $hasInterests = false;
 $hasTraits = false;
 ?>
 <script>
-var interestActive = false;
-var traitActive = false; 
 var selectedInterests = []; 
 var selectedTraits = [];
 </script>
@@ -134,34 +133,53 @@ var selectedTraits = [];
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLabel">Interests and Traits</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6 class="modal-title" id="exampleModalLabel"> Hey There! Care to tell us about some of your
-                        interests and traits?</h6>
+                    <h5 class="modal-title" id="exampleModalLabel">Let's Get Personal✨</h5>
                     <div class="ph3 mt4">
-                        <h1 class="f6 fw6 ttu tracked">Interests</h1>
+                        <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand out!</h1>
+                        @php 
+                          $my_interests = Auth::user()->interests->pluck('id');
+                        @endphp
                         @foreach (Interest::get() as $interest)
-                            <button id="test" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
+                            <button id="{{$interest->id}}" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
                                 href="#0" data-interest-name="{{ $interest->name }}"
-                                data-interest-id=" {{ $interest->id }}" data-interest-category="testCat"
+                                data-interest-id="{{ $interest->id }}" data-interest-category="testCat"
                                 onclick="addSelectedInterest(this)">
                                 {{ $interest->name }}
                             </button>
+                            @if ($my_interests->contains($interest->id))
+                         <script> 
+                         var intButton = document.getElementById("{{$interest->id}}");
+                         selectedInterests.push("{{$interest->id}}");
+                         intButton.classList.add('on');
+                         </script>
+                            @endif
                         @endforeach
                     </div>
                     <div class="ph3 mt4">
-                        <h1 class="f6 fw6 ttu tracked">Traits</h1>
+                        <h1 class="f6 fw6 ttu tracked">Ready to reveal your vibe? Select your personality traits!</h1>
+                        @php 
+                          $my_traits = Auth::user()->traits->pluck('id');
+                        @endphp
                         @foreach (SparkTrait::get() as $trait)
-                            <button class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0"
-                                data-trait-name="{{ $trait->name }}" data-trait-id=" {{ $trait->id }}"
+                            <button id="{{$trait->id}}_trait" class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0"
+                                data-trait-name="{{ $trait->name }}" data-trait-id="{{ $trait->id }}"
                                 data-trait-category="testCat" onclick="addSelectedTrait(this)">
                                 {{ $trait->name }}
                             </button>
+                            @if ($my_traits->contains($trait->id))
+                         <script> 
+                         var traitButton = document.getElementById("{{$trait->id}}_trait");
+                         selectedTraits.push("{{$trait->id}}");
+                         traitButton.classList.add('onTwo');
+                         </script>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -170,7 +188,7 @@ var selectedTraits = [];
                     <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
                         @csrf
 
-            <input type="text" class="interestInput" value="" name="interests" id="interests" />   
+            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
             <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
                    
         <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
@@ -295,7 +313,7 @@ var selectedTraits = [];
                                     {{ $gender->getLabel() }}</option>
                             @endforeach
                         </select>
-                        <label for="gender">Gender</label>
+                        <label for="gender">How do you identify?</label>
                     </div>
                     <div class="form-floating mb-3">
                         <!-- Bio -->
@@ -322,7 +340,7 @@ var selectedTraits = [];
                                     {{ $interested_in_option->getLabel() }}</option>
                             @endforeach
                         </select>
-                        <label for="interested_in">Interested In</label>
+                        <label for="interested_in">What genders are you open to connecting with?</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -335,7 +353,7 @@ var selectedTraits = [];
                                 </option>
                             @endforeach
                         </select>
-                        <label for="seeking">Length of relationship you're seeking</label>
+                        <label for="seeking">Looking for long-term love or something shorter?</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -366,7 +384,14 @@ var selectedTraits = [];
                             value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
                         <label for="location">Location</label>
                     </div> --}}
-
+                </div>
+                <div class="mb-3">
+                    <h4>Select your Interests and Traits here!</h4>
+                    <p>By selecting some of the interests and traits that describe you best, we can find the best match for you,<br>Click down below to get started!</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Click Me!
+                    </button>
                 </div>
 
 
@@ -403,14 +428,15 @@ var selectedTraits = [];
                             class="form-control" size=4 maxlength=4
                             value="{{ old('personality_type', $hasProfile ? $profile->personality_type : '') }}"
                             pattern="[A-Za-z]{4}" />
-                        <label for="personality_type">Myers Briggs Personality Type (e.g. INTP)</label>
+                        <label for="personality_type">What's your Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
+                    <p>Unsure? Click <a target="_blank" href="https://www.16personalities.com/free-personality-test">here</a> to take a free personality test and find out!</p>
                     <div class="form-floating mb-3">
                         <!-- Height -->
                         <input id="height" name="height" type="text" class="form-control" size=4
                             placeholder="1.75m" maxlength=4 pattern="^[0-9](\.[0-9]{0,2})?$"
                             value="{{ old('height', $hasProfile ? $profile->height : '') }}" />
-                        <label for="height">Height in Meters (e.g., 1.53)</label>
+                        <label for="height">How tall are you? (e.g. 1.53 Meters)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <!-- Languages -->
@@ -422,43 +448,41 @@ var selectedTraits = [];
                 </div>
 
                 <div class="flex items-center gap-4 g">
-                    <button class="btn btn-primary" name="profile">Save Profile</button>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Interests and Traits
-                    </button>
+                    <button class="btn btn-primary" name="profile">Save Profile</button> 
                 </div>
             </div>
 
             <script>
     function addSelectedInterest(e) {
        var interestId = e.getAttribute("data-interest-id");
+       var interestInput =  document.querySelector("#interests");
        if (!selectedInterests.includes(interestId)) {
        selectedInterests.push(interestId);
-       var interestInput =  document.querySelector("#interests");
-       interestInput.value = selectedInterests.toString();
        e.classList.add("on");
         }
         else {
             e.classList.remove("on");
             var removeIndex = selectedInterests.indexOf(interestId);
-            newInput = selectedInterests.splice(removeIndex, 1);
-            console.log(selectedInterests);
-            
+            selectedInterests.splice(removeIndex, 1);
         }
+        interestInput.value = selectedInterests.toString();
     }
-        
     </script>
     <script>
         function addSelectedTrait(e) {
-            traitsActive = !traitsActive;
-            if (traitsActive == true) {
             var traitId = e.getAttribute("data-trait-id");
             var traitInput = document.querySelector('#traits');
-            traitInput.value += traitId + ",";
+            if(!selectedTraits.includes(traitId)) {
+                selectedTraits.push(traitId);
+                e.classList.add('onTwo');
+            }
+            else {
+            e.classList.remove('onTwo');
+            var removeIndex = selectedTraits.indexOf(traitId);
+             selectedTraits.splice(removeIndex,1);
+            }
+            traitInput.value = selectedTraits.toString();
         }
-    }
         </script>
         </form>
 </section>

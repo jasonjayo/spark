@@ -58,6 +58,10 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post("/addUserInterestsAndTraits", [ProfileController::class, "addUserInterestsAndTraits"])->name("profile.addUserInterestsAndTraits");
 
+    //Photos 
+    Route::post('/uploadPhoto', [PhotoController::class, 'store'])->name('photo.store');
+    Route::delete('/deletePhoto', [PhotoController::class, 'destroy'])->name('photo.destroy');
+
     Route::get("/search", [ProfileController::class, "index"])->name('search');
     Route::get('/viewprofile', [ProfileController::class, 'index'])->name('viewprofile');
     Route::get('/viewprofile/{id}', [ProfileController::class, 'show'])->name('viewprofile');

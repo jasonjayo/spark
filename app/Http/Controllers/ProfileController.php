@@ -14,11 +14,12 @@ use App\Models\Profile;
 use App\Models\Photo;
 use Illuminate\Support\Facades\DB;
 use App\Models\Interest;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProfileController extends Controller
 {
-
+    public $imageName;
     public function index(Request $request)
     {
 
@@ -94,6 +95,7 @@ class ProfileController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+
         if ($request->has('profile')) {
 
             $formFields = $request->validate([
@@ -126,34 +128,44 @@ class ProfileController extends Controller
             return Redirect::route('profile.edit')->with('status', 'profile-updated');
         }
 
-        if ($request->has('photo')) { {
+        // if ($request->has('photo')) { {
+
+        //         $request->validate([
+        //             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
+        //             'photoName' => 'required'
+
+        //         ]);
+
+        //         $imageName = time() . '-' . $request->photoName . '.' . $request->image->extension();
+
+        //         $request->image->move(public_path('images/profilePhotos'), $imageName);
+
+        //         $photo = Photo::create([
+        //             'user_id' => $request->user()->id,
+        //             'photo_url' => $imageName
+        //         ]);
 
 
-                $request->validate([
-                    'image' => 'required|mimes:jpg,png,jpeg|max:5048',
-                    'photoName' => 'required'
+        //         return back()->with('status', "photo-saved");
+        //     }
+        // }
+        // if ($request->has('photoDelete')) { {
+              
+        //         $files = Storage::files('');
+        //         dd($files);
+        //         // $photoId = $request->photoId;
+        //         // DB::table('photos')->where('id', $photoId)->delete();
+        //         // if (
+        //         //     Storage::delete(public_path('images/profilePhotos') . '\\' . $image)
+        //         // ) {
+        //         //     dd($imageName);
+        //         // }
+        //         // // cant delete the right path here... should of this be moved to the Photo controller ?? would mean changing post routes in theh profile photos 
 
-                ]);
 
-                $newImageName = time() . '-' . $request->photoName . '.' . $request->image->extension();
-
-                $request->image->move(public_path('images/profilePhotos'), $newImageName);
-
-                $photo = Photo::create([
-                    'user_id' => $request->user()->id,
-                    'photo_url' => $newImageName
-                ]);
-
-
-                return back()->with('status', "photo-saved");
-            }
-        }
-        if ($request->has('photoDelete')) { {
-                $photoId = $request->photoId;
-                DB::table('photos')->where('id', $photoId)->delete();
-                return back()->with('status', "photo-deleted");
-            }
-        }
+        //         return back()->with('status', "photo-deleted");
+        //     }
+        // }
     }
 
     public function show($id): View
@@ -180,6 +192,8 @@ class ProfileController extends Controller
             $my = Auth::user();
             if (!$my->interests->contains(Interest::find($interest))) {
                 $my->interests()->attach($interest);
+            } else {
+                $my->interests()->sync($interests);
             }
         }
 
@@ -189,6 +203,8 @@ class ProfileController extends Controller
             $my = Auth::user();
             if (!$my->traits->contains(SparkTrait::find($trait))) {
                 $my->traits()->attach($trait);
+            } else {
+                $my->traits()->sync($traits);
             }
         }
         return back()->with('status', "interestsAndTraits-created");

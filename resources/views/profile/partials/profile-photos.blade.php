@@ -2,8 +2,8 @@
 
 <section>
     <style>
-    
- .imgContainer {
+
+.imgContainer {
 position: relative;
 }
 .img {
@@ -68,7 +68,7 @@ position: relative;
     </div>
 @endif
 
-<form method="post" action="{{ route('profile.store') }}" enctype="multipart/form-data">
+<form method="post" action="{{ route('photo.store') }}" enctype="multipart/form-data">
 @csrf
     <div class="mb-3">
   <label for="image" class="form-label">
@@ -84,7 +84,7 @@ position: relative;
 
 <!-- <input class="form-control mb-3" type="text" name="photoName"> -->
 <button type="submit" name="photo" class="btn btn-primary">Upload Photo</button>
-
+</form>
 
 
 <br>
@@ -95,6 +95,9 @@ position: relative;
     <div class="container">
     <div class="row ">
 
+<form method="post" action="{{ route('photo.destroy') }}">
+@csrf
+@method('delete')
 
     @foreach (Photo::where('user_id', auth()->id())->get() as $photo)
 <div class="imgContainer d-flex justify-content-center col-3 my-1">
@@ -102,14 +105,15 @@ position: relative;
     src="{{ asset('images/profilePhotos/' . $photo->photo_url) }}" 
     class="img"/>
            <div class="buttonContainer">
-           <input type="hidden" id="photoId" name="photoId" value= "{{ $photo->id }}"/>
+           <input type="hidden" id="photoId" name="photoId" value= "{{$photo->id}}"/>
+           <input type="hidden" id="photoUrl" name="photoUrl" value= "{{$photo->photo_url}}"/>
            <button type="submit" name="photoDelete"  class="delBtn btn btn-primary">Delete Photo</button>
            </div>
     
 </div>
     @endforeach
-
-</div>
-</div>
     </form>
+</div>
+</div>
+  
 </section>
