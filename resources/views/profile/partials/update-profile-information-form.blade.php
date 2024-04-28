@@ -48,7 +48,6 @@
             padding-top: .5rem;
             padding-bottom: .5rem;
         }
-
         .ph3 {
             padding-left: 1rem;
             padding-right: 1rem;
@@ -432,7 +431,9 @@ var selectedTraits = [];
                             pattern="[A-Za-z]{4}" />
                         <label for="personality_type">What's your Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
-                    <p>Unsure? Click <a target="_blank" href="https://www.16personalities.com/free-personality-test">here</a> to take a free personality test and find out!</p>
+                    
+                    <p style="padding-left:10px;color:#A9A9A9">Unsure? Click <a target="_blank" href="https://www.16personalities.com/free-personality-test">here</a> to take a free personality test and find out!</p>
+                 
                     <div class="form-floating mb-3">
                         <!-- Height -->
                         <input id="height" name="height" type="text" class="form-control" size=4
