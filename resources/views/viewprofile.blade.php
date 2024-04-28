@@ -27,7 +27,7 @@
             <span class="visually-hidden">Loading...</span>
         </div>
         <div class="mt-4 text-white z-3 fs-5">
-            <b>Generating personalised data ideas...</b>
+            <b>Generating your personalised date ideas...</b>
         </div>
     </div>
 
@@ -101,6 +101,7 @@
             </div>
         </div>
     @endif
+
     <div class="container profile-container">
         @if (session('match'))
             <div class="row">
@@ -129,6 +130,16 @@
                 <div class="col-12">
                     <div class="alert alert-success" role="alert">
                         Ban created successfully (Ban ID: {{ session('ban_id') }})
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if (session('generation_error'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        Couldn't generate suggestions, please try again in a few minutes.
                     </div>
                 </div>
             </div>
@@ -253,7 +264,11 @@
                                     <div class="profile-tagline">{{ $profile->tagline }}</div>
                                 </div>
                                 <div class="d-flex gap-2 mb-4">
-                                    @if (!$match && $profile->user_id != Auth::user()->id && !Auth::user()->isAdmin())
+                                    @if (
+                                        !$match &&
+                                            $profile->user_id != Auth::user()->id &&
+                                            !Auth::user()->isAdmin() &&
+                                            !Auth::user()->reactionsSent->pluck('id')->contains($profile->user_id))
                                         <form action="{{ route('react') }}" method="POST" class="m-0">
                                             @csrf
                                             <input hidden type="text" name="id"
@@ -365,6 +380,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="profile-info">
+                                            <div class="profile-seeking">
+                                                <span class="material-symbols-outlined">wc</span>
+                                                {{ $profile->gender->getLabel() }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-6">
@@ -375,7 +398,7 @@
                                                     $my_traits = Auth::user()->traits->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->traits as $trait)
-                                                    <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{$trait->name}}{{$trait->emoji}} </span>
+                                                    <span @class(['comma-after', 'fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
                                                 @endforeach
                                                 @if (count($profile->user->traits) == 0)
                                                     <span>No traits specified</span>
@@ -391,7 +414,11 @@
                                                     $my_interests = Auth::user()->interests->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->interests as $interest)
-                                                    <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{$interest->name}}{{$interest->emoji}} </span>
+                                                    <span
+                                                        @class([
+                                                            'comma-after',
+                                                            'fw-bold' => $my_interests->contains($interest->id),
+                                                        ])>{{ $interest->name }}{{ $interest->emoji }}</span>
                                                 @endforeach
                                                 @if (count($profile->user->interests) == 0)
                                                     <span>No interests specified</span>
@@ -404,7 +431,7 @@
                                 <div class="profile-bio">{{ $profile->bio }}</div>
                                 @if ($date_ideas)
                                     <hr>
-                                    <div class="row">
+                                    <div class="row" id="date-ideas">
                                         <div class="col-12">
                                             <h5>✨ Personalised Date Ideas</h5>
                                             {!! $date_ideas->content !!}

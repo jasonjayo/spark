@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Events\ChatSent;
 use App\Models\AIResponse;
 use App\Models\User;
+use Exception;
 use Pusher\Pusher;
 
 use Orhanerday\OpenAi\OpenAi;
@@ -108,7 +109,9 @@ class ChatController extends Controller
 
         $prompt = "I am interested in " . $my_interests . ".
         The person I'm chatting with is interested in " . $other_interests . ".
+        I speak " . $my->profile->languages . " and they speak " . User::find($id)->profile->languages . ".
         Suggest 3 date ideas for us. Give a very short description of each.
+        For each, include an emoji.
         Format the list like this example:
         <ol class='list-group list-group-numbered'>
           <li class='list-group-item'><strong>Go for a swim:</strong>description</li>
@@ -134,7 +137,11 @@ class ChatController extends Controller
         ]);
 
         $d = json_decode($chat);
-        $content = $d->choices[0]->message->content;
+        try {
+            $content = $d->choices[0]->message->content;
+        } catch (Exception $e) {
+            return back()->with(["generation_error" => true]);
+        }
 
         $first_user_id = min($my->id, $id);
         $second_user_id = max($my->id, $id);
@@ -146,6 +153,6 @@ class ChatController extends Controller
             "content" => $content
         ]);
 
-        return back();
+        return back()->withFragment('#date-ideas');
     }
 }

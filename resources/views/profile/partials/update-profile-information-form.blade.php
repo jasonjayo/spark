@@ -112,7 +112,7 @@
     <?php
     $firstToUpper = ucfirst($user->first_name);
     $secondToUpper = ucfirst($user->second_name);
-    $user = Auth::user();
+    
     $hasProfile = isset($user->profile);
     if ($hasProfile) {
         $profile = $user->profile;
@@ -148,7 +148,7 @@
                         <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand
                             out!</h1>
                         @php
-                            $my_interests = Auth::user()->interests->pluck('id');
+                            $my_interests = $user->interests->pluck('id');
                         @endphp
                         @foreach (Interest::get() as $interest)
                             <button id="{{ $interest->id }}" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
@@ -170,7 +170,7 @@
                     <div class="ph3 mt4">
                         <h1 class="f6 fw6 ttu tracked">Ready to reveal your vibe? Select your personality traits!</h1>
                         @php
-                            $my_traits = Auth::user()->traits->pluck('id');
+                            $my_traits = $user->traits->pluck('id');
                         @endphp
                         @foreach (SparkTrait::get() as $trait)
                             <button id="{{ $trait->id }}_trait"
@@ -193,7 +193,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <form id="interestsTraitsForm">
-
+                        <input type="hidden" id="user_id" value="{{ $user->id }}">
                         <input type="hidden" class="interestInput" value="" name="interests" id="interests" />
                         <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
 
@@ -230,7 +230,7 @@
     @endif
 
     @if (session('status') === 'profile-updated')
-        @if ($hasPhotos->isEmpty())
+        @if ($hasPhotos->isEmpty() && !Auth::user()->isAdmin())
             <div class="alert alert-success" role="alert">
                 Profile saved! Why not upload some pictures to your profile in the Update Photos section!
             </div>
@@ -503,7 +503,8 @@
                     e.preventDefault();
                     axios.post(`${URL_BASE}/api/interestsTraits`, {
                         interests: interestInput.value,
-                        traits: traitInput.value
+                        traits: traitInput.value,
+                        id: document.querySelector("#user_id").value
                     }).then(res => {
                         const interestsTraitsUpdateAlert = document.querySelector("#interestsTraitsUpdateAlert");
                         interestsTraitsUpdateAlert.style.display = "block";

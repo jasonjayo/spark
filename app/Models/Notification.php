@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Events\NotificationSent;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Database\Eloquent\BroadcastsEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Notification extends Model
 {
-    use HasFactory;
+    use BroadcastsEvents, HasFactory;
 
     public $timestamps = false;
 
@@ -17,4 +21,16 @@ class Notification extends Model
         "title",
         "link"
     ];
+
+    public function recipient(): HasOne
+    {
+        return $this->hasOne(User::class, "id", "recipient_id");
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (Notification $notif) {
+            NotificationSent::dispatch($notif);
+        });
+    }
 }

@@ -61,7 +61,7 @@
     $timeAgo = new Westsworld\TimeAgo();
 @endphp
 
-<nav class="nav
+<nav id ="nav" class="nav
     navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white"
     x-data="{ notificationsVisible: false, notificationsCount: {{ count($notifications) }} }">
 
@@ -95,11 +95,9 @@
                 <button type="button" data-notification-id="{{ $notification->id }}"
                     @click="dismissNotification($el, $data)" class="btn-close notification-close-btn ms-3"
                     aria-label="Close"></button>
-
-
             </div>
         @endforeach
-        <div x-show="notificationsCount === 0">No notifications</div>
+        <div x-show="notificationsCount <= 0">No notifications</div>
     </div>
 
     <a href="{{ $home }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
@@ -245,8 +243,11 @@
         axios.post(`${URL_BASE}/api/dismissNotification`, {
             id
         }).then(res => {
-            data.notificationsCount -= 1;
-            el.parentElement.remove();
+            console.log(res);
+            if (res.status === 200) {
+                data.notificationsCount -= 1;
+                el.parentElement.remove();
+            }
         });
     }
     //     notificatipnCloseBtns.forEach(btn => {

@@ -69,10 +69,6 @@ class RecommendationController extends Controller
                 $weight += $my->profile->seeking === $profile->seeking ? 15 : 0;
                 // echo "Weight for " . $profile->user->first_name . " = " . $weight . "<br>";
 
-                // matches looking for
-                // I AM      I AM INTERESTED IN          THEY ARE       THEY ARE INTERESTED IN
-
-
                 // Recommendation::updateOrCreate(
                 //     [
                 //         "user_1_id" => $first_user_id,
@@ -122,7 +118,7 @@ class RecommendationController extends Controller
                 SparkMatch::updateOrCreate(["user_1_id" => $user_1_id, "user_2_id" => $user_2_id]);
 
                 // send notification to other user
-                Notification::create([
+                $notif = Notification::create([
                     "recipient_id" => $id,
                     "title" => "New Match!",
                     "contents" => "🎉 It's a match! You can now chat with " . $my->first_name . ".",
