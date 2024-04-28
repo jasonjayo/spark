@@ -102,6 +102,45 @@
         </div>
     @endif
 
+                        <div class="card-body">
+                            <form action="{{ route('ban.create') }}" method="POST" x-data="{ banType: '' }">
+                                @csrf
+                                <input type="number" name="user_id" hidden value="{{ $profile->user->id }}">
+
+                                <div class="mb-3">
+                                    <label for="reason" class="form-label">{{ __('Reason') }}</label>
+                                    <input type="text" id="reason" name="reason" class="form-control"
+                                        placeholder="{{ __('Enter reason') }}" value="You got banned.">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('Ban Type') }}</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="banType" id="permanentBan"
+                                            value="permanent" x-model="banType">
+                                        <label class="form-check-label"
+                                            for="permanentBan">{{ __('Permanent Ban') }}</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="banType" id="timeout"
+                                            value="timeout" x-model="banType">
+                                        <label class="form-check-label" for="timeout">{{ __('Timeout') }}</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3" x-show="banType === 'timeout'">
+                                    <label for="expiry" class="form-label">{{ __('Ban Expiry') }}</label>
+                                    <input name="expiry" type="date" class="form-control">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">{{ __('Ban') }}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="container profile-container">
         @if (session('match'))
             <div class="row">

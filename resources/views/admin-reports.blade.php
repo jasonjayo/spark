@@ -94,7 +94,8 @@
                                     @if ($report->status != 'CLOSED')
                                         <button class="btn btn-primary me-1" data-bs-toggle="modal"
                                             data-bs-target="#banModal" data-reported-id="{{ $report->reported_id }}"
-                                            data-report-id="{{ $report->id }}" x-on:click="prepBanModal">Ban</button>
+                                            data-report-id="{{ $report->id }}"
+                                            x-on:click="prepBanModal">Ban</button>
                                         <form action="{{ route('report.close') }}" method="POST"
                                             class="d-inline-block">
                                             @csrf

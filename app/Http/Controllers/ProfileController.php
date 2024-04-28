@@ -131,6 +131,12 @@ class ProfileController extends Controller
 
             return back()->with('status', 'profile-updated');
         }
+        if ($request->has('photoDelete')) { {
+                $photoId = $request->photoId;
+                DB::table('photos')->where('id', $photoId)->delete();
+                return back()->with('status', "photo-deleted");
+            }
+        }
     }
 
     public function show($id): View
