@@ -91,6 +91,11 @@ class User extends Authenticatable
             ->orderBy("pivot_weight", "desc");
     }
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, "recipient_id", "id");
+    }
+
     public function reactionsReceived()
     {
         return $this->belongsToMany(User::class, "reactions", "recipient_id", "sender_id")

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum', 'update_last_active'])->post('/chat', [ChatController::class, 'store']);
 Route::middleware(['auth:sanctum'])->post("/geolocation", [ProfileController::class, "updateLocation"]);
 Route::middleware(['auth:sanctum'])->post("/interestsTraits", [ProfileController::class, "addUserInterestsAndTraits"]);
+Route::middleware(['auth:sanctum'])->post("/dismissNotification", [NotificationController::class, "dismissNotification"]);

@@ -10,6 +10,7 @@ use App\Models\Profile;
 use App\Models\Recommendation;
 use App\Models\SparkMatch;
 use App\Models\User;
+use App\Models\Notification;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -104,6 +105,14 @@ class RecommendationController extends Controller
                 $user_1_id = min($my->id, $id);
                 $user_2_id = max($my->id, $id);
                 SparkMatch::updateOrCreate(["user_1_id" => $user_1_id, "user_2_id" => $user_2_id]);
+
+                // send notification to other user
+                Notification::create([
+                    "recipient_id" => $id,
+                    "title" => "New Match!",
+                    "contents" => "🎉 It's a match! You can now chat with " . $my->first_name,
+                    "link" => "viewprofile/" . $my->id
+                ]);
                 return redirect()->route("viewprofile", ["id" => $id])->with(["match" => true]);
             }
         }

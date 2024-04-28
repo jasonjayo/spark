@@ -27,7 +27,7 @@ $match = SparkMatch::where(['user_1_id' => $first_user_id, 'user_2_id' => $secon
             <span class="visually-hidden">Loading...</span>
         </div>
         <div class="mt-4 text-white z-3 fs-5">
-            <b>Working</b>
+            <b>Generating personalised data ideas...</b>
         </div>
     </div>
 
@@ -286,6 +286,10 @@ $match = SparkMatch::where(['user_1_id' => $first_user_id, 'user_2_id' => $secon
                                             data-bs-target="#deleteModal">
                                             Delete
                                         </button>
+                                        <a class="btn btn-secondary"
+                                            href="{{ route('updateUserAccount', ['id' => $profile->user->id]) }}">
+                                            Edit
+                                        </a>
                                     @endif
                                 </div>
 
@@ -408,7 +412,7 @@ $my_interests = Auth::user()->interests->pluck('id');
                                     <hr>
                                     <div class="row">
                                         <div class="col-12">
-                                            <h5>Date Ideas</h5>
+                                            <h5>✨ Personalised Date Ideas</h5>
                                             {!! $date_ideas->content !!}
                                             <img class="chatgpt-logo mt-3"
                                                 src="{{ asset('./images/logos/powered-by-openai-badge-filled-on-light.svg') }}"

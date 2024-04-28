@@ -29,12 +29,41 @@
     #links {
         min-height: 70vh;
     }
+
+    #notifications {
+        position: absolute;
+        right: 1.5em;
+        top: 5em;
+        width: min(80vw, 350px);
+        background: #fff;
+
+        .btn-close {
+            font-size: 14px;
+        }
+    }
+
+    #notification-count {
+        left: 70%;
+        top: 30%;
+    }
+
+    .notification-ago {
+        font-size: 0.9em;
+    }
 </style>
 <div class="alert alert-secondary mb-0" role="alert" x-cloak x-data x-show="window.location.host === '78.153.209.28'">
     Please access the site through <a href="https://findyourspark.ie">findyourspark.ie</a>
 </div>
+
+@php
+    $notifications = Auth::user()->notifications;
+
+    $timeAgo = new Westsworld\TimeAgo();
+@endphp
+
 <nav class="nav
-    navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white">
+    navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white"
+    x-data="{ notificationsVisible: false, notificationsCount: {{ count($notifications) }} }">
 
     @php
         if (Auth::user()->isAdmin()) {
@@ -43,11 +72,51 @@
             $home = route('dashboard');
         }
     @endphp
+
+    <div id="notifications" class="z-2 p-3 shadow" x-cloak x-show="notificationsVisible">
+
+        @foreach ($notifications as $notification)
+            <div
+                class="notification d-flex justify-content-between align-items-center border-3 border-bottom mb-2 mt-2 ps-3 pt-2 pb-2">
+                @if ($notification->link)
+                    <a class="text-decoration-none text-black" href="{{ $notification->link }}">
+                @endif
+                <div>
+                    <h6>{{ $notification->title }} </h6>
+                    <div class="notification-ago mb-1 text-secondary">
+                        {{ $timeAgo->inWords(new DateTime($notification->timestamp)) }}
+                    </div>
+                    <span> {{ $notification->contents }}</span>
+                </div>
+                @if ($notification->link)
+                    </a>
+                @endif
+                <button type="button" data-notification-id="{{ $notification->id }}"
+                    @click="dismissNotification($el, $data)" class="btn-close notification-close-btn ms-3"
+                    aria-label="Close"></button>
+
+
+            </div>
+        @endforeach
+        <div x-show="notificationsCount === 0">No notifications</div>
+    </div>
+
     <a href="{{ $home }}"><img class="nav-logo" src="{{ asset('./images/logos/spark_no_subtitle.png') }}"
             alt=""></a>
 
     <div class="d-none d-md-flex">
         <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
+            @if (Auth::user()->isAdmin())
+                <a href="{{ route('admin') }}" class="text-decoration-none text-black">
+                    <li @class([
+                        'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                        'spark-bg-secondary text-white' => Request::is('admin'),
+                    ])>
+                        <i class="bi-stars icon"> </i>
+                        <span class="d-none mx-2 d-lg-flex">Admin Dashboard</span>
+                    </li>
+                </a>
+            @endif
             @if (!Auth::user()->isAdmin())
                 <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
                     <li @class([
@@ -93,6 +162,18 @@
                 </a></a>
             @endif
 
+            @if (!Auth::user()->isAdmin())
+                <li role="button" @class([
+                    'p-3 px-4 rounded d-flex text-center align-items-center position-relative',
+                ]) @click="notificationsVisible = !notificationsVisible">
+                    <i class="bi-bell icon"></i>
+                    <span id="notification-count" x-cloak x-show="notificationsCount > 0"
+                        class="position-absolute translate-middle badge rounded-pill bg-danger">
+                        <span x-text="notificationsCount"></span>
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>
@@ -143,6 +224,30 @@
     </ul>
 </nav>
 
+<script>
+    const notificatipnCloseBtns = document.querySelectorAll(".notification-close-btn");
+
+    function dismissNotification(el, data) {
+        const id = el.getAttribute("data-notification-id");
+        axios.post(`${URL_BASE}/api/dismissNotification`, {
+            id
+        }).then(res => {
+            data.notificationsCount -= 1;
+            el.parentElement.remove();
+        });
+    }
+    //     notificatipnCloseBtns.forEach(btn => {
+    //         const id = btn.getAttribute("data-notification-id");
+    //         btn.addEventListener("click", e => {
+    //             axios.post(`${URL_BASE}/api/dismissNotification`, {
+    //                 id
+    //             }).then(res => {
+    //                 e.target.parentElement.remove();
+    //             })
+    //         });
+    //     });
+    //
+</script>
 {{-- <div class="container-fluid">
     <a class="navbar-brand" href="#">Expand at md</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
