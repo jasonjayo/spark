@@ -375,7 +375,7 @@
                                                     $my_traits = Auth::user()->traits->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->traits as $trait)
-                                                    <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
+                                                    <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{$trait->name}}{{$trait->emoji}} </span>
                                                 @endforeach
                                                 @if (count($profile->user->traits) == 0)
                                                     <span>No traits specified</span>
@@ -391,7 +391,7 @@
                                                     $my_interests = Auth::user()->interests->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->interests as $interest)
-                                                    <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{ $interest->name }}</span>
+                                                    <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{$interest->name}}{{$interest->emoji}} </span>
                                                 @endforeach
                                                 @if (count($profile->user->interests) == 0)
                                                     <span>No interests specified</span>
