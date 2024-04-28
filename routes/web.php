@@ -36,7 +36,10 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         Route::get("/admin", [AdminController::class, "dashboard"])->name("admin");
         Route::delete("/deleteUserAccount", [AdminController::class, "deleteUserAccount"])->name("deleteUserAccount");
 
-        Route::get("/updateUserAccount/{id}", [AdminController::class, "updateUserAccount"])->name("updateUserAccount");
+        Route::get("/admin/updateUserAccount/{id}", [AdminController::class, "updateUserAccount"])->name("updateUserAccount");
+
+        Route::get("/admin/bans", [AdminController::class, "bansIndex"])->name("admin.bans");
+        Route::get("/admin/reports", [AdminController::class, "reportsIndex"])->name("admin.reports");
     });
 
     Route::middleware(['ensure_not_admin'])->group(function () {

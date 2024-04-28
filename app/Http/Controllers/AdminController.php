@@ -60,7 +60,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view("admin");
+        return view("admin-dashboard");
     }
 
     // method for admin to delete a user account
@@ -76,5 +76,16 @@ class AdminController extends Controller
         return view('profile.edit', [
             'user' => User::findOrFail($req->id),
         ]);
+    }
+
+    public function bansIndex()
+    {
+        return view("admin-bans");
+    }
+
+
+    public function reportsIndex()
+    {
+        return view("admin-reports");
     }
 }
