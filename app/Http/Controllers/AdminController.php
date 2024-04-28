@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ban;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
@@ -56,6 +57,12 @@ class AdminController extends Controller
         $report = Report::find($id);
         $report->status = "CLOSED";
         $report->save();
+
+        Notification::create([
+            "recipient_id" => $report->reporter_id,
+            "title" => "Update on report " . $id,
+            "contents" => "An admin reviewed your report."
+        ]);
     }
 
     public function dashboard()

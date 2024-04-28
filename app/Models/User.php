@@ -93,7 +93,7 @@ class User extends Authenticatable
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class, "recipient_id", "id");
+        return $this->hasMany(Notification::class, "recipient_id", "id")->orderBy('id', "desc");
     }
 
     public function reactionsReceived()
@@ -152,5 +152,25 @@ class User extends Authenticatable
             ->where('recipient_id', '=', Auth::user()->id)
             ->where("read", "=", "0")
             ->count();
+    }
+
+    public function getMatches()
+    {
+        $my = Auth::user();
+
+        $matches = SparkMatch::where("user_1_id", "=", $my->id)
+            ->orWhere("user_2_id", "=", $my->id)->get();
+
+        $matchedUsers = [];
+
+        foreach ($matches as $match) {
+            if ($match->user_1_id == $my->id) {
+                array_push($matchedUsers, $match->user_2_id);
+            } else {
+                array_push($matchedUsers, $match->user_1_id);
+            }
+        }
+
+        return $matchedUsers;
     }
 }

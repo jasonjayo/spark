@@ -86,38 +86,37 @@
             <label for="photoName">Photo Name </label>
         </div>
 
-<!-- <input class="form-control mb-3" type="text" name="photoName"> -->
-<button type="submit" name="photo" class="btn btn-primary">Upload Photo</button>
-</form>
-
-
-        <br>
-
-        <div class="mb-3 mt-4">
-            <h4>Current Photo Selection</h4>
-        </div>
-        <div class="container">
-            <div class="row ">
-
-<form method="post" action="{{ route('photo.destroy') }}">
-@csrf
-@method('delete')
-
-    @foreach (Photo::where('user_id', auth()->id())->get() as $photo)
-<div class="imgContainer d-flex justify-content-center col-3 my-1">
-    <img 
-    src="{{ asset('images/profilePhotos/' . $photo->photo_url) }}" 
-    class="img"/>
-           <div class="buttonContainer">
-           <input type="hidden" id="photoId" name="photoId" value= "{{$photo->id}}"/>
-           <input type="hidden" id="photoUrl" name="photoUrl" value= "{{$photo->photo_url}}"/>
-           <button type="submit" name="photoDelete"  class="delBtn btn btn-primary">Delete Photo</button>
-           </div>
-    
-</div>
-    @endforeach
+        <!-- <input class="form-control mb-3" type="text" name="photoName"> -->
+        <button type="submit" name="photo" class="btn btn-primary">Upload Photo</button>
     </form>
-</div>
-</div>
-  
+
+
+    <br>
+
+    <div class="mb-3 mt-4">
+        <h4>Current Photo Selection</h4>
+    </div>
+    <div class="container">
+        <div class="row ">
+
+            <form method="post" action="{{ route('photo.destroy') }}">
+                @csrf
+                @method('delete')
+
+                @foreach (Photo::where('user_id', $user->id)->get() as $photo)
+                    <div class="imgContainer d-flex justify-content-center col-3 my-1">
+                        <img src="{{ asset('images/profilePhotos/' . $photo->photo_url) }}" class="img" />
+                        <div class="buttonContainer">
+                            <input type="hidden" id="photoId" name="photoId" value= "{{ $photo->id }}" />
+                            <input type="hidden" id="photoUrl" name="photoUrl" value= "{{ $photo->photo_url }}" />
+                            <button type="submit" name="photoDelete" class="delBtn btn btn-primary">Delete
+                                Photo</button>
+                        </div>
+
+                    </div>
+                @endforeach
+            </form>
+        </div>
+    </div>
+
 </section>

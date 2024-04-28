@@ -73,7 +73,8 @@
         }
     @endphp
 
-    <div id="notifications" class="z-2 p-3 shadow" x-cloak x-show="notificationsVisible">
+    <div id="notifications" class="z-2 p-3 shadow" x-cloak x-show="notificationsVisible"
+        @click.outside="notificationsVisible = false">
 
         @foreach ($notifications as $notification)
             <div
@@ -112,7 +113,7 @@
                         'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
                         'spark-bg-secondary text-white' => Request::is('admin'),
                     ])>
-                        <i class="bi-stars icon"> </i>
+                        <i class="bi-gear icon"> </i>
                         <span class="d-none mx-2 d-lg-flex">Admin Dashboard</span>
                     </li>
                 </a>
@@ -178,8 +179,20 @@
     </div>
 </nav>
 
+{{-- mobile nav --}}
 <nav class="bottomnav navbar d-flex d-md-none fixed-bottom justify-content-around z-4 spark-bg-primary">
     <ul class="nav-links list-group d-flex flex-row justify-content-center fs-5">
+        @if (Auth::user()->isAdmin())
+            <a href="{{ route('admin') }}" class="text-decoration-none text-black">
+                <li @class([
+                    'p-3 mr-3 px-4 rounded d-flex text-center align-items-center',
+                    'spark-bg-secondary' => Request::is('admin'),
+                ])>
+                    <i class="bi-gear fs-1 text-white"> </i>
+                </li>
+            </a>
+        @endif
+
         @if (!Auth::user()->isAdmin())
             <a href="{{ route('discovery') }}" class="text-decoration-none text-black">
                 <li @class([

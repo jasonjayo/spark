@@ -3,7 +3,10 @@
 
 <ul class='list-group overflow-y-scroll gap-3'>
 
-    @foreach (Profile::all()->except(Auth::user()->id) as $profile)
+    @php
+        $profiles = Profile::whereIn('user_id', Auth::user()->getMatches())->get();
+    @endphp
+    @foreach ($profiles as $profile)
         <?php
         $photoUrls = [];
         ?>

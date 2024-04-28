@@ -16,7 +16,7 @@
                 <x-chat-user-list></x-chat-user-list>
             </div>
             <div
-                class="col-8 d-none text-center d-md-flex justify-content-center align-items-center bg-white flex-column">
+                class="col-8 p-5 d-none text-center d-md-flex justify-content-center align-items-center bg-white flex-column">
                 <i class="bi-chat-dots chat-icon colored-text"></i>
                 <h1 class="colored-text">Welcome to Spark Chat, {{ Auth::user()->first_name }}!</h1>
                 <p class="colored-text">Click on a name to get started.</p>

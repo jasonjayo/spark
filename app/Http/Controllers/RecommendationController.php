@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
+use App\Enums\InterestedIn;
 use App\Models\AIResponse;
+use App\Models\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,6 +25,15 @@ class RecommendationController extends Controller
         $my_interests = collect($my->interests->pluck("id"));
         $my_traits = collect($my->traits->pluck("id"));
         foreach (Profile::all()->except(Auth::user()->id) as $profile) {
+
+            if (
+                $my->profile->interested_in === InterestedIn::MEN && !in_array($profile->gender, [Gender::MALE, Gender::PREF_NOT_SAY]) ||
+                $my->profile->interested_in === InterestedIn::WOMEN && !in_array($profile->gender, [Gender::FEMALE, Gender::PREF_NOT_SAY]) ||
+                $profile->interested_in === InterestedIn::MEN && !in_array($my->profile->gender, [Gender::MALE, Gender::PREF_NOT_SAY]) ||
+                $profile->interested_in === InterestedIn::WOMEN && !in_array($my->profile->gender, [Gender::FEMALE, Gender::PREF_NOT_SAY])
+            ) {
+                continue;
+            }
 
             $first_user_id = min($my->id, $profile->user->id);
             // $second_user_id = max($my->id, $profile->user->id);
@@ -56,6 +68,9 @@ class RecommendationController extends Controller
                 // common seeking
                 $weight += $my->profile->seeking === $profile->seeking ? 15 : 0;
                 // echo "Weight for " . $profile->user->first_name . " = " . $weight . "<br>";
+
+                // matches looking for
+                // I AM      I AM INTERESTED IN          THEY ARE       THEY ARE INTERESTED IN
 
 
                 // Recommendation::updateOrCreate(
@@ -110,8 +125,8 @@ class RecommendationController extends Controller
                 Notification::create([
                     "recipient_id" => $id,
                     "title" => "New Match!",
-                    "contents" => "🎉 It's a match! You can now chat with " . $my->first_name,
-                    "link" => "viewprofile/" . $my->id
+                    "contents" => "🎉 It's a match! You can now chat with " . $my->first_name . ".",
+                    "link" => "/viewprofile/" . $my->id
                 ]);
                 return redirect()->route("viewprofile", ["id" => $id])->with(["match" => true]);
             }
@@ -134,8 +149,12 @@ class RecommendationController extends Controller
         SparkMatch::where(["user_1_id" => $user_1_id, "user_2_id" => $user_2_id])->first()->delete();
         // remove unmatching user's reaction
         $req->user()->reactionsSent()->detach($req->id);
-        // remove ai date suggestions
-        AIResponse::where('user_1_id', $user_1_id)->where('user_2_id', $user_2_id)->first()->delete();
+        // remove ai date suggestions if exists
+
+        $ai_response = AIResponse::where('user_1_id', $user_1_id)->where('user_2_id', $user_2_id)->first();
+        if ($ai_response) {
+            $ai_response->delete();
+        }
 
         return back();
     }

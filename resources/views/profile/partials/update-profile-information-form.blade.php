@@ -48,6 +48,7 @@
             padding-top: .5rem;
             padding-bottom: .5rem;
         }
+
         .ph3 {
             padding-left: 1rem;
             padding-right: 1rem;
@@ -85,45 +86,48 @@
     opacity: .8;
     transition: opacity .15s ease-out;
 } */
-.intr_color {
-    border-color:  var(--spk-color-primary-1);
-    color: var(--spk-color-primary-1);
-}
-.traits_color {
-    border-color: var( --spk-color-secondary-1);
-    color : var( --spk-color-secondary-1);
-}
-.on {
-  
-    background-color : var( --spk-color-primary-1);
-    color : white;
-}
-.onTwo {
-    background-color: var( --spk-color-secondary-1);
-    color : white;
-}
-</style>
+        .intr_color {
+            border-color: var(--spk-color-primary-1);
+            color: var(--spk-color-primary-1);
+        }
+
+        .traits_color {
+            border-color: var(--spk-color-secondary-1);
+            color: var(--spk-color-secondary-1);
+        }
+
+        .on {
+
+            background-color: var(--spk-color-primary-1);
+            color: white;
+        }
+
+        .onTwo {
+            background-color: var(--spk-color-secondary-1);
+            color: white;
+        }
+    </style>
 
 
     <?php
-$firstToUpper = ucfirst($user->first_name);
-$secondToUpper = ucfirst($user->second_name);
-$user = Auth::user();
-$hasProfile = isset($user->profile);
-if ($hasProfile) {
-    $profile = $user->profile;
-}
-
-$hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
-$userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
-$usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
-$hasInterests = false;
-$hasTraits = false;
-?>
-<script>
-var selectedInterests = []; 
-var selectedTraits = [];
-</script>
+    $firstToUpper = ucfirst($user->first_name);
+    $secondToUpper = ucfirst($user->second_name);
+    $user = Auth::user();
+    $hasProfile = isset($user->profile);
+    if ($hasProfile) {
+        $profile = $user->profile;
+    }
+    
+    $hasPhotos = DB::table('photos')->where('user_id', '=', auth()->id())->get();
+    $userinterests = DB::table('interest_user')->where('user_id', '=', auth()->id())->get();
+    $usertraits = DB::table('trait_user')->where('user_id', '=', auth()->id())->get();
+    $hasInterests = false;
+    $hasTraits = false;
+    ?>
+    <script>
+        var selectedInterests = [];
+        var selectedTraits = [];
+    </script>
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -135,50 +139,53 @@ var selectedTraits = [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <div id="interestsTraitsUpdateAlert" style="display:none;" class="alert alert-success" role="alert">
-                    Your interests and traits were updated successfully!
-                </div>
+                    <div id="interestsTraitsUpdateAlert" style="display:none;" class="alert alert-success"
+                        role="alert">
+                        Your interests and traits were updated successfully!
+                    </div>
                     <h5 class="modal-title" id="exampleModalLabel">Let's Get Personal!✨</h5>
                     <div class="ph3 mt4">
-                        <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand out!</h1>
-                        @php 
-                          $my_interests = Auth::user()->interests->pluck('id');
+                        <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand
+                            out!</h1>
+                        @php
+                            $my_interests = Auth::user()->interests->pluck('id');
                         @endphp
                         @foreach (Interest::get() as $interest)
-                            <button id="{{$interest->id}}" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
+                            <button id="{{ $interest->id }}" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
                                 href="#0" data-interest-name="{{ $interest->name }}"
                                 data-interest-id="{{ $interest->id }}" data-interest-category="testCat"
                                 onclick="addSelectedInterest(this)">
                                 {{ $interest->name }}
-                                <span>{{$interest->emoji}}</span>
+                                <span>{{ $interest->emoji }}</span>
                             </button>
                             @if ($my_interests->contains($interest->id))
-                         <script> 
-                         var intButton = document.getElementById("{{$interest->id}}");
-                         selectedInterests.push("{{$interest->id}}");
-                         intButton.classList.add('on');
-                         </script>
+                                <script>
+                                    var intButton = document.getElementById("{{ $interest->id }}");
+                                    selectedInterests.push("{{ $interest->id }}");
+                                    intButton.classList.add('on');
+                                </script>
                             @endif
                         @endforeach
                     </div>
                     <div class="ph3 mt4">
                         <h1 class="f6 fw6 ttu tracked">Ready to reveal your vibe? Select your personality traits!</h1>
-                        @php 
-                          $my_traits = Auth::user()->traits->pluck('id');
+                        @php
+                            $my_traits = Auth::user()->traits->pluck('id');
                         @endphp
                         @foreach (SparkTrait::get() as $trait)
-                            <button id="{{$trait->id}}_trait" class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0"
+                            <button id="{{ $trait->id }}_trait"
+                                class="f6 link dim br-pill ba ph3 pv2 mb2 dib  traits_color" href="#0"
                                 data-trait-name="{{ $trait->name }}" data-trait-id="{{ $trait->id }}"
                                 data-trait-category="testCat" onclick="addSelectedTrait(this)">
                                 {{ $trait->name }}
-                                <span>{{$trait->emoji}}</span>
+                                <span>{{ $trait->emoji }}</span>
                             </button>
                             @if ($my_traits->contains($trait->id))
-                         <script> 
-                         var traitButton = document.getElementById("{{$trait->id}}_trait");
-                         selectedTraits.push("{{$trait->id}}");
-                         traitButton.classList.add('onTwo');
-                         </script>
+                                <script>
+                                    var traitButton = document.getElementById("{{ $trait->id }}_trait");
+                                    selectedTraits.push("{{ $trait->id }}");
+                                    traitButton.classList.add('onTwo');
+                                </script>
                             @endif
                         @endforeach
                     </div>
@@ -187,15 +194,15 @@ var selectedTraits = [];
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <form id="interestsTraitsForm">
 
-            <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
-            <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
-                   
-        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-</form>
-      </div>
+                        <input type="hidden" class="interestInput" value="" name="interests" id="interests" />
+                        <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
+
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <header>
@@ -248,7 +255,7 @@ var selectedTraits = [];
     <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
         @csrf
 
-        @if (!$hasProfile)
+        @if (!$hasProfile && !Auth::user()->isAdmin())
             <div class="alert alert-primary" role="alert">
                 <b>You haven't created your profile yet. Fill out your details below to get full access to Spark.</b>
             </div>
@@ -287,8 +294,9 @@ var selectedTraits = [];
                     </div>
 
                     <div class="form-floating mb-3"> <!-- Second Name Input -->
-                        <input id="second_name" name="second_name" type="text" class="form-control mt-1 block w-full"
-                            value="{{ old('second_name', $secondToUpper) }}" required readonly />
+                        <input id="second_name" name="second_name" type="text"
+                            class="form-control mt-1 block w-full" value="{{ old('second_name', $secondToUpper) }}"
+                            required readonly />
                         <label for="second_name">Second Name </label>
                         <x-input-error class="mt-2" :messages="$errors->get('name')" />
                     </div>
@@ -388,7 +396,8 @@ var selectedTraits = [];
                 </div>
                 <div class="mb-3">
                     <h4>Select your Interests and Traits here!</h4>
-                    <p>By selecting some of the interests and traits that describe you best, we can find the best match for you,<br>Click down below to get started!</p>
+                    <p>By selecting some of the interests and traits that describe you best, we can find the best match
+                        for you,<br>Click down below to get started!</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         Click Me!
@@ -431,9 +440,11 @@ var selectedTraits = [];
                             pattern="[A-Za-z]{4}" />
                         <label for="personality_type">What's your Myers Briggs Personality Type (e.g. INTP)</label>
                     </div>
-                    
-                    <p style="padding-left:10px;color:#A9A9A9">Unsure? Click <a target="_blank" href="https://www.16personalities.com/free-personality-test">here</a> to take a free personality test and find out!</p>
-                 
+
+                    <p style="padding-left:10px;color:#A9A9A9">Unsure? Click <a target="_blank"
+                            href="https://www.16personalities.com/free-personality-test">here</a> to take a free
+                        personality test and find out!</p>
+
                     <div class="form-floating mb-3">
                         <!-- Height -->
                         <input id="height" name="height" type="text" class="form-control" size=4
@@ -451,58 +462,56 @@ var selectedTraits = [];
                 </div>
 
                 <div class="flex items-center gap-4 g">
-                    <button class="btn btn-primary" name="profile">Save Profile</button> 
+                    <button class="btn btn-primary" name="profile">Save Profile</button>
                 </div>
             </div>
 
             <script>
-            var traitInput = document.querySelector('#traits');
-            var interestInput =  document.querySelector("#interests");
-            traitInput.value = selectedTraits.toString();
-            interestInput.value = selectedInterests.toString();
+                var traitInput = document.querySelector('#traits');
+                var interestInput = document.querySelector("#interests");
+                traitInput.value = selectedTraits.toString();
+                interestInput.value = selectedInterests.toString();
 
-    function addSelectedInterest(e) {
-       var interestId = e.getAttribute("data-interest-id");
-       if (!selectedInterests.includes(interestId)) {
-       selectedInterests.push(interestId);
-       e.classList.add("on");
-        }
-        else {
-            e.classList.remove("on");
-            var removeIndex = selectedInterests.indexOf(interestId);
-            selectedInterests.splice(removeIndex, 1);
-        }
-        interestInput.value = selectedInterests.toString();
-    }
-    </script>
-    <script>
-        function addSelectedTrait(e) {
-            var traitId = e.getAttribute("data-trait-id");
-            if(!selectedTraits.includes(traitId)) {
-                selectedTraits.push(traitId);
-                e.classList.add('onTwo');
-            }
-            else {
-            e.classList.remove('onTwo');
-            var removeIndex = selectedTraits.indexOf(traitId);
-             selectedTraits.splice(removeIndex,1);
-            }
-            traitInput.value = selectedTraits.toString();
-        }
-        const interestsTraitsForm = document.querySelector("#interestsTraitsForm");
-        interestsTraitsForm.addEventListener("submit", e => {
-            e.preventDefault();
-            axios.post(`${URL_BASE}/api/interestsTraits`, {
-                interests: interestInput.value,
-                traits: traitInput.value
-            }).then(res => {
-                const interestsTraitsUpdateAlert = document.querySelector("#interestsTraitsUpdateAlert");
-                interestsTraitsUpdateAlert.style.display = "block";
-                setTimeout(() => {
-                    interestsTraitsUpdateAlert.style.display = "none";
-                }, 3000);
-            })
-        });
-        </script>
+                function addSelectedInterest(e) {
+                    var interestId = e.getAttribute("data-interest-id");
+                    if (!selectedInterests.includes(interestId)) {
+                        selectedInterests.push(interestId);
+                        e.classList.add("on");
+                    } else {
+                        e.classList.remove("on");
+                        var removeIndex = selectedInterests.indexOf(interestId);
+                        selectedInterests.splice(removeIndex, 1);
+                    }
+                    interestInput.value = selectedInterests.toString();
+                }
+            </script>
+            <script>
+                function addSelectedTrait(e) {
+                    var traitId = e.getAttribute("data-trait-id");
+                    if (!selectedTraits.includes(traitId)) {
+                        selectedTraits.push(traitId);
+                        e.classList.add('onTwo');
+                    } else {
+                        e.classList.remove('onTwo');
+                        var removeIndex = selectedTraits.indexOf(traitId);
+                        selectedTraits.splice(removeIndex, 1);
+                    }
+                    traitInput.value = selectedTraits.toString();
+                }
+                const interestsTraitsForm = document.querySelector("#interestsTraitsForm");
+                interestsTraitsForm.addEventListener("submit", e => {
+                    e.preventDefault();
+                    axios.post(`${URL_BASE}/api/interestsTraits`, {
+                        interests: interestInput.value,
+                        traits: traitInput.value
+                    }).then(res => {
+                        const interestsTraitsUpdateAlert = document.querySelector("#interestsTraitsUpdateAlert");
+                        interestsTraitsUpdateAlert.style.display = "block";
+                        setTimeout(() => {
+                            interestsTraitsUpdateAlert.style.display = "none";
+                        }, 3000);
+                    })
+                });
+            </script>
         </form>
 </section>

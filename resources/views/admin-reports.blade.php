@@ -66,7 +66,7 @@
                     </thead>
                     <tbody class="table-group-divider">
                         @php
-                            $reports = Report::paginate(10);
+                            $reports = Report::orderBy('id', 'desc')->paginate(10);
                         @endphp
                         @foreach ($reports as $report)
                             <tr>
