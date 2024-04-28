@@ -44,9 +44,6 @@
         /* .link:link, .link:visited {
     transition: color .15s ease-in;
 } */
-
-
-
         .pv2 {
             padding-top: .5rem;
             padding-bottom: .5rem;
@@ -139,7 +136,10 @@ var selectedTraits = [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5 class="modal-title" id="exampleModalLabel">Let's Get Personal✨</h5>
+                <div id="interestsTraitsUpdateAlert" style="display:none;" class="alert alert-success" role="alert">
+                    Your interests and traits were updated successfully!
+                </div>
+                    <h5 class="modal-title" id="exampleModalLabel">Let's Get Personal!✨</h5>
                     <div class="ph3 mt4">
                         <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand out!</h1>
                         @php 
@@ -151,6 +151,7 @@ var selectedTraits = [];
                                 data-interest-id="{{ $interest->id }}" data-interest-category="testCat"
                                 onclick="addSelectedInterest(this)">
                                 {{ $interest->name }}
+                                <span>{{$interest->emoji}}</span>
                             </button>
                             @if ($my_interests->contains($interest->id))
                          <script> 
@@ -171,6 +172,7 @@ var selectedTraits = [];
                                 data-trait-name="{{ $trait->name }}" data-trait-id="{{ $trait->id }}"
                                 data-trait-category="testCat" onclick="addSelectedTrait(this)">
                                 {{ $trait->name }}
+                                <span>{{$trait->emoji}}</span>
                             </button>
                             @if ($my_traits->contains($trait->id))
                          <script> 
@@ -184,8 +186,7 @@ var selectedTraits = [];
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <form action="{{ route('profile.addUserInterestsAndTraits') }}" method="POST">
-                        @csrf
+                    <form id="interestsTraitsForm">
 
             <input type="hidden" class="interestInput" value="" name="interests" id="interests" />   
             <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
@@ -454,9 +455,13 @@ var selectedTraits = [];
             </div>
 
             <script>
+            var traitInput = document.querySelector('#traits');
+            var interestInput =  document.querySelector("#interests");
+            traitInput.value = selectedTraits.toString();
+            interestInput.value = selectedInterests.toString();
+
     function addSelectedInterest(e) {
        var interestId = e.getAttribute("data-interest-id");
-       var interestInput =  document.querySelector("#interests");
        if (!selectedInterests.includes(interestId)) {
        selectedInterests.push(interestId);
        e.classList.add("on");
@@ -472,7 +477,6 @@ var selectedTraits = [];
     <script>
         function addSelectedTrait(e) {
             var traitId = e.getAttribute("data-trait-id");
-            var traitInput = document.querySelector('#traits');
             if(!selectedTraits.includes(traitId)) {
                 selectedTraits.push(traitId);
                 e.classList.add('onTwo');
@@ -484,6 +488,20 @@ var selectedTraits = [];
             }
             traitInput.value = selectedTraits.toString();
         }
+        const interestsTraitsForm = document.querySelector("#interestsTraitsForm");
+        interestsTraitsForm.addEventListener("submit", e => {
+            e.preventDefault();
+            axios.post(`${URL_BASE}/api/interestsTraits`, {
+                interests: interestInput.value,
+                traits: traitInput.value
+            }).then(res => {
+                const interestsTraitsUpdateAlert = document.querySelector("#interestsTraitsUpdateAlert");
+                interestsTraitsUpdateAlert.style.display = "block";
+                setTimeout(() => {
+                    interestsTraitsUpdateAlert.style.display = "none";
+                }, 3000);
+            })
+        });
         </script>
         </form>
 </section>

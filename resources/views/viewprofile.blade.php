@@ -12,12 +12,12 @@
     <x-slot:title>{{ $profile->user->first_name }}'s profile</x-slot>
 
     <?php
-    $my = Auth::user();
-    $first_user_id = min($my->id, $profile->user->id);
-    $second_user_id = max($my->id, $profile->user->id);
-    $date_ideas = AIResponse::where('user_1_id', $first_user_id)->where('user_2_id', $second_user_id)->first();
-    
-    $match = SparkMatch::where(['user_1_id' => $first_user_id, 'user_2_id' => $second_user_id])->first();
+$my = Auth::user();
+$first_user_id = min($my->id, $profile->user->id);
+$second_user_id = max($my->id, $profile->user->id);
+$date_ideas = AIResponse::where('user_1_id', $first_user_id)->where('user_2_id', $second_user_id)->first();
+
+$match = SparkMatch::where(['user_1_id' => $first_user_id, 'user_2_id' => $second_user_id])->first();
     ?>
     <div id="loader"
         class="d-none flex-column justify-content-center align-items-center position-fixed start-0 top-0 bottom-0 end-0 z-2">
@@ -204,15 +204,18 @@
                             <div class="carousel-inner">
                                 @foreach ($profile->user->photos as $index => $photo)
                                     <?php
-                                    if ($index == 0) {
-                                        $activeClass = 'carousel-item active';
-                                    } elseif ($index > 0) {
-                                        $activeClass = 'carousel-item';
-                                    }
+    if ($index == 0) {
+        $activeClass = 'carousel-item active';
+    } elseif ($index > 0) {
+        $activeClass = 'carousel-item';
+    }
                                     ?>
                                     <div class="{{ $activeClass }}">
                                         <img src="{{ asset('images/profilePhotos/' . $photo->photo_url) }}"
-                                            class="d-block w-100" alt="{{ $photo->photo_url }}">
+                                            class="d-block w-100" alt="{{ $photo->photo_url }}"
+                                             width=	424px
+                                             height=445px
+                                            style=object-fit: cover;>
                                     </div>
                                 @endforeach
 
@@ -371,7 +374,7 @@
                                             <div class="profile-traits">
                                                 <span class="material-symbols-outlined">waving_hand</span>
                                                 @php
-                                                    $my_traits = Auth::user()->traits->pluck('id');
+$my_traits = Auth::user()->traits->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->traits as $trait)
                                                     <span @class(['fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
@@ -387,7 +390,7 @@
                                             <div class="profile-interests">
                                                 <span class="material-symbols-outlined">interests</span>
                                                 @php
-                                                    $my_interests = Auth::user()->interests->pluck('id');
+$my_interests = Auth::user()->interests->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->interests as $interest)
                                                     <span @class(['fw-bold' => $my_interests->contains($interest->id)])>{{ $interest->name }}</span>

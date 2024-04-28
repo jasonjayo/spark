@@ -53,9 +53,5 @@ class PhotoController extends Controller
         return back()->with('status', "photo-deleted");
     }
 
-    public function getPhotoName(Photo $photo): string
-    {
-        return $photo->name;
-
-    }
+    
 }

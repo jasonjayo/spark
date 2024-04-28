@@ -22,7 +22,7 @@ $photoUrls = [];
 ?>
 
 @foreach (Photo::where('user_id', $profile->user_id)->get() as $photo)
-    <?php array_push($photoUrls, $photo->photo_url); ?>
+    <?php    array_push($photoUrls, $photo->photo_url); ?>
 @endforeach
 
 <?php
@@ -38,7 +38,7 @@ if (Arr::get($photoUrls, 0) == null) {
 
 
 <a href="{{ route('viewprofile', ['id' => $profile->user->id]) }}" class="card h-100 profile-card">
-    <img src="{{ $coverPhoto }}" class="card-img-top" alt="Photo of {{ $profile->user->first_name }}">
+    <img src="{{ $coverPhoto }}" class="card-img-top" alt="Photo of {{ $profile->user->first_name }}" height=247.3px width=247.3px  style=object-fit: cover>
     <div class="card-body">
         <h4 class="card-title d-flex justify-content-between">
             <div class="d-flex align-items-center">{{ $profile->user->first_name }}

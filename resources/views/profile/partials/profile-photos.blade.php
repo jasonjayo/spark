@@ -68,7 +68,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('profile.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('photo.store') }}" enctype="multipart/form-data">
         @csrf
 
         <input type="text" name="id" value="{{ $user->id }}" hidden>

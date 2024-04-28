@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware(['auth:sanctum', 'update_last_active'])->post('/chat', [ChatController::class, 'store']);
-Route::middleware(['auth:sanctum', 'update_last_active'])->post("/geolocation", [ProfileController::class, "updateLocation"]);
+Route::middleware(['auth:sanctum'])->post("/geolocation", [ProfileController::class, "updateLocation"]);
+Route::middleware(['auth:sanctum'])->post("/interestsTraits", [ProfileController::class, "addUserInterestsAndTraits"]);
