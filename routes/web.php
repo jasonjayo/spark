@@ -34,6 +34,12 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         Route::post("closeReport", [AdminController::class, "closeReport"])->name("report.close");
         Route::post("revokeBan", [AdminController::class, "revokeBan"])->name("ban.revoke");
         Route::get("/admin", [AdminController::class, "dashboard"])->name("admin");
+        Route::delete("/deleteUserAccount", [AdminController::class, "deleteUserAccount"])->name("deleteUserAccount");
+
+        Route::get("/admin/updateUserAccount/{id}", [AdminController::class, "updateUserAccount"])->name("updateUserAccount");
+
+        Route::get("/admin/bans", [AdminController::class, "bansIndex"])->name("admin.bans");
+        Route::get("/admin/reports", [AdminController::class, "reportsIndex"])->name("admin.reports");
     });
 
     Route::middleware(['ensure_not_admin'])->group(function () {
@@ -47,6 +53,8 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         Route::get("discovery", [RecommendationController::class, "index"])->name("discovery");
         Route::post("react", [RecommendationController::class, "react"])->name("react");
 
+        Route::delete("match", [RecommendationController::class, "deleteMatch"])->name("deleteMatch");
+
         // ai suggestions
         Route::get("/aiSuggestions/{id}", [ChatController::class, "getAISuggestions"])->name("aiSuggestions");
     });
@@ -57,6 +65,10 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post("/addUserInterestsAndTraits", [ProfileController::class, "addUserInterestsAndTraits"])->name("profile.addUserInterestsAndTraits");
+
+    //Photos 
+    Route::post('/uploadPhoto', [PhotoController::class, 'store'])->name('photo.store');
+    Route::delete('/deletePhoto', [PhotoController::class, 'destroy'])->name('photo.destroy');
 
     Route::get("/search", [ProfileController::class, "index"])->name('search');
     Route::get('/viewprofile', [ProfileController::class, 'index'])->name('viewprofile');

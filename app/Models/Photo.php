@@ -15,6 +15,7 @@ class Photo extends Model
     protected $fillable = [
         'user_id',
         'photo_url',
+        'name'
     ];
 
     public function user(): HasOne

@@ -15,6 +15,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 use DateInterval;
+use App\Models\Notification;
 
 class RegisteredUserController extends Controller
 {
@@ -54,6 +55,13 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        Notification::create([
+            "recipient_id" => $user->id,
+            "title" => "Welcome to Spark!",
+            "contents" => "Make sure fill out your profile and add some photos!",
+            "link" => "viewprofile"
+        ]);
 
         Auth::login($user);
 

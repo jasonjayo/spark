@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ff270c421165ca20f5928ce41c42297",
+    "content-hash": "8ac94553305385fd36c886867539dc7f",
     "packages": [
         {
             "name": "blade-ui-kit/blade-icons",
@@ -1186,6 +1186,58 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "jimmiw/php-time-ago",
+            "version": "3.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jimmiw/php-time-ago.git",
+                "reference": "d5b37a93aee579962117310644965d0f7bf1302d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jimmiw/php-time-ago/zipball/d5b37a93aee579962117310644965d0f7bf1302d",
+                "reference": "d5b37a93aee579962117310644965d0f7bf1302d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^6",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Westsworld\\": "src/Westsworld/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jimmi Westerberg",
+                    "homepage": "http://www.westsworld.dk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple module, that displays the date in a \"time ago\" format",
+            "homepage": "https://github.com/jimmiw/php-time-ago",
+            "keywords": [
+                "distance of time",
+                "time ago",
+                "time ago in words"
+            ],
+            "support": {
+                "issues": "https://github.com/jimmiw/php-time-ago/issues",
+                "source": "https://github.com/jimmiw/php-time-ago/tree/3.2.4"
+            },
+            "time": "2022-09-02T12:39:13+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3582,57 +3634,6 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
-        },
-        {
-            "name": "rkondratuk/geo-math-php",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rkondratuk/geo-math-php.git",
-                "reference": "98cf9a16183259f719389cf7a8818bc6c88350d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rkondratuk/geo-math-php/zipball/98cf9a16183259f719389cf7a8818bc6c88350d4",
-                "reference": "98cf9a16183259f719389cf7a8818bc6c88350d4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "5.7.18"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PhpGeoMath\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Kondratuk",
-                    "email": "rkodratuk@gmail.com"
-                }
-            ],
-            "description": "Geo calculations library",
-            "homepage": "https://github.com/rkondratuk/php-geo-math",
-            "keywords": [
-                "cartesian",
-                "coordinates",
-                "geo",
-                "mathematics",
-                "polar"
-            ],
-            "support": {
-                "issues": "https://github.com/rkondratuk/geo-math-php/issues",
-                "source": "https://github.com/rkondratuk/geo-math-php/tree/1.0.0"
-            },
-            "time": "2022-10-14T18:36:00+00:00"
         },
         {
             "name": "symfony/console",

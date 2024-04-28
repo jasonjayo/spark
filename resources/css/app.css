@@ -30,6 +30,7 @@
 }
 .default {
     width: 100vw;
+    padding-bottom: 96px;
 }
 .btn-primary {
     --bs-btn-bg: var(--spk-color-primary-1);
@@ -42,37 +43,49 @@
     --bs-btn-active-bg: var(--spk-color-secondary-1);
     border: 0;
 }
+#dashboard-logo {
+    width: 175px;
+}
 .dashbtn {
     text-decoration: none;
     position: relative;
     display: flex;
-    font-size: 32px;
+    font-size: 2.75em;
     font-weight: 700;
     text-align: center;
     align-items: center;
     justify-content: center;
     transition-duration: 0.1s;
+    padding: 5em 3em;
     color: white;
-    min-height: 400px;
-    span {
+    border-radius: 24px;
+    overflow: hidden;
+    .dashbtn-background {
+        background-position: center 75%;
+        background-repeat: no-repeat;
+        background-size: cover;
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        filter: blur(4px);
+        transition-duration: 0.2s;
+    }
+    &:hover .dashbtn-background {
+        filter: blur(8px);
+        transform: scale(1.2);
+    }
+    span {
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        transform: translate(-50%, -50%);
+        z-index: 1;
     }
-    img {
-        border-radius: 8px;
-        object-fit: cover;
-        width: 105%;
-        height: 100%;
-        text-align: center;
-        transition-duration: 0.1s;
-        filter: blur(2px);
-    }
-    img:hover {
-        filter: blur(0px);
-        border-radius: 24px;
+}
+.dashbtn--small {
+    padding: 1.75em;
+    font-size: 2.25em;
+    .dashbtn-background {
+        background-position: center 25%;
     }
 }
 #filters_form {
@@ -213,6 +226,9 @@ h3 {
         max-height: 89vh;
         overflow-y: scroll;
         border-right: 1px solid var(--spk-color-primary-2);
+    }
+    .default {
+        width: 100vw;
     }
 }
 .chatpage {

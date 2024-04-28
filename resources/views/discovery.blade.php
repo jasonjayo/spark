@@ -12,7 +12,7 @@
             $recommendation = $recommendations->first();
         @endphp
         @if ($recommendation !== null)
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col text-center">
                     <div class="recommendation-score mx-auto my-3">
                         <div class="recommendation-bar bg-success"
@@ -20,14 +20,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="row">
-                <div class="col-4"></div>
+                <div class="col-md-4"></div>
 
-                <div class="col-4">
+                <div class=" col-12 col-md-4">
                     <x-profile-card :profile="$recommendation->profile" />
                 </div>
-                <div class="col-4"></div>
+                <div class="colmd--4"></div>
 
             </div>
 

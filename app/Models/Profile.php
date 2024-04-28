@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-use PhpGeoMath\Model\Polar3dPoint;
-
 use App\Enums\InterestedIn;
 use App\Enums\Seeking;
 use App\Enums\Gender;
@@ -114,6 +112,8 @@ class Profile extends Model
             $query->orWhere("second_name", "LIKE", "%" . $filters["query"] . "%");
             $query->orWhere("tagline", "LIKE", "%" . $filters["query"] . "%");
         }
+
+        $query->where("id", "!=", Auth::user()->id);
     }
 
     public function isActive()
@@ -184,5 +184,11 @@ class Profile extends Model
     {
         return ($duration->y * 365.25 * 24 * 60) + ($duration->d * 24 * 60)
             + ($duration->h * 60) + $duration->i;
+    }
+
+    public function getMatches()
+    {
+        SparkMatch::where("user_1_id", "=", Auth::user()->id)
+            ->orWhere("user_2_id", "=", Auth::user()->id);
     }
 }
