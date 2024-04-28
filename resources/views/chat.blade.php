@@ -1,8 +1,10 @@
 @use('App\Models\User')
 @use('App\Models\Profile')
+@use ('App\Models\Photo')
+
 
 @pushOnce('scripts')
-    @vite(['resources/js/chat.js'])
+    @vite(['resources/js/chat.js', 'resources/css/viewprofile.css'])
 @endPushOnce
 
 <x-app-layout>
@@ -17,16 +19,69 @@
 
     <main class="container-fluid chat-page">
         <div class="row">
-
-            <div class="col-12 sideform-chat col-md-4 d-none d-md-block g-0">
                 <?php
                 // // need to update this so it also shows if I sent the only message
                 // $statement = $pdo->prepare('SELECT DISTINCT users.username, users.id,  last_activity, (select count(*) from messages where sender_id = users.id and receiver_id = :me and opened = 0) AS unread_count FROM messages JOIN users ON users.id = messages.sender_id WHERE receiver_id = :me');
                 ?>
-                <h3 class="p-3">Your Sparks:</h3>
-                <x-chat-user-list></x-chat-user-list>
-            </div>
-            <div id="inner" class="col-12 col-md-8 bg-white">
+                <div class="col-4 col-md-4 d-none mb-4 d-md-block pt-4">
+                    <h3 class="text-center mb-4">Your Sparks</h3>
+                    <x-chat-user-list></x-chat-user-list>
+                </div>
+            <div id="inner" class="col-12 col-md-8">
+                <!-- View Profile button with profile picture -->
+                <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
+                    <div class="d-flex align-items-center">
+                        <h4 style="text-transform: uppercase; font-weight: bold;">{{ $other_user->first_name }}</h4>
+                        <a href="{{ url('/viewprofile/'.$other_user->id) }}" style="text-decoration: none; color: #de3163;">
+                            <span class="ms-2" style="color: #6c757d;">(Visit their profile)</span>
+                        </a>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-lg btn-primary bg-transparent" data-bs-toggle="modal" data-bs-target="#reportModal">
+                            <span class="material-symbols-outlined text-danger" style="font-size: 40px;">flag</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="ban-modal-header modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="ban-modal-title-container modal-title-container">
+                                    <h5 class="modal-title" id="reportModalLabel">Report</h5>
+                                    <p class="ban-modal-subtitle modal-subtitle">Don't worry,
+                                        {{ $other_user->first_name }} won't find out.</p>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('report.create') }}" method="POST" id="reportForm">
+                                    @csrf
+                                    <input type="hidden" name="reported_id" value="{{ $other_user->id }}">
+                                    <div class="mb-3">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-report" name="reason" value="Inappropriate Messages">Inappropriate Messages</button>
+                                            <button type="submit" class="btn btn-report" name="reason" value="Inappropriate Photos">Inappropriate Photos</button>
+                                            <button type="submit" class="btn btn-report" name="reason" value="Spam">Feels like Spam</button>
+                                            <button type="button" class="btn btn-report" data-bs-toggle="collapse" data-bs-target="#otherReasonField">Other</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="collapse" id="otherReasonField">
+                                    <form action="{{ route('report.create') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="reported_id" value="{{ $other_user->id }}">
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="otherReason" name="reason" rows="3" placeholder="Enter reason"></textarea>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Submit Report</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ul id="messages" class="d-flex flex-column p-3 m-auto">
                     @foreach ($messages as $message)
                         @php
