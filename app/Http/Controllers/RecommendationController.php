@@ -26,6 +26,9 @@ class RecommendationController extends Controller
         $my_traits = collect($my->traits->pluck("id"));
         foreach (Profile::all()->except(Auth::user()->id) as $profile) {
 
+            // reset any previous recommendation of this user first
+            $my->recommendations()->detach($profile->user->id);
+
             if (
                 $my->profile->interested_in === InterestedIn::MEN && !in_array($profile->gender, [Gender::MALE, Gender::PREF_NOT_SAY]) ||
                 $my->profile->interested_in === InterestedIn::WOMEN && !in_array($profile->gender, [Gender::FEMALE, Gender::PREF_NOT_SAY]) ||
@@ -80,17 +83,17 @@ class RecommendationController extends Controller
                 $weight = -9999;
             }
 
-            if ($my->recommendations->contains($second_user_id)) {
-                $my->recommendations()->updateExistingPivot($second_user_id, [
-                    "weight" => $weight
-                ]);
-            } else {
-                $my->recommendations()->attach($second_user_id, [
-                    "weight" => $weight
-                ]);
-            }
+            // if ($my->recommendations->contains($second_user_id)) {
+            //     $my->recommendations()->updateExistingPivot($second_user_id, [
+            //         "weight" => $weight
+            //     ]);
+            // } else {
+            $my->recommendations()->attach($second_user_id, [
+                "weight" => $weight
+            ]);
+            // }
         }
-        return $my->recommendations()->where("weight", ">", 0)->simplePaginate(1);
+        return $my->recommendations()->where("weight", ">", 0)->orderBy('weight', 'desc')->simplePaginate(1);
     }
 
     public function index(Request $req)

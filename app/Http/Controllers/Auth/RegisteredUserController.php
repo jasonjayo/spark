@@ -60,7 +60,7 @@ class RegisteredUserController extends Controller
             "recipient_id" => $user->id,
             "title" => "Welcome to Spark!",
             "contents" => "Make sure fill out your profile and add some photos!",
-            "link" => "viewprofile"
+            "link" => "profile"
         ]);
 
         Auth::login($user);

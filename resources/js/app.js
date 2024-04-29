@@ -20,6 +20,7 @@ if (typeof user_id !== "undefined" && user_id !== null) {
         (e) => {
             let data = Alpine.$data(nav);
             data["notificationsCount"] += 1;
+            data["refreshPromptVisible"] = true;
         }
     );
 }
