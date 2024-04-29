@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-label-group my-3 mx-4" x-data="{ max_age: {{ old('max_age', 100) }} }">
                         <label for="filter_max_age" class="form-label">Max age</label>
-                        <span id="max_age_val" x-text="max_age"></span>
+                        <span id="max_age_val" x-text="max_age"></span><span x-show="max_age >= 100">+</span>
                         <input type="range" class="form-range" min="18" max="100" id="filter_max_age"
                             name="max_age" x-model="max_age">
                     </div>

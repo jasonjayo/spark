@@ -12,18 +12,19 @@
     @foreach ($profiles as $profile)
         <?php
         $photoUrls = [];
-
+        
         foreach (Photo::where('user_id', $profile->user_id)->get() as $photo) {
             array_push($photoUrls, $photo->photo_url);
         }
-
+        
         if (Arr::get($photoUrls, 0) == null) {
             $coverPhoto = 'https://placehold.co/300x300?text=Photo';
         } else {
             $coverPhoto = asset('images/profilePhotos/' . $photoUrls[0]);
         }
         ?>
-        <a class='text-secondary user-row d-flex align-items-center profile-section{{ $profile->user->id == $currentChatUserId ? " active" : "" }}' href='{{ route('chat.show', $profile->user->id) }}'>
+        <a class='text-secondary user-row d-flex align-items-center profile-section{{ $profile->user->id == $currentChatUserId ? ' active' : '' }}'
+            href='{{ route('chat.show', $profile->user->id) }}'>
             <div class="profile-container">
                 <img class="profile-photo" src="{{ $coverPhoto }}">
                 @if ($profile->isActive())
@@ -83,7 +84,7 @@
         border-radius: 50%;
         object-fit: cover;
     }
-    
+
     .online-now {
         background-color: #4caf50;
     }
@@ -116,7 +117,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        max-width: 200px;
     }
+
     .active {
         background-color: #e2f3ff;
         border-color: #de3163;
