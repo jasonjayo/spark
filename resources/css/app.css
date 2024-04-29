@@ -266,9 +266,9 @@ h3 {
 .profile-active {
     position: absolute;
     top: 25%;
-    right: 5%;
-    width: 18px;
-    height: 18px;
+    right: 7%;
+    width: 15px;
+    height: 15px;
     border: 3px solid white;
     transform: translate(-50%, -50%);
 }
