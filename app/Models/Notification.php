@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Notification extends Model
 {
-    use BroadcastsEvents, HasFactory;
+    use HasFactory;
 
     public $timestamps = false;
 

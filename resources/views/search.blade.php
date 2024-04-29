@@ -115,7 +115,7 @@
 
 
             <div class="col-12 col-md-7 col-lg-9">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 m-4 g-4">
+                <div id="searchResults" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 m-4 g-4">
                     @foreach ($profiles as $profile)
                         <div class="col">
                             <x-profile-card :profile="$profile" />
@@ -123,7 +123,7 @@
                     @endforeach
                 </div>
                 <div class="row">
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 pagination-links">
                         {{ $profiles->links() }}
                     </div>
                 </div>

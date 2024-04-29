@@ -398,7 +398,8 @@
                                                     $my_traits = Auth::user()->traits->pluck('id');
                                                 @endphp
                                                 @foreach ($profile->user->traits as $trait)
-                                                    <span @class(['comma-after', 'fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}</span>
+                                                    <span
+                                                        @class(['comma-after', 'fw-bold' => $my_traits->contains($trait->id)])>{{ $trait->name }}{{ $trait->emoji }}</span>
                                                 @endforeach
                                                 @if (count($profile->user->traits) == 0)
                                                     <span>No traits specified</span>

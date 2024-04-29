@@ -63,7 +63,7 @@
 
 <nav id ="nav" class="nav
     navbar d-flex fixed-top justify-content-between p-3 position-relative z-1 bg-white"
-    x-data="{ notificationsVisible: false, notificationsCount: {{ count($notifications) }} }">
+    x-data="{ notificationsVisible: false, refreshPromptVisible: false, notificationsCount: {{ count($notifications) }} }">
 
     @php
         if (Auth::user()->isAdmin()) {
@@ -75,6 +75,14 @@
 
     <div id="notifications" class="z-2 p-3 shadow" x-cloak x-show="notificationsVisible"
         @click.outside="notificationsVisible = false">
+        <div x-show="refreshPromptVisible" class="mb-4" style="cursor: pointer;" @click="location.reload()">
+            <div class="d-flex justify-content-center">
+                <span class="material-symbols-outlined me-2">
+                    refresh
+                </span>
+                Refresh to get latest notifications!
+            </div>
+        </div>
 
         @foreach ($notifications as $notification)
             <div
