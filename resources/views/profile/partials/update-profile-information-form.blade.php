@@ -232,7 +232,7 @@
     @if (session('status') === 'profile-updated')
         @if ($hasPhotos->isEmpty() && !Auth::user()->isAdmin())
             <div class="alert alert-success" role="alert">
-                Profile saved! Why not upload some pictures to your profile in the <a href="http://127.0.0.1:8000/profile?section=section4">Update Photos</a> section!
+                Profile saved! Why not upload some pictures to your profile in the <a href="/profile?section=section4">Update Photos</a> section!
             </div>
         @else
             <div class="alert alert-success" role="alert">
