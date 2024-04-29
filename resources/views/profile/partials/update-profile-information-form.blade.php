@@ -232,7 +232,8 @@
     @if (session('status') === 'profile-updated')
         @if ($hasPhotos->isEmpty() && !Auth::user()->isAdmin())
             <div class="alert alert-success" role="alert">
-                Profile saved! Why not upload some pictures to your profile in the <a href="/profile?section=section4">Update Photos</a> section!
+                Profile saved! Why not upload some pictures to your profile in the <a
+                    href="/profile?section=section4">Update Photos</a> section!
             </div>
         @else
             <div class="alert alert-success" role="alert">
@@ -395,12 +396,12 @@
                     </div> --}}
                 </div>
                 <div class="mb-3">
-                    <h4>Select your Interests and Traits here!</h4>
+                    <h2>Interests and Traits</h2>
                     <p>By selecting some of the interests and traits that describe you best, we can find the best match
-                        for you,<br>Click down below to get started!</p>
+                        for you!</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
-                        Click Me!
+                        Interests and Traits
                     </button>
                 </div>
 
