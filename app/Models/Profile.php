@@ -61,6 +61,7 @@ class Profile extends Model
             $lat = floatval($coords[0]);
             $long = floatval($coords[1]);
 
+            // using DB::raw here as need to use ST_Distance_Sphere function for calculating distances
             $query->select("*")->from(DB::raw("(select user_id,
             ST_Distance_Sphere(
                 POINT(?, ?),

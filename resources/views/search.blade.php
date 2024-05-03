@@ -135,8 +135,4 @@
                 </div>
             </div>
 
-            <script>
-                // debug
-            </script>
-            {{-- {{ $sql }} --}}
 </x-app-layout>

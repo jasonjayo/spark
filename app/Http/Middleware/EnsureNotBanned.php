@@ -27,7 +27,6 @@ class EnsureNotBanned
         }
         if ($active_ban) {
             auth()->logout();
-            echo $ban->acive_to;
             return redirect()->route("login")->with(["ban" => $active_ban]);
         }
         return $next($request);

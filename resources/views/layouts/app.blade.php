@@ -39,47 +39,11 @@
             </header>
         @endif
 
-        {{-- <div class="position-fixed top-0 left-0 bottom-0 spark-bg-primary d-flex">
-            <ul class="nav-links list-group text-white d-flex flex-column justify-content-center fs-5">
-                <a href="./dashboard" class="text-decoration-none text-white">
-                    <li
-                        class="p-3 m-3 rounded  d-flex flex-column text-center {{ Request::is('dashboard') ? 'spark-bg-secondary' : '' }}">
-                        <span class="material-symbols-outlined fs-1">
-                            star
-                        </span>Discover
-                    </li>
-                </a>
-                <li class="p-3 m-3 d-flex flex-column text-center"><span class="material-symbols-outlined fs-1">
-                        search
-                    </span>Search</li>
-                <li class="p-3 m-3 d-flex flex-column text-center"><span class="material-symbols-outlined fs-1">
-                        chat
-                    </span>Chat</li>
-                <li class="p-3 m-3 d-flex flex-column text-center"><span class="material-symbols-outlined fs-1 ">
-                        person
-                    </span>Profile</li>
-
-
-
-            </ul>
-        </div> --}}
-
-
-
         <!-- Page Content -->
         <main>
             {{ $slot }}
         </main>
-        {{--
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
 
-            <x-responsive-nav-link class="btn btn-primary m-4" :href="route('logout')"
-                onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                {{ __('Log Out') }}
-            </x-responsive-nav-link>
-        </form> --}}
     </div>
     @stack('scripts')
     <script>

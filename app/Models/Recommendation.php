@@ -11,9 +11,4 @@ class Recommendation extends Model
     use HasFactory;
 
     protected $fillable = ["user_1_id", "user_2_id", "weight"];
-
-    // public function user(): BelongsTo
-    // {
-    //     return $this->belongsTo(User::class, "user_1_id");
-    // }
 }

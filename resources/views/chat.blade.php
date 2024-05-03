@@ -19,10 +19,6 @@
 
     <main class="container-fluid chat-page">
         <div class="row">
-            <?php
-            // // need to update this so it also shows if I sent the only message
-            // $statement = $pdo->prepare('SELECT DISTINCT users.username, users.id,  last_activity, (select count(*) from messages where sender_id = users.id and receiver_id = :me and opened = 0) AS unread_count FROM messages JOIN users ON users.id = messages.sender_id WHERE receiver_id = :me');
-            ?>
             <div class="col-4 col-md-4 d-none mb-4 d-md-block pt-4">
                 <h3 class="text-center mb-4">Your Sparks</h3>
                 <x-chat-user-list></x-chat-user-list>

@@ -66,7 +66,7 @@
 
                                 <div class="mb-3" x-show="banType === 'timeout'">
                                     <label for="expiry" class="form-label">{{ __('Ban Expiry') }}</label>
-                                    <input name="expiry" type="date" class="form-control">
+                                    <input name="expiry" id="expiry" type="date" class="form-control">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">{{ __('Ban') }}</button>

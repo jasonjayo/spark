@@ -34,7 +34,7 @@ class PhotoController extends Controller
 
         $request->image->move(public_path('images/profilePhotos'), $newImageName);
 
-        $photo = Photo::create([
+        Photo::create([
             'user_id' => $user->id,
             'photo_url' => $newImageName,
             'name' => $request->photoName

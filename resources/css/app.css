@@ -1,6 +1,4 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* global */
 .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
@@ -45,6 +43,14 @@
     --bs-btn-active-bg: var(--spk-color-secondary-1);
     border: 0;
 }
+.chatgpt-logo {
+    width: 150px;
+}
+.pagination-links {
+    margin-bottom: 6em;
+}
+
+/* dashboard */
 #dashboard-logo {
     width: 175px;
 }
@@ -90,6 +96,8 @@
         background-position: center 25%;
     }
 }
+
+/* search */
 #filters_form {
     background: rgba(255, 255, 255, 0.75);
 }
@@ -275,20 +283,4 @@ h3 {
 #discovery-empty-icon {
     color: var(--spk-color-primary-2);
     font-size: 3.5em;
-}
-.recommendation-score {
-    width: 200px;
-    background: #fff;
-    height: 12px;
-    border-radius: 6px;
-    overflow: hidden;
-}
-.recommendation-bar {
-    height: 100%;
-}
-.chatgpt-logo {
-    width: 150px;
-}
-.pagination-links {
-    margin-bottom: 6em;
 }
