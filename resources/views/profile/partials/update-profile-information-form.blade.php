@@ -266,6 +266,8 @@
         <form method="post" action="{{ route('profile.store') }}" class="mt-6 space-y-6">
             @csrf
 
+            <input type="text" value="{{ $user->id }}" hidden>
+
             <div class="container d-flex flex-column ">
 
                 <!-- Basic Details Div -->
@@ -383,7 +385,6 @@
                     <p>Location will be set automatically by your browser, if you've <a target="_blank"
                             href="https://docs.buddypunch.com/en/articles/919258-how-to-enable-location-services-for-chrome-safari-edge-and-android-ios-devices-gps-setting">given
                             permission</a>.</p>
-
                 </div>
                 <div class="mb-3">
                     <h2>Interests and Traits</h2>

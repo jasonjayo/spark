@@ -66,6 +66,7 @@ class RecommendationController extends Controller
 
                 // common seeking
                 $weight += $my->profile->seeking === $profile->seeking ? 15 : 0;
+
             } else {
                 $weight = -9999;
             }
