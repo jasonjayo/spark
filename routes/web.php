@@ -29,6 +29,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(function () {
 
+    // admin only
     Route::middleware(['ensure_admin'])->group(function () {
         Route::post("ban", [AdminController::class, "ban"])->name("ban.create");
         Route::post("closeReport", [AdminController::class, "closeReport"])->name("report.close");
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
         Route::get("/admin/reports", [AdminController::class, "reportsIndex"])->name("admin.reports");
     });
 
+    // user only
     Route::middleware(['ensure_not_admin'])->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
@@ -66,7 +68,7 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post("/addUserInterestsAndTraits", [ProfileController::class, "addUserInterestsAndTraits"])->name("profile.addUserInterestsAndTraits");
 
-    //Photos 
+    // photos
     Route::post('/uploadPhoto', [PhotoController::class, 'store'])->name('photo.store');
     Route::delete('/deletePhoto', [PhotoController::class, 'destroy'])->name('photo.destroy');
 
@@ -77,7 +79,6 @@ Route::middleware(['auth', 'ensure_not_banned', 'update_last_active'])->group(fu
     // chat
     Route::get("chat", [ChatController::class, "index"])->name("chat.index");
     Route::get("chat/{id}", [ChatController::class, "show"])->name("chat.show");
-    // Route::post("chat", [ChatController::class, "store"])->name("chat.store");
 
     // report & ban
     Route::post("report", [AdminController::class, "report"])->name("report.create");

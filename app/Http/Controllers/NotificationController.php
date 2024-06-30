@@ -12,8 +12,12 @@ class NotificationController extends Controller
     {
         $notif = Notification::find($req->id);
 
-        if ($notif->recipient_id == Auth::user()->id) {
-            $notif->delete();
+        if ($notif) {
+            if ($notif->recipient_id == Auth::user()->id) {
+                $notif->delete();
+                return response(null, 200);
+            }
         }
+        return response(null, 204);
     }
 }

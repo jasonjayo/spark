@@ -5,8 +5,13 @@
 @use('App\Models\Interest')
 @use('App\Models\SparkTrait')
 
+@pushOnce('scripts')
+    @vite(['resources/js/updateProfile.js'])
+@endPushOnce
+
 <section>
     <style>
+        /* styles for traits & interests pill buttons */
         .ba {
             border-style: solid;
             border-width: 1px;
@@ -41,9 +46,6 @@
             transition: color .15s ease-in;
         }
 
-        /* .link:link, .link:visited {
-    transition: color .15s ease-in;
-} */
         .pv2 {
             padding-top: .5rem;
             padding-bottom: .5rem;
@@ -82,10 +84,6 @@
             transition: opacity .15s ease-in;
         }
 
-        /* .dim:active {
-    opacity: .8;
-    transition: opacity .15s ease-out;
-} */
         .intr_color {
             border-color: var(--spk-color-primary-1);
             color: var(--spk-color-primary-1);
@@ -112,7 +110,7 @@
     <?php
     $firstToUpper = ucfirst($user->first_name);
     $secondToUpper = ucfirst($user->second_name);
-    $user = Auth::user();
+    
     $hasProfile = isset($user->profile);
     if ($hasProfile) {
         $profile = $user->profile;
@@ -148,7 +146,7 @@
                         <h1 class="f6 fw6 ttu tracked">Elevate your profile! Choose the interests that make you stand
                             out!</h1>
                         @php
-                            $my_interests = Auth::user()->interests->pluck('id');
+                            $my_interests = $user->interests->pluck('id');
                         @endphp
                         @foreach (Interest::get() as $interest)
                             <button id="{{ $interest->id }}" class="f6 link dim br-pill ba ph3 pv2 mb2 dib intr_color"
@@ -170,7 +168,7 @@
                     <div class="ph3 mt4">
                         <h1 class="f6 fw6 ttu tracked">Ready to reveal your vibe? Select your personality traits!</h1>
                         @php
-                            $my_traits = Auth::user()->traits->pluck('id');
+                            $my_traits = $user->traits->pluck('id');
                         @endphp
                         @foreach (SparkTrait::get() as $trait)
                             <button id="{{ $trait->id }}_trait"
@@ -193,7 +191,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <form id="interestsTraitsForm">
-
+                        <input type="hidden" id="user_id" value="{{ $user->id }}">
                         <input type="hidden" class="interestInput" value="" name="interests" id="interests" />
                         <input type="hidden" class="traitInput" value="" name="traits" id="traits" />
 
@@ -230,9 +228,10 @@
     @endif
 
     @if (session('status') === 'profile-updated')
-        @if ($hasPhotos->isEmpty())
+        @if ($hasPhotos->isEmpty() && !Auth::user()->isAdmin())
             <div class="alert alert-success" role="alert">
-                Profile saved! Why not upload some pictures to your profile in the Update Photos section!
+                Profile saved! Why not upload some pictures to your profile in the <a
+                    href="/profile?section=section4">Update Photos</a> section!
             </div>
         @else
             <div class="alert alert-success" role="alert">
@@ -277,16 +276,16 @@
                     <p>These details cannot be changed.</p>
 
                     <div class="form-floating mb-3"> <!-- User Id  -->
-                        <input id="user_id" name="id" type="text" class="form-control mt-1 block w-full"
-                            value="{{ old('id', $user->id) }}" required autofocus autocomplete="name" readonly />
-                        <label for="user_id">User ID </label>
+                        <input id="profile_user_id" name="id" type="text" class="form-control mt-1 block w-full"
+                            value="{{ old('id', $user->id) }}" required autofocus readonly />
+                        <label for="profile_user_id">User ID </label>
 
 
                     </div>
 
                     <div class="form-floating mb-3"> <!-- First Name Input -->
 
-                        <input id="first_name" name="first_name" type="text"
+                        <input id="first_name" autocomplete="name" name="first_name" type="text"
                             class="form-control mt-1 block {$gray-500}-bg-subtle"
                             value="{{ old('first_name', $firstToUpper) }}" required readonly />
                         <label for="first_name">First Name</label>
@@ -326,9 +325,9 @@
                     </div>
                     <div class="form-floating mb-3">
                         <!-- Bio -->
-                        <textarea class="form-control" name="bio" style="height:100px" cols="50" maxlength="1000"
+                        <textarea class="form-control" id="bio" name="bio" style="height:100px" cols="50" maxlength="1000"
                             placeholder="Describe yourself here...">{{ old('bio', $hasProfile ? $profile->bio : '') }}</textarea>
-                        <label for="bio">Write a bio about yourself here...<label />
+                        <label for="bio">Write a bio about yourself here...</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -386,26 +385,19 @@
                     <p>Location will be set automatically by your browser, if you've <a target="_blank"
                             href="https://docs.buddypunch.com/en/articles/919258-how-to-enable-location-services-for-chrome-safari-edge-and-android-ios-devices-gps-setting">given
                             permission</a>.</p>
-                    {{-- <div class="form-floating mb-3">
-                        <!-- Location -->
-                        <input id="location" name="location" type="text" class="form-control" size=20
-                            maxlength=40 pattern="(-)?\d+(\.\d+)?,\s?(-)?\d+(\.\d+)?" readonly
-                            value="{{ old('location', $hasProfile ? $profile->location : '') }}" />
-                        <label for="location">Location</label>
-                    </div> --}}
                 </div>
                 <div class="mb-3">
-                    <h4>Select your Interests and Traits here!</h4>
+                    <h2>Interests and Traits</h2>
                     <p>By selecting some of the interests and traits that describe you best, we can find the best match
-                        for you,<br>Click down below to get started!</p>
+                        for you!</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
-                        Click Me!
+                        Interests and Traits
                     </button>
                 </div>
 
 
-                <div class="">
+                <div>
                     <h2>Extra Bits</h2>
                     <p>These fields are optional.</p>
                     <div class="form-floating mb-3">
@@ -465,53 +457,5 @@
                     <button class="btn btn-primary" name="profile">Save Profile</button>
                 </div>
             </div>
-
-            <script>
-                var traitInput = document.querySelector('#traits');
-                var interestInput = document.querySelector("#interests");
-                traitInput.value = selectedTraits.toString();
-                interestInput.value = selectedInterests.toString();
-
-                function addSelectedInterest(e) {
-                    var interestId = e.getAttribute("data-interest-id");
-                    if (!selectedInterests.includes(interestId)) {
-                        selectedInterests.push(interestId);
-                        e.classList.add("on");
-                    } else {
-                        e.classList.remove("on");
-                        var removeIndex = selectedInterests.indexOf(interestId);
-                        selectedInterests.splice(removeIndex, 1);
-                    }
-                    interestInput.value = selectedInterests.toString();
-                }
-            </script>
-            <script>
-                function addSelectedTrait(e) {
-                    var traitId = e.getAttribute("data-trait-id");
-                    if (!selectedTraits.includes(traitId)) {
-                        selectedTraits.push(traitId);
-                        e.classList.add('onTwo');
-                    } else {
-                        e.classList.remove('onTwo');
-                        var removeIndex = selectedTraits.indexOf(traitId);
-                        selectedTraits.splice(removeIndex, 1);
-                    }
-                    traitInput.value = selectedTraits.toString();
-                }
-                const interestsTraitsForm = document.querySelector("#interestsTraitsForm");
-                interestsTraitsForm.addEventListener("submit", e => {
-                    e.preventDefault();
-                    axios.post(`${URL_BASE}/api/interestsTraits`, {
-                        interests: interestInput.value,
-                        traits: traitInput.value
-                    }).then(res => {
-                        const interestsTraitsUpdateAlert = document.querySelector("#interestsTraitsUpdateAlert");
-                        interestsTraitsUpdateAlert.style.display = "block";
-                        setTimeout(() => {
-                            interestsTraitsUpdateAlert.style.display = "none";
-                        }, 3000);
-                    })
-                });
-            </script>
         </form>
 </section>

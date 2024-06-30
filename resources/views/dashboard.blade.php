@@ -29,6 +29,7 @@
             DB::table('reactions')
                 ->where('sender_id', '=', Auth::user()->id)
                 ->count() > 0;
+        $checklistComplete = $hasProfile && $hasPhotos && $hasMatches && $hasUsedDiscovery;
     @endphp
 
     <div class="container">
@@ -39,70 +40,74 @@
                 </h1>
             </div>
         </div>
-        <div class="row text-center justify-content-center">
-            <div class="col-md-8">
-                <p>Here's a checklist to help you get started!</p>
+        @if (!$checklistComplete)
+            <div class="row text-center justify-content-center">
+                <div class="col-md-8">
+                    <p>Here's a checklist to help you get started!</p>
+                </div>
             </div>
-        </div>
-        <div class="row mt-4 justify-content-center">
-            <div class="col-md-6">
-                <ul class="list-group" id="gettingStarted">
-                    <a href="{{ route('profile.edit') }}" class="list-group-item text-black text-   coration-none">
-                        <li @class([
-                            'd-flex align-items-center',
-                            'text-decoration-line-through text-body-tertiary completed-item' => $hasProfile,
-                        ])>
-                            <span class="material-symbols-outlined me-4">
-                                person
-                            </span>
-                            Create your profile
-                        </li>
-                    </a>
-                    <a href="{{ route('profile.edit') }}/?section=section4"
-                        class="list-group-item text-black text-decoration-none">
-                        <li @class([
-                            'd-flex align-items-center',
-                            'text-decoration-line-through text-body-tertiary completed-item' => $hasPhotos,
-                        ])>
-                            <span class="material-symbols-outlined me-4">
-                                add_to_photos
-                            </span>
-                            Add some photos
-                        </li>
-                    </a>
-                    <a href="{{ route('discovery') }}" class="list-group-item text-black text-decoration-none">
-                        <li @class([
-                            'd-flex align-items-center',
-                            'text-decoration-line-through text-body-tertiary completed-item' => $hasUsedDiscovery,
-                        ])>
-                            <span class="material-symbols-outlined me-4">
-                                favorite
-                            </span>
-                            Explore your personalised Discovery Queue
-                        </li>
-                    </a>
-                    <a href="{{ route('search') }}" class="list-group-item text-black text-decoration-none">
-                        <li class="d-flex">
-                            <span class="material-symbols-outlined me-4">
-                                search
-                            </span>
-                            Find other users
-                        </li>
-                    </a>
-                    <a href="{{ route('chat.index') }}" class="list-group-item text-black text-decoration-none">
-                        <li @class([
-                            'd-flex align-items-center',
-                            'text-decoration-line-through text-body-tertiary completed-item' => $hasMatches,
-                        ])>
-                            <span class="material-symbols-outlined me-4">
-                                chat
-                            </span>
-                            Chat with your matches
-                        </li>
-                    </a>
-                </ul>
+        @endif
+        @if (!$checklistComplete)
+            <div class="row mt-4 justify-content-center">
+                <div class="col-md-6">
+                    <ul class="list-group" id="gettingStarted">
+                        <a href="{{ route('profile.edit') }}" class="list-group-item text-black text-   coration-none">
+                            <li @class([
+                                'd-flex align-items-center',
+                                'text-decoration-line-through text-body-tertiary completed-item' => $hasProfile,
+                            ])>
+                                <span class="material-symbols-outlined me-4">
+                                    person
+                                </span>
+                                Create your profile
+                            </li>
+                        </a>
+                        <a href="{{ route('profile.edit') }}/?section=section4"
+                            class="list-group-item text-black text-decoration-none">
+                            <li @class([
+                                'd-flex align-items-center',
+                                'text-decoration-line-through text-body-tertiary completed-item' => $hasPhotos,
+                            ])>
+                                <span class="material-symbols-outlined me-4">
+                                    add_to_photos
+                                </span>
+                                Add some photos
+                            </li>
+                        </a>
+                        <a href="{{ route('discovery') }}" class="list-group-item text-black text-decoration-none">
+                            <li @class([
+                                'd-flex align-items-center',
+                                'text-decoration-line-through text-body-tertiary completed-item' => $hasUsedDiscovery,
+                            ])>
+                                <span class="material-symbols-outlined me-4">
+                                    favorite
+                                </span>
+                                Explore your personalised Discovery Queue
+                            </li>
+                        </a>
+                        <a href="{{ route('search') }}" class="list-group-item text-black text-decoration-none">
+                            <li class="d-flex">
+                                <span class="material-symbols-outlined me-4">
+                                    search
+                                </span>
+                                Find other users
+                            </li>
+                        </a>
+                        <a href="{{ route('chat.index') }}" class="list-group-item text-black text-decoration-none">
+                            <li @class([
+                                'd-flex align-items-center',
+                                'text-decoration-line-through text-body-tertiary completed-item' => $hasMatches,
+                            ])>
+                                <span class="material-symbols-outlined me-4">
+                                    chat
+                                </span>
+                                Chat with your matches
+                            </li>
+                        </a>
+                    </ul>
+                </div>
             </div>
-        </div>
+        @endif
         <div class="row justify-content-center my-3 gx-4 gy-5">
             <div class="col-md-6">
                 <a href="{{ route('discovery') }}" class="dashbtn shadow-lg ">
@@ -130,7 +135,7 @@
             </div>
         </div>
 
-        <footer class="mt-5 text-center text-body-tertiary">
+        <footer class="my-5 text-center text-body-tertiary">
             Developed by Jason Gill, Caragh Morahan, Kamil Mrowiec &amp; Roy Flaherty.
         </footer>
 </x-app-layout>

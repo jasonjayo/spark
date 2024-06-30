@@ -61,6 +61,7 @@ class Profile extends Model
             $lat = floatval($coords[0]);
             $long = floatval($coords[1]);
 
+            // using DB::raw here as need to use ST_Distance_Sphere function for calculating distances
             $query->select("*")->from(DB::raw("(select user_id,
             ST_Distance_Sphere(
                 POINT(?, ?),
@@ -82,7 +83,7 @@ class Profile extends Model
             $query->where("users.dob", "<=", $max_dob->format("Y-m-d"));
         }
 
-        if (array_key_exists("max_age", $filters)) {
+        if (array_key_exists("max_age", $filters) && $filters["max_age"] < 100) {
             $now = date_create("now");
             $min_dob = $now->sub(new DateInterval("P" . $filters["max_age"] . "Y364D"));
             $query->where("users.dob", ">=", $min_dob->format("Y-m-d"));

@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-label-group my-3 mx-4" x-data="{ max_age: {{ old('max_age', 100) }} }">
                         <label for="filter_max_age" class="form-label">Max age</label>
-                        <span id="max_age_val" x-text="max_age"></span>
+                        <span id="max_age_val" x-text="max_age"></span><span x-show="max_age >= 100">+</span>
                         <input type="range" class="form-range" min="18" max="100" id="filter_max_age"
                             name="max_age" x-model="max_age">
                     </div>
@@ -115,7 +115,7 @@
 
 
             <div class="col-12 col-md-7 col-lg-9">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 m-4 g-4">
+                <div id="searchResults" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 m-4 g-4">
                     @foreach ($profiles as $profile)
                         <div class="col">
                             <x-profile-card :profile="$profile" />
@@ -123,7 +123,7 @@
                     @endforeach
                 </div>
                 <div class="row">
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6 pagination-links">
                         {{ $profiles->links() }}
                     </div>
                 </div>
@@ -135,8 +135,4 @@
                 </div>
             </div>
 
-            <script>
-                // debug
-            </script>
-            {{-- {{ $sql }} --}}
 </x-app-layout>

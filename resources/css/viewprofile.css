@@ -30,7 +30,7 @@
 .profile-info {
     align-items: center;
 }
-.material-symbols-outlined {
+.profile-info .material-symbols-outlined {
     font-size: 24px;
     margin-right: 5px;
     color: #de3163;
@@ -53,15 +53,6 @@
     overflow: auto;
 }
 
-/* Fixed position button */
-.fixed-bottom {
-    position: fixed;
-    bottom: -10;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-}
-
 /* Button style */
 .btn-send-message {
     font-size: 16px;
@@ -76,12 +67,6 @@
     background-color: #b61a47;
 }
 
-@media (max-width: 768px) {
-    .fixed-bottom {
-        position: static;
-        margin-top: 20px;
-    }
-}
 .profile-tagline {
     margin-bottom: 10px;
     font-weight: bold;
@@ -260,4 +245,7 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.comma-after:not(:last-of-type)::after {
+    content: ",";
 }

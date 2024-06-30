@@ -13,6 +13,7 @@ export default defineConfig({
                 "resources/js/chat.js",
                 "resources/css/viewprofile.css",
                 "resources/js/viewprofile.js",
+                "resources/js/updateProfile.js",
             ],
             refresh: true,
         }),

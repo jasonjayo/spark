@@ -86,7 +86,6 @@
             <label for="photoName">Photo Name </label>
         </div>
 
-        <!-- <input class="form-control mb-3" type="text" name="photoName"> -->
         <button type="submit" name="photo" class="btn btn-primary">Upload Photo</button>
     </form>
 

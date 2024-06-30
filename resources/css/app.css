@@ -1,6 +1,4 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* global */
 .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
@@ -28,9 +26,11 @@
     font-size: larger;
     font-weight: 800;
 }
-.default {
-    width: 100vw;
-    padding-bottom: 96px;
+@media only screen and (max-width: 768px) {
+    .default {
+        width: 100vw;
+        padding-bottom: 96px;
+    }
 }
 .btn-primary {
     --bs-btn-bg: var(--spk-color-primary-1);
@@ -43,6 +43,14 @@
     --bs-btn-active-bg: var(--spk-color-secondary-1);
     border: 0;
 }
+.chatgpt-logo {
+    width: 150px;
+}
+.pagination-links {
+    margin-bottom: 6em;
+}
+
+/* dashboard */
 #dashboard-logo {
     width: 175px;
 }
@@ -88,6 +96,8 @@
         background-position: center 25%;
     }
 }
+
+/* search */
 #filters_form {
     background: rgba(255, 255, 255, 0.75);
 }
@@ -131,8 +141,13 @@
     list-style-type: none;
     padding: 0;
     /* max-width: 700px; */
-    height: 71vh;
+    height: 60vh;
     overflow-y: scroll;
+}
+@media only screen and (max-width: 768px) {
+    #messages {
+        height: 50vh;
+    }
 }
 ::-webkit-scrollbar {
     width: 0.5em;
@@ -259,26 +274,13 @@ h3 {
 .profile-active {
     position: absolute;
     top: 25%;
-    right: 5%;
-    width: 18px;
-    height: 18px;
+    right: 7%;
+    width: 15px;
+    height: 15px;
     border: 3px solid white;
     transform: translate(-50%, -50%);
 }
 #discovery-empty-icon {
     color: var(--spk-color-primary-2);
     font-size: 3.5em;
-}
-.recommendation-score {
-    width: 200px;
-    background: #fff;
-    height: 12px;
-    border-radius: 6px;
-    overflow: hidden;
-}
-.recommendation-bar {
-    height: 100%;
-}
-.chatgpt-logo {
-    width: 150px;
 }

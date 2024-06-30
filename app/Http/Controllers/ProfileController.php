@@ -157,14 +157,19 @@ class ProfileController extends Controller
 
     public function addUserInterestsAndTraits(Request $request)
     {
+
+        $user = User::findOrFail($request->id);
+        if (!Auth::user()->isAdmin() && $user->id != Auth::user()->id) {
+            return redirect()->route("error")->with(["message" => "Not authorised.", "code" => 401]);
+        }
+
         $interests = array_filter(explode(",", $request->interests));
 
-        $my = Auth::user();
-        $my->interests()->sync($interests);
-     
+        $user->interests()->sync($interests);
+
         $traits = array_filter(explode(",", $request->traits));
 
-        $my->traits()->sync($traits);
+        $user->traits()->sync($traits);
 
 
         return response(null, 200);

@@ -84,8 +84,6 @@ class User extends Authenticatable
         //     ->merge($this->recommendationsAsSecondUser)->sortByDesc(function ($recommendation) {
         //         return $recommendation->pivot->weight;
         //     });
-        // $recommendationIds = Recommendation::where("user_1_id", "=", Auth::user()->id)->pluck("id");
-        // return User::whereIn("id", $recommendationIds);
         return $this->belongsToMany(User::class, 'recommendations', 'user_1_id', 'user_2_id')
             ->withPivot('weight')
             ->orderBy("pivot_weight", "desc");
